@@ -9,7 +9,7 @@ public class CardText extends ChanceCard {
 
 
     public ChanceCard() {
-        CardPile = new ChanceCard[35];
+        CardPile = new ChanceCard[45];
         int i = 0;
         CardPile[i] = new IncreasePrice("Oliepriserne er steget, og de skal betale 500 kr pr hus og 2000kr pr hotel", i, 500,2000);
         CardPile[i++] = new IncreasePrice("Ejendomsskatten er steget. Ekstraudgifterne er 800kr pr hus, 2300kr pr hotel",i++,800,2300);
