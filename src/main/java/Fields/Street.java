@@ -51,6 +51,7 @@ public class Street extends Ownable {
     public int getPawnValue() {
         return pawnValue;
     }
+
     public void build (int houseAmount) {
         houseCount = houseCount + houseAmount;
         if (houseCount == 1) {
