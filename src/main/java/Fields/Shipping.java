@@ -9,8 +9,8 @@ public class Shipping extends Ownable {
     int priceOfThree;
     int priceOfFour;
 
-    public Shipping(int price, String name) {
-        super(price);
+    public Shipping(int id, int price, String name) {
+        super(id, price);
         this.pawnValue = 2000;
         this.priceOfOne = 500;
         this.priceOfTwo = 1000;

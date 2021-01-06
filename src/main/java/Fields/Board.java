@@ -18,7 +18,7 @@ public class Board {
             board[i++] = new Chancefield(i);
             board[i++] = new Street(i,1200, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new TaxField(i, false, 4000);
-            board[i++] = new Shipping(4000,"Scandlines");
+            board[i++] = new Shipping(i, 4000,"Scandlines");
             board[i++] = new Street(i,2000, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new Chancefield(i);
             board[i++] = new Street(i,2000, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
@@ -28,7 +28,7 @@ public class Board {
             board[i++] = new Brewery(i, 3000, 10);
             board[i++] = new Street(i,2800, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new Street(i,3200, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
-            board[i++] = new Shipping(4000,"Mols");
+            board[i++] = new Shipping(i, 4000,"Mols");
             board[i++] = new Street(i,3600, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new Chancefield(i);
             board[i++] = new Street(i,3600, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
@@ -38,7 +38,7 @@ public class Board {
             board[i++] = new Chancefield(i);
             board[i++] = new Street(i,4400, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new Street(i,4800, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
-            board[i++] = new Shipping(4000,"Scandlines2");
+            board[i++] = new Shipping(i, 4000,"Scandlines2");
             board[i++] = new Street(i,5200, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new Street(i,5200, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new Brewery(i, 3000, 10);
@@ -48,7 +48,7 @@ public class Board {
             board[i++] = new Street(i,6000, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new Chancefield(i);
             board[i++] = new Street(i,6400, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
-            board[i++] = new Shipping(4000,"Scandlines3");
+            board[i++] = new Shipping(i, 4000,"Scandlines3");
             board[i++] = new Chancefield(i);
             board[i++] = new Street(i,7000, "Hvidovrevej", ".", ".", "", Color.BLUE, 0, 600, 1000, 250, 750, 2250, 4000, 6000);
             board[i++] = new TaxField(i, true, 4000);
