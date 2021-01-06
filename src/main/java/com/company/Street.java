@@ -2,7 +2,7 @@ package com.company;
 
 import java.awt.*;
 
-public class Street {
+public class Street extends Ownable {
     public int currentRent;
     String name;
     String subText;
@@ -18,8 +18,8 @@ public class Street {
     int fourthHouse;
     int hotel;
 
-    public Street(String name, String subText, String description, String rent, Color mainColor, int currentRent, int pawnValue, int housePrice, int firstHouse, int secondHouse, int thirdHouse, int fourthHouse, int hotel) {
-        super();
+    public Street(int price, String name, String subText, String description, String rent, Color mainColor, int currentRent, int pawnValue, int housePrice, int firstHouse, int secondHouse, int thirdHouse, int fourthHouse, int hotel) {
+        super(price);
         this.name = name;
         this.subText = subText;
         this. description = description;
