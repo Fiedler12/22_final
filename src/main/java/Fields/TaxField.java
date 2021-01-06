@@ -1,18 +1,20 @@
 package Fields;
 
-public class TaxField {
-    boolean payTax;
-    boolean percentage;
-    int taxPrice;
-    int tenPercent;
-
-    public TaxField(boolean percentage, int taxPrice){
+public class TaxField extends Field{
+    public TaxField(int id, boolean percentage, int taxPrice){
+        super(id);
+        setPayTax(true);
         this.percentage = percentage;
         this.taxPrice = taxPrice;
         if (percentage){
             tenPercent = 10;
         }
     }
+
+    boolean payTax;
+    boolean percentage;
+    int taxPrice;
+    int tenPercent;
 
     public boolean isPercentage() {
         return percentage;

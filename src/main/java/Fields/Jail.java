@@ -1,6 +1,11 @@
 package Fields;
 
-public class Jail {
+public class Jail extends Field{
+    public Jail (int id){
+        super(id);
+        setInJail(true);
+    }
+
     boolean isInJail;
 
     public boolean Prisonor(){
