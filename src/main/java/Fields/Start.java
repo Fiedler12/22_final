@@ -1,7 +1,12 @@
 package Fields;
 
-public class Start {
+public class Start extends Field {
     boolean startField;
+    public Start (int id) {
+        super(id);
+        setStartField(true);
+    }
+
 
     public boolean isStartField() {
         return startField;

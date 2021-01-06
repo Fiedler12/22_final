@@ -18,8 +18,8 @@ public class Street extends Ownable {
     int fourthHouse;
     int hotel;
 
-    public Street(int price, String name, String subText, String description, String rent, Color mainColor, int currentRent, int pawnValue, int housePrice, int firstHouse, int secondHouse, int thirdHouse, int fourthHouse, int hotel) {
-        super(price);
+    public Street(int id, int price, String name, String subText, String description, String rent, Color mainColor, int currentRent, int pawnValue, int housePrice, int firstHouse, int secondHouse, int thirdHouse, int fourthHouse, int hotel) {
+        super(id, price);
         this.name = name;
         this.subText = subText;
         this. description = description;
