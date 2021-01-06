@@ -5,4 +5,5 @@ public class CardText extends ChanceCard {
     String T;
     int ID;
     int TopCard;
+
 }
