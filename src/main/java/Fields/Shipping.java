@@ -2,7 +2,7 @@ package Fields;
 
 public class Shipping extends Ownable {
     String name;
-    int currentprice;
+    int currentPrice;
     int pawnValue;
     int priceOfOne;
     int priceOfTwo;
