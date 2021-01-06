@@ -1,4 +1,4 @@
-package com.company;
+package Fields;
 
 public class Shipping extends Ownable {
     String name;

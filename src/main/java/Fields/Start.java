@@ -1,4 +1,4 @@
-package com.company;
+package Fields;
 
 public class Start {
 }

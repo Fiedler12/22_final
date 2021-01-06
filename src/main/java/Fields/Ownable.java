@@ -1,6 +1,6 @@
-package com.company;
+package Fields;
 
-public class Ownable extends Field {
+abstract class Ownable extends Field {
     int price;
     int ownedID;
 

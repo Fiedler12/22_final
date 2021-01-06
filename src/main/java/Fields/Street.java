@@ -1,4 +1,4 @@
-package com.company;
+package Fields;
 
 import java.awt.*;
 
