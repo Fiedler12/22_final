@@ -1,6 +1,11 @@
 package Fields;
 
-public class Parking {
+public class Parking extends Field{
+    public Parking (int id){
+        super(id);
+        setParking(true);
+    }
+
     boolean parking;
 
     public boolean isParking() {
