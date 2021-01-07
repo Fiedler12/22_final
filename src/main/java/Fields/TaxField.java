@@ -16,6 +16,7 @@ public class TaxField extends Field{
     int taxPrice;
     int tenPercent;
 
+
     public boolean isPercentage() {
         return percentage;
     }
