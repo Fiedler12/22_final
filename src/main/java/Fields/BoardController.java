@@ -48,13 +48,18 @@ public class BoardController {
                 }
                 checkSubClass = (board.getFields()[i] instanceof Parking);
                 if (checkSubClass) {
-                    gui_fields[i] =
+                    Parking parking = (Parking) board.getFields()[i];
+                    gui_fields[i] = new GUI_Refuge();
                 }
                 checkSubClass = (board.getFields()[i] instanceof TaxField);
                 if (checkSubClass) {
-                    gui_fields[i] =
+                    gui_fields[i] = new GUI_Tax();
                 }
                 i++;
             }
         }
+
+    public GUI_Field[] getGui_fields() {
+        return gui_fields;
     }
+}
