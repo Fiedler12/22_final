@@ -6,7 +6,14 @@ public class PlayerController {
         static Player[] players;
         GUI_Player[] gui_players;
         Color[] colors = new Color[6];
-        public PlayerController() { }
+        public PlayerController() {
+            colors[0] = Color.white;
+            colors[1] = Color.yellow;
+            colors[2] = Color.blue;
+            colors[3] = Color.PINK;
+            colors[4] = Color.black;
+            colors[5] = Color.GREEN;
+        }
 
         public Player[] getSpillere () {
             return players;
@@ -24,7 +31,16 @@ public class PlayerController {
         public void movePlayer(int playerIndex, int roll) {
             players[playerIndex].setPos(players[playerIndex].getPos() + roll);
         }
-        public void playerBuys(int fieldID) {
-
+        public void playerBuys(int playerIndex, int fieldID) {
+            players[playerIndex].buys(fieldID);
         }
+        public void playerSells(int playerIndex, int removenumber) {
+            players[playerIndex].sells(removenumber);
+        }
+        public int[] getOwnedIDs(int playerIndex) {
+            int[] playerOwns = new int[players[playerIndex].owns.size()];
+            players[playerIndex].getOwns();
+            return playerOwns;
+        }
+
 }

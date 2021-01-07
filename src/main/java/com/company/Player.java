@@ -61,5 +61,24 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void buys (int fieldID) {
+        owns.add(fieldID);
+    }
+
+    public void sells (int address) {
+        owns.remove(address);
+    }
+
+    public int[] getOwns() {
+        int i = 0;
+        int[] ownedIDs;
+        ownedIDs = new int[owns.size()];
+        while(i < owns.size()) {
+            ownedIDs[i] = owns.get(i);
+            i++;
+        }
+        return ownedIDs;
+    }
 }
 
