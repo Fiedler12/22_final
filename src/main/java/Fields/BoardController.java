@@ -35,8 +35,8 @@ public class BoardController {
                 checkSubClass = (board.getFields()[i] instanceof Brewery);
                 if (checkSubClass) {
                     Brewery brewery = (Brewery) board.getFields()[i];
-                    gui_fields[i] = new GUI_Brewery();
-                    gui_fields[i] = new GUI_Brewery();
+                    gui_fields[i] = new GUI_Brewery("default", "Tuborg", "3.000","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser, hvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
+                    gui_fields[i] = new GUI_Brewery("default", "Carlsberg", "3.000","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser, hvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Chancefield);
                 if (checkSubClass) {
@@ -60,8 +60,8 @@ public class BoardController {
                 }
                 checkSubClass = (board.getFields()[i] instanceof TaxField);
                 if (checkSubClass) {
-                    gui_fields[4] = new GUI_Tax("Betal indkomstskat", "","Du skal enten betale 10% af dine værdier eller 4.000 kr",new Color(255,255,255),Color.BLACK);
-                    gui_fields[38] = new GUI_Tax("Ekstra ordinær statskat", "Betal 2.000 kr","",new Color(255,255,255),Color.BLACK);
+                    gui_fields[4] = new GUI_Tax("Betal indkomstskat", "","Du skal enten betale 10% af dine værdier eller 4.000 kr",new Color(100,225,247),Color.BLACK);
+                    gui_fields[38] = new GUI_Tax("Ekstra ordinær statskat", "Betal 2.000 kr","Du betaler nu 2.000kr til banken.",new Color(100,225,247),Color.BLACK);
                 }
                 i++;
             }
