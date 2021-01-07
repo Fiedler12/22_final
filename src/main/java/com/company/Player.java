@@ -1,5 +1,10 @@
 package com.company;
 
+import Fields.Field;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
     String name;
     Account playerAccount = new Account();
@@ -7,6 +12,7 @@ public class Player {
     int playerID;
     boolean inJail;
     boolean hasJailCard;
+    List<Integer> owns = new ArrayList<Integer>();
 
     public boolean isHasJailCard() {
         return hasJailCard;
@@ -56,3 +62,4 @@ public class Player {
         this.name = name;
     }
 }
+

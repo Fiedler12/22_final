@@ -1,11 +1,11 @@
 package com.company;
-
 import gui_fields.GUI_Player;
+import java.awt.*;
 
 public class PlayerController {
         static Player[] players;
         GUI_Player[] gui_players;
-
+        Color[] colors = new Color[6];
         public PlayerController() { }
 
         public Player[] getSpillere () {
@@ -23,5 +23,8 @@ public class PlayerController {
 
         public void movePlayer(int playerIndex, int roll) {
             players[playerIndex].setPos(players[playerIndex].getPos() + roll);
+        }
+        public void playerBuys(int fieldID) {
+
         }
 }
