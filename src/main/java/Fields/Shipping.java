@@ -3,9 +3,44 @@ package Fields;
 import java.awt.*;
 
 public class Shipping extends Ownable {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     String name;
+
+    public String getSubText() {
+        return subText;
+    }
+
+    public void setSubText(String subText) {
+        this.subText = subText;
+    }
+
     String subText;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     String description;
+
+    public String getRent() {
+        return rent;
+    }
+
+    public void setRent(String rent) {
+        this.rent = rent;
+    }
+
     String rent;
     Color mainColor;
     Color secondaryColor;

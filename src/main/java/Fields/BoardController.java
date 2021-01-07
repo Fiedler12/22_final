@@ -26,9 +26,11 @@ public class BoardController {
                 checkSubClass = (board.getFields()[i] instanceof Shipping);
                 if (checkSubClass) {
                     Shipping shipping = (Shipping) board.getFields()[i];
-                    gui_fields[i] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[5] = new GUI_Shipping("default","Scandlines Helsingør","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[15] = new GUI_Shipping("default","Mols-linien","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[25] = new GUI_Shipping("default","Scandlines Rødby","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[35] = new GUI_Shipping("default","Scandlines Gedser","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
 
-                    gui_fields[i]=new GUI_Shipping(shipping.name, shipping.subText, shipping.description, shipping.rent, shipping);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Brewery);
                 if (checkSubClass) {
