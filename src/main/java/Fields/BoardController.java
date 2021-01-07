@@ -26,7 +26,8 @@ public class BoardController {
                 checkSubClass = (board.getFields()[i] instanceof Shipping);
                 if (checkSubClass) {
                     Shipping shipping = (Shipping) board.getFields()[i];
-                    gui_fields[i] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \n m/ Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[i] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[5] = new GUI_Shipping("default", "Scandlines \n Helsingør-\n Helsingborg","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Brewery);
                 if (checkSubClass) {
