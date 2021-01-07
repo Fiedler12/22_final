@@ -15,8 +15,8 @@ public class Consol {
         while (true) {
             int numberInput = gui.getUserInteger("Hvor mange skal spille med? I kan være mellem 2 og 6 spillere.");
             playerController.makePlayers(numberInput);
-            if (numberInput < 2 || numberInput > 4) {
-                gui.showMessage("Fejl Der må kun være 2-4 spillere");
+            if (numberInput < 2 || numberInput > 6) {
+                gui.showMessage("Fejl! Der må kun være 2-6 spillere");
             } else {
                 askName(numberInput);
                 break;
@@ -28,14 +28,14 @@ public class Consol {
         int var = 0;
         while (var < amount) {
             String navn = gui.getUserString("Indtast spillernes navne");
-            playerController.players[var] = new Player();
-            playerController.players[var].setName(navn);
-            playerController.players[var].setPos(0);
-            playerController.players[var].setPlayerID(var);
-            playerController.players[var].playerAccount.setBalance(30000);
-            playerController.gui_players[var] = new GUI_Player(playerController.players[var].getName(), playerController.players[var].playerAccount.getBalance());
+            PlayerController.players[var] = new Player();
+            PlayerController.players[var].setName(navn);
+            PlayerController.players[var].setPos(0);
+            PlayerController.players[var].setPlayerID(var);
+            PlayerController.players[var].playerAccount.setBalance(30000);
+            playerController.gui_players[var] = new GUI_Player(PlayerController.players[var].getName(), PlayerController.players[var].playerAccount.getBalance());
             gui.addPlayer(playerController.getGui_players()[var]);
-            gui.getFields()[playerController.players[var].getPos()].setCar(playerController.getGui_players()[var], true);
+            gui.getFields()[PlayerController.players[var].getPos()].setCar(playerController.getGui_players()[var], true);
             var++;
         }
     }
