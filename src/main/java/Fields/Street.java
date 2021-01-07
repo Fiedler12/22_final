@@ -9,6 +9,7 @@ public class Street extends Ownable {
     String description;
     String rent;
     Color mainColor;
+    Color secondaryColor;
     int pawnValue;
     int houseCount;
     int housePrice;
@@ -18,13 +19,14 @@ public class Street extends Ownable {
     int fourthHouse;
     int hotel;
 
-    public Street(int id, int price, String name, String subText, String description, String rent, Color mainColor, int currentRent, int pawnValue, int housePrice, int firstHouse, int secondHouse, int thirdHouse, int fourthHouse, int hotel) {
+    public Street(int id, int price, String name, String subText, String description, String rent, Color mainColor, Color secondaryColor, int currentRent, int pawnValue, int housePrice, int firstHouse, int secondHouse, int thirdHouse, int fourthHouse, int hotel) {
         super(id, price);
         this.name = name;
         this.subText = subText;
         this. description = description;
         this.rent = rent;
         this.mainColor = mainColor;
+        this.secondaryColor = secondaryColor;
         houseCount = 0;
         this.currentRent = currentRent;
         this.pawnValue = pawnValue;

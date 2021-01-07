@@ -1,6 +1,6 @@
 package Fields;
 
-abstract class Ownable extends Field {
+public abstract class Ownable extends Field {
     int price;
     int ownedID;
 
