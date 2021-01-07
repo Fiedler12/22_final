@@ -26,17 +26,17 @@ public class BoardController {
                 checkSubClass = (board.getFields()[i] instanceof Shipping);
                 if (checkSubClass) {
                     Shipping shipping = (Shipping) board.getFields()[i];
-                    gui_fields[5] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
-                    gui_fields[15] = new GUI_Shipping("default","Mols-linien","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
-                    gui_fields[25] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
-                    gui_fields[35] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \n Hvis 2 redderier ejes: 1.000 \n Hvis 3 redderier ejes: 2.000 \n Hvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[5] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \nHvis 2 redderier ejes: 1.000 \nHvis 3 redderier ejes: 2.000 \nHvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[15] = new GUI_Shipping("default","Mols-linien","4.000 kr","Leje: 500 kr. \nHvis 2 redderier ejes: 1.000 \nHvis 3 redderier ejes: 2.000 \nHvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[25] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \nHvis 2 redderier ejes: 1.000 \nHvis 3 redderier ejes: 2.000 \nHvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
+                    gui_fields[35] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \nHvis 2 redderier ejes: 1.000 \nHvis 3 redderier ejes: 2.000 \nHvis 4 redderier ejes: 4.000","", new Color(13,90,184),Color.black);
 
                 }
                 checkSubClass = (board.getFields()[i] instanceof Brewery);
                 if (checkSubClass) {
                     Brewery brewery = (Brewery) board.getFields()[i];
-                    gui_fields[i] = new GUI_Brewery("default", "Tuborg", "3.000","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser, hvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
-                    gui_fields[i] = new GUI_Brewery("default", "Carlsberg", "3.000","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser, hvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
+                    gui_fields[i] = new GUI_Brewery("default", "Tuborg", "3.000","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
+                    gui_fields[i] = new GUI_Brewery("default", "Carlsberg", "3.000","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Chancefield);
                 if (checkSubClass) {
