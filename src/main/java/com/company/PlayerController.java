@@ -34,8 +34,8 @@ public class PlayerController {
         public void playerBuys(int playerIndex, int fieldID, int price) {
             players[playerIndex].buys(fieldID, price);
         }
-        public void playerSells(int playerIndex, int removenumber) {
-            players[playerIndex].sells(removenumber);
+        public void playerSells(int playerIndex, int removeNumber) {
+            players[playerIndex].sells(removeNumber);
         }
 
         public int[] getOwnedIDs(int playerIndex) {

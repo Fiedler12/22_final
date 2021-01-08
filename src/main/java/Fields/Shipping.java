@@ -27,8 +27,24 @@ public class Shipping extends Ownable {
         this.subText = subText;
         this.description = description;
         this.rent = rent;
+    }
 
+    public int landOnowned(int amountOwned) {
+        switch (amountOwned) {
+            case 1:
+                toPay = priceOfOne;
+                break;
+            case 2:
+                toPay = priceOfTwo;
+                break;
+            case 3:
+                toPay = priceOfThree;
+                break;
+            case 4:
+                toPay = priceOfFour;
+        }
 
+        return toPay;
     }
 
 }

@@ -1,7 +1,9 @@
 package com.company;
 
 import Fields.BoardController;
+import Fields.Brewery;
 import Fields.Ownable;
+import Fields.Shipping;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
 
@@ -28,10 +30,11 @@ public class Consol {
     public void askName(int amount) {
         int var = 0;
         while (var < amount) {
-            String navn = gui.getUserString("Indtast spillernes navne");
+            String name = gui.getUserString("Indtast spillernes navne");
             PlayerController.players[var] = new Player();
-            PlayerController.players[var].setName(navn);
+            PlayerController.players[var].setName(name);
             PlayerController.players[var].setPos(0);
+            PlayerController.players[var].setShippingOwned(0);
             PlayerController.players[var].setPlayerID(var);
             PlayerController.players[var].playerAccount.setBalance(30000);
             playerController.gui_players[var] = new GUI_Player(PlayerController.players[var].getName(), PlayerController.players[var].playerAccount.getBalance());
@@ -48,14 +51,24 @@ public class Consol {
             playerController.movePlayer(var2, dice.getTotal());
             gui.getFields()[PlayerController.players[var2].getPos()].setCar(playerController.getGui_players()[var2], true);
             updateView(PlayerController.players.length);
-            boolean checkSubClass = (boardController.getField()[playerController.players[var2].getPos()] instanceof Ownable);
+            boolean checkSubClass = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Ownable);
             if (checkSubClass) {
-                Ownable ownable = (Ownable) boardController.getField()[playerController.players[var2].getPos()];
-                boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
-                if (yes) {
-                playerController.playerBuys(var2, PlayerController.players[var2].getPos(), ownable.getPrice());
-                ownable.setOwnedID(var2);
-                updateView(PlayerController.players.length);
+                Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[var2].getPos()];
+                if (ownable.getOwnedID() == -1) {
+                    boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
+                    if (yes) {
+                        playerController.playerBuys(var2, PlayerController.players[var2].getPos(), ownable.getPrice());
+                        ownable.setOwnedID(var2);
+                        updateView(PlayerController.players.length);
+                        boolean isShipping = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Shipping);
+                        if(isShipping) {
+                            PlayerController.players[var2].setShippingOwned(PlayerController.players[var2].getShippingOwned() + 1);
+                        }
+                        boolean isBrewery = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Brewery);
+                        if(isBrewery) {
+                            PlayerController.players[var2].setBreweryOwned(PlayerController.players[var2].getBreweryOwned() + 1);
+                        }
+                    }
                 }
             }
             var2++;

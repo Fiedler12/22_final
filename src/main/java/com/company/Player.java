@@ -10,6 +10,8 @@ public class Player {
     Account playerAccount = new Account();
     int pos;
     int playerID;
+    int shippingOwned;
+    int breweryOwned;
     boolean inJail;
     boolean hasJailCard;
     List<Integer> owns = new ArrayList<Integer>();
@@ -80,6 +82,22 @@ public class Player {
             i++;
         }
         return ownedIDs;
+    }
+
+    public int getShippingOwned() {
+        return shippingOwned;
+    }
+
+    public void setShippingOwned(int shippingOwned) {
+        this.shippingOwned = shippingOwned;
+    }
+
+    public int getBreweryOwned() {
+        return breweryOwned;
+    }
+
+    public void setBreweryOwned(int breweryOwned) {
+        this.breweryOwned = breweryOwned;
     }
 }
 
