@@ -39,7 +39,7 @@ public class CardText extends ChanceCard {
         CardPile[i++] = new MoneyFromPlayer("Det er deres fødselsdag, motag 200 kr fra hver medspiller",i++,200);
         CardPile[i++] = new MoneyFromPlayer("De har lagt penge ud til et sammenskudsgilde.Mærkværdigvis betaler alle straks, modtag 500kr fra hver medspiller",i++,500);
         CardPile[i++] = new MoneyFromPlayer("De skal holde familiefest og får et tilskud fra hver medspiller på 500kr",i++,500);
-        CardPile[i++] = new Move("Ryk frem til START", i++,39 );//placement for start når vi engang for lavet brattet
+        CardPile[i++] = new MovetoSpecific("Ryk frem til START", i++,39 );//placement for start når vi engang for lavet brattet
         CardPile[i++] = new Move("Ryk frem til START", i++,39 );//placement for start når vi engang for lavet brattet
         CardPile[i++] = new Move("Ryk tre felter frem",i++,+3);
         CardPile[i++] = new Move("Ryk tre felter tilbage",i++,-3);
