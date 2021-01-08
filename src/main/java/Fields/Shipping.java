@@ -3,7 +3,6 @@ package Fields;
 import java.awt.*;
 
 public class Shipping extends Ownable {
-    String name;
     String subText;
     String description;
     String rent;
@@ -17,8 +16,8 @@ public class Shipping extends Ownable {
     int priceOfThree;
     int priceOfFour;
 
-    public Shipping(int id, int price, String name, String subText, String description, String rent) {
-        super(id, price);
+    public Shipping(String name, int id, int price, String subText, String description, String rent) {
+        super(name, id, price);
         this.pawnValue = 2000;
         this.priceOfOne = 500;
         this.priceOfTwo = 1000;
