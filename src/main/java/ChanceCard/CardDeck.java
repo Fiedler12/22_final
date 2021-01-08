@@ -9,8 +9,9 @@ public class CardDeck {
 
 
     public CardDeck() {
-        CardPile = new ChanceCard[45];
-        int i = 0;
+        setTopCard(0);
+        CardPile = new ChanceCard[46];
+
         CardPile[0] = new IncreasePrice("Oliepriserne er steget, og de skal betale 500 kr pr hus og 2000kr pr hotel", 1, 500,2000);
         CardPile[1] = new IncreasePrice("Ejendomsskatten er steget. Ekstraudgifterne er 800kr pr hus, 2300kr pr hotel",2,800,2300);
         CardPile[2] = new PayMoney("De har kørt frem for fuldt stop, betal 1000 kr i bøde",3,1000);
