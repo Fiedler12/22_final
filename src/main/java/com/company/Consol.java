@@ -73,7 +73,7 @@ public class Consol {
             }
             boolean checkSubClass2 = (boardController.getField()[playerController.players[var2].getPos()] instanceof Chancefield);
             if (checkSubClass2) {
-                cardDeck.draw();
+                pullCard(PlayerController.players[var2].playerID);
             }
             var2++;
         }
@@ -112,10 +112,10 @@ public class Consol {
         boolean checkMoveToShipping = (cardDeck.getCardDeck()[cardID] instanceof MoveToShipping);
         boolean checkMoveToSpecific = (cardDeck.getCardDeck()[cardID] instanceof MovetoSpecific);
         boolean checkPayMoney = (cardDeck.getCardDeck()[cardID] instanceof PayMoney);
-        boolean checkRecieveMoney = (cardDeck.getCardDeck()[cardID] instanceof RecieveMoney);
-        if(checkRecieveMoney) {
-            RecieveMoney recieveMoney = (RecieveMoney) cardDeck.getCardDeck()[cardID];
-            playerController.getSpillere()[playerIndex].playerAccount.setBalance(playerController.getSpillere()[playerIndex].playerAccount.getBalance() + recieveMoney.getReceive());
+        boolean checkReceiveMoney = (cardDeck.getCardDeck()[cardID] instanceof ReceiveMoney);
+        if(checkReceiveMoney) {
+            ReceiveMoney receiveMoney = (ReceiveMoney) cardDeck.getCardDeck()[cardID];
+            playerController.getSpillere()[playerIndex].playerAccount.setBalance(playerController.getSpillere()[playerIndex].playerAccount.getBalance() + receiveMoney.getReceive());
         }
     }
 
