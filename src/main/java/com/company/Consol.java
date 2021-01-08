@@ -55,7 +55,8 @@ public class Consol {
                 Ownable ownable = (Ownable) boardController.getField()[var2];
                 boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
                 if (yes) {
-                playerController.playerBuys(var2, playerController.players[var2].getPos());
+                playerController.playerBuys(var2, playerController.players[var2].getPos(), ownable.getPrice());
+                ownable.setOwnedID(var2);
                 }
             }
             var2++;

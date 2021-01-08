@@ -62,8 +62,9 @@ public class Player {
         this.name = name;
     }
 
-    public void buys (int fieldID) {
+    public void buys (int fieldID, int price) {
         owns.add(fieldID);
+        playerAccount.setBalance(- price);
     }
 
     public void sells (int address) {

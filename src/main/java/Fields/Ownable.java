@@ -19,4 +19,7 @@ public abstract class Ownable extends Field {
     }
 
     public String getName() { return name; }
+
+    public int getPrice() {return price; }
+
 }
