@@ -15,6 +15,7 @@ public class Shipping extends Ownable {
     int priceOfTwo;
     int priceOfThree;
     int priceOfFour;
+    int toPay;
 
     public Shipping(String name, int id, int price, String subText, String description, String rent) {
         super(name, id, price);
@@ -47,4 +48,7 @@ public class Shipping extends Ownable {
         return toPay;
     }
 
+    public int getToPay() {
+        return toPay;
+    }
 }
