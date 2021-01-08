@@ -4,6 +4,7 @@ public abstract class Ownable extends Field {
     int price;
     int ownedID;
     String name;
+    int toPay;
     public Ownable(String name, int id, int price) {
         super(id);
         this.name = name;
@@ -23,7 +24,6 @@ public abstract class Ownable extends Field {
     public int getPrice() {return price; }
 
     public int landOnOwned() {
-        int toPay;
         return toPay;
     }
 
