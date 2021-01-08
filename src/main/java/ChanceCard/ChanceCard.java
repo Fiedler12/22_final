@@ -7,5 +7,7 @@ abstract class ChanceCard {
         this.CardID = CardID;
         this.CardText = CardText;
 
+
     }
+
 }

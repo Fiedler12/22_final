@@ -3,7 +3,9 @@ package ChanceCard;
 import ChanceCard.ChanceCard;
 
 public class MoneyFromPlayer extends ChanceCard {
-    public MoneyFromPlayer(int id, String text) {
-        super(text, id);
+    int recieveFromPlayer;
+    public MoneyFromPlayer(String text, int ID, int recieveFromPlayer) {
+        super(text, ID);
+        this.recieveFromPlayer = recieveFromPlayer;
     }
 }
