@@ -1,6 +1,6 @@
 package com.company;
 
-import ChanceCard.CardDeck;
+import ChanceCard.*;
 import Fields.*;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
@@ -73,7 +73,7 @@ public class Consol {
             }
             boolean checkSubClass2 = (boardController.getField()[playerController.players[var2].getPos()] instanceof Chancefield);
             if (checkSubClass2) {
-                pullCard();
+                cardDeck.draw();
             }
             var2++;
         }
@@ -90,14 +90,33 @@ public class Consol {
         }
 
     }
-    public void pullCard(){
+    public void pullCard(int playerIndex){
         gui.getUserButtonPressed("Du er landet på chancefeltet\nTryk på knappen for at trække et kort", "Træk kort");
         cardDeck.draw();
         gui.displayChanceCard(cardDeck.recieveT());
         gui.getUserButtonPressed("Du har trukket dette kort", "Fortsæt");
+        cardDeckSwitch(playerIndex, cardDeck.recieveID());
     }
-    public void cardDeckSwitch(){
+    public void cardDeckSwitch(int playerIndex, int cardID){
+        boolean checkGetOutOfJail = (cardDeck.getCardDeck()[cardID] instanceof GetOutOfJailCard);
+        if(checkGetOutOfJail) {
 
+        }
+        boolean checkGoToJailCard = (cardDeck.getCardDeck()[cardID] instanceof GoToJailCard);
+        if(checkGetOutOfJail) {
+
+        }
+        boolean checkIncreasePrice = (cardDeck.getCardDeck()[cardID] instanceof IncreasePrice);
+        boolean checkMoneyFromPlayer = (cardDeck.getCardDeck()[cardID] instanceof MoneyFromPlayer);
+        boolean checkMove = (cardDeck.getCardDeck()[cardID] instanceof Move);
+        boolean checkMoveToShipping = (cardDeck.getCardDeck()[cardID] instanceof MoveToShipping);
+        boolean checkMoveToSpecific = (cardDeck.getCardDeck()[cardID] instanceof MovetoSpecific);
+        boolean checkPayMoney = (cardDeck.getCardDeck()[cardID] instanceof PayMoney);
+        boolean checkRecieveMoney = (cardDeck.getCardDeck()[cardID] instanceof RecieveMoney);
+        if(checkRecieveMoney) {
+            RecieveMoney recieveMoney = (RecieveMoney) cardDeck.getCardDeck()[cardID];
+            playerController.getSpillere()[playerIndex].playerAccount.setBalance(playerController.getSpillere()[playerIndex].playerAccount.getBalance() + recieveMoney.getReceive());
+        }
     }
 
 }
