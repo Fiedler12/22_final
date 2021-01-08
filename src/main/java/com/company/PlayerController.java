@@ -15,7 +15,7 @@ public class PlayerController {
             colors[5] = Color.GREEN;
         }
 
-        public Player[] getSpillere () {
+        public Player[] getPlayers () {
             return players;
         }
 
