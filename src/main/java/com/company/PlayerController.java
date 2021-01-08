@@ -31,12 +31,13 @@ public class PlayerController {
         public void movePlayer(int playerIndex, int roll) {
             players[playerIndex].setPos(players[playerIndex].getPos() + roll);
         }
-        public void playerBuys(int playerIndex, int fieldID) {
-            players[playerIndex].buys(fieldID);
+        public void playerBuys(int playerIndex, int fieldID, int price) {
+            players[playerIndex].buys(fieldID, price);
         }
         public void playerSells(int playerIndex, int removenumber) {
             players[playerIndex].sells(removenumber);
         }
+
         public int[] getOwnedIDs(int playerIndex) {
             int[] playerOwns = new int[players[playerIndex].owns.size()];
             players[playerIndex].getOwns();

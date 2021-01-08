@@ -1,6 +1,7 @@
 package com.company;
 
 import Fields.BoardController;
+import Fields.Ownable;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
 
@@ -38,6 +39,39 @@ public class Consol {
             gui.getFields()[PlayerController.players[var].getPos()].setCar(playerController.getGui_players()[var], true);
             var++;
         }
+        int var2 = 0;
+        while (var2 < amount) {
+            gui.getUserButtonPressed("I skal nu til at starte spillet. " + PlayerController.players[var2].getName() + ", tryk på knappen for at slå", "Kast terningerne");
+            dice.roll();
+            gui.setDice(dice.die1, dice.die2);
+            gui.getFields()[PlayerController.players[var2].getPos()].setCar(playerController.getGui_players()[var2], false);
+            playerController.movePlayer(var2, dice.getTotal());
+            gui.getFields()[PlayerController.players[var2].getPos()].setCar(playerController.getGui_players()[var2], true);
+            updateView(PlayerController.players.length);
+            boolean checkSubClass = (boardController.getField()[playerController.players[var2].getPos()] instanceof Ownable);
+            if (checkSubClass) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.players[var2].getPos()];
+                boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
+                if (yes) {
+                playerController.playerBuys(var2, PlayerController.players[var2].getPos(), ownable.getPrice());
+                ownable.setOwnedID(var2);
+                }
+            }
+            var2++;
+        }
     }
+    public void turn(int playerIndex) {
+
+    }
+    public void updateView(int amount) {
+        int t = 0;
+        boardController.getGui_fields();
+        while(t < amount){
+            playerController.gui_players[t].setBalance(playerController.getSpillere()[t].playerAccount.getBalance());
+            t++;
+        }
+
+    }
+
 }
 

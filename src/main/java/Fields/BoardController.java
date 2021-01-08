@@ -70,4 +70,7 @@ public class BoardController {
     public GUI_Field[] getGui_fields() {
         return gui_fields;
     }
+
+    public Field[] getField() {return board.fields;}
+
 }
