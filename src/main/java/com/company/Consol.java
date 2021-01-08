@@ -61,11 +61,11 @@ public class Consol {
                         ownable.setOwnedID(var2);
                         updateView(PlayerController.players.length);
                         boolean isShipping = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Shipping);
-                        if(isShipping) {
+                        if (isShipping) {
                             PlayerController.players[var2].setShippingOwned(PlayerController.players[var2].getShippingOwned() + 1);
                         }
                         boolean isBrewery = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Brewery);
-                        if(isBrewery) {
+                        if (isBrewery) {
                             PlayerController.players[var2].setBreweryOwned(PlayerController.players[var2].getBreweryOwned() + 1);
                         }
                     }
@@ -78,14 +78,30 @@ public class Consol {
             var2++;
         }
     }
-    public void turn(int playerIndex) {
 
+    public void playGame() {
+        int t = 0;
+        while (true) {
+            if (t > PlayerController.players.length - 1) {
+                t = 0;
+            }
+            if (PlayerController.players[t].isInJail()) {
+                if (playerController.getPlayers()[t].isHasJailCard()) {
+                    boolean selection = gui.getUserLeftButtonPressed("Vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal M1");
+                    if (selection) {
+                        playerController.getPlayers()[t].setHasJailCard(false);
+                    }
+                }
+            }
+        turn(t);
+        t++;
+        }
     }
     public void updateView(int amount) {
         int t = 0;
         boardController.getGui_fields();
         while(t < amount){
-            playerController.gui_players[t].setBalance(playerController.getSpillere()[t].playerAccount.getBalance());
+            playerController.gui_players[t].setBalance(PlayerController.players[t].playerAccount.getBalance());
             t++;
         }
     }
@@ -181,6 +197,49 @@ public class Consol {
             updateView(PlayerController.players.length);
         } //DONE
     }
+    public void turn(int playerIndex) {
+        String choice = gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur. Vælg hvad du vil benytte din tur til:", "Køb eller sælg", "Byg", "Pantsæt", "Slå terningen");
+        switch (choice) {
+            case "Køb eller sælg":
+                break;
+            case "Byg":
+                break;
+            case "Pantsæt":
+                break;
+            case "Slå terningen":
+                playerRolls(playerIndex);
+                break;
+        }
+    }
+    public void playerRolls(int playerIndex) {
+        dice.roll();
+        gui.setDice(dice.die1, dice.die2);
+        gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+        playerController.movePlayer(playerIndex, dice.getTotal());
+        gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+        boolean checkSubClass = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Ownable);
+        if (checkSubClass) {
+            Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[playerIndex].getPos()];
+            if (ownable.getOwnedID() == -1) {
+                boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
+                if (yes) {
+                    playerController.playerBuys(playerIndex, PlayerController.players[playerIndex].getPos(), ownable.getPrice());
+                    ownable.setOwnedID(playerIndex);
+                    updateView(PlayerController.players.length);
+                    boolean isShipping = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Shipping);
+                    if (isShipping) {
+                        PlayerController.players[playerIndex].setShippingOwned(PlayerController.players[playerIndex].getShippingOwned() + 1);
+                    }
+                    boolean isBrewery = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Brewery);
+                    if (isBrewery) {
+                        PlayerController.players[playerIndex].setBreweryOwned(PlayerController.players[playerIndex].getBreweryOwned() + 1);
+                    }
+                }
+            }
+        }
+        updateView(PlayerController.players.length);
+    }
 
 }
+
 
