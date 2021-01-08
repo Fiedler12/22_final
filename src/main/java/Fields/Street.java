@@ -76,6 +76,12 @@ public class Street extends Ownable {
         this.ownedID = ownedID;
         currentRent = noHouse;
     }
+
+    @Override
+    public int landOnOwned() {
+        int toPay = currentRent;
+        return toPay;
+    }
 }
 
 
