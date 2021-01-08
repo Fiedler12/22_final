@@ -22,4 +22,9 @@ public abstract class Ownable extends Field {
 
     public int getPrice() {return price; }
 
+    public int landOnOwned() {
+        int toPay;
+        return toPay;
+    }
+
 }
