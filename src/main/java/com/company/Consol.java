@@ -55,6 +55,7 @@ public class Consol {
                 if (yes) {
                 playerController.playerBuys(var2, PlayerController.players[var2].getPos(), ownable.getPrice());
                 ownable.setOwnedID(var2);
+                updateView(PlayerController.players.length);
                 }
             }
             var2++;
