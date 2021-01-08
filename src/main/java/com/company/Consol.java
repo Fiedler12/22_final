@@ -1,9 +1,7 @@
 package com.company;
 
-import Fields.BoardController;
-import Fields.Brewery;
-import Fields.Ownable;
-import Fields.Shipping;
+import ChanceCard.CardDeck;
+import Fields.*;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
 
@@ -12,9 +10,11 @@ public class Consol {
     GUI gui = new GUI(boardController.getGui_fields());
     PlayerController playerController = new PlayerController();
     Dice dice = new Dice();
+    CardDeck cardDeck = new CardDeck();
 
 
     public void startGame() {
+        cardDeck.mix();
         while (true) {
             int numberInput = gui.getUserInteger("Hvor mange skal spille med? I kan være mellem 2 og 6 spillere.");
             playerController.makePlayers(numberInput);
@@ -51,8 +51,8 @@ public class Consol {
             playerController.movePlayer(var2, dice.getTotal());
             gui.getFields()[PlayerController.players[var2].getPos()].setCar(playerController.getGui_players()[var2], true);
             updateView(PlayerController.players.length);
-            boolean checkSubClass = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Ownable);
-            if (checkSubClass) {
+            boolean checkSubClass1 = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Ownable);
+            if (checkSubClass1) {
                 Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[var2].getPos()];
                 if (ownable.getOwnedID() == -1) {
                     boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
@@ -71,6 +71,10 @@ public class Consol {
                     }
                 }
             }
+            boolean checkSubClass2 = (boardController.getField()[playerController.players[var2].getPos()] instanceof Chancefield);
+            if (checkSubClass2) {
+                pullCard();
+            }
             var2++;
         }
     }
@@ -84,6 +88,15 @@ public class Consol {
             playerController.gui_players[t].setBalance(playerController.getSpillere()[t].playerAccount.getBalance());
             t++;
         }
+
+    }
+    public void pullCard(){
+        gui.getUserButtonPressed("Du er landet på chancefeltet\nTryk på knappen for at trække et kort", "Træk kort");
+        cardDeck.draw();
+        gui.displayChanceCard(cardDeck.recieveT());
+        gui.getUserButtonPressed("Du har trukket dette kort", "Fortsæt");
+    }
+    public void cardDeckSwitch(){
 
     }
 

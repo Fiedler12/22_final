@@ -8,7 +8,7 @@ public class CardTest {
         testDeck.mix();
         int t = 0;
         while(t < 100) {
-            testDeck.Draw();
+            testDeck.draw();
             testDeck.recieveID();
             testDeck.recieveT();
             System.out.println(testDeck.recieveID());
