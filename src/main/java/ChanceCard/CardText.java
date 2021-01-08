@@ -1,8 +1,9 @@
 package ChanceCard;
 
-//public class CardText extend    ChanceCard[] CardPile;
-        //String T;
-        //int ID;
-        //int TopCard;s ChanceCard {
+public class CardText extends ChanceCard {
+    ChanceCard[] CardPile;
+    String T;
+    int ID;
+    int TopCard;
 
-//}
+}
