@@ -142,8 +142,7 @@ public class Consol {
                     }
                 } else if (ownable.getOwnedID() == playerController.getPlayers()[playerIndex].getPlayerID()) {
                     gui.displayChanceCard("Du ejer selv dette felt.");
-                } else if (ownable.getOwnedID() != -1) {
-                    ownable.landOnOwned();
+                } else if (ownable.getOwnedID() != -1 && ownable.getOwnedID() != playerController.getPlayers()[playerIndex].getPlayerID()) {
                     boolean checkStreet = (ownable instanceof Street);
                     if (checkStreet) {
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Street) ownable).currentRent);
