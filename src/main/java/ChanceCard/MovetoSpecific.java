@@ -11,4 +11,8 @@ public class MovetoSpecific extends Move {
     public int getSpecific(int pos) {
         return this.fieldID;
     }
+
+    public int getFieldID() {
+        return fieldID;
+    }
 }

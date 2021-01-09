@@ -8,4 +8,8 @@ public class MoneyFromPlayer extends ChanceCard {
         super(text, ID);
         this.recieveFromPlayer = recieveFromPlayer;
     }
+
+    public int getRecieveFromPlayer() {
+        return recieveFromPlayer;
+    }
 }

@@ -7,4 +7,8 @@ public class GoToJailCard extends ChanceCard {
         super(text, ID);
         this.moveToJail = moveToJail;
     }
+
+    public int getMoveToJail() {
+        return moveToJail;
+    }
 }
