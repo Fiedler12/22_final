@@ -92,30 +92,56 @@ public class Consol {
     }
     public void pullCard(int playerIndex){
         gui.getUserButtonPressed("Du er landet på chancefeltet\nTryk på knappen for at trække et kort", "Træk kort");
-        cardDeck.draw();
-        gui.displayChanceCard(cardDeck.recieveT());
+        ChanceCard card = cardDeck.draw();
+        gui.displayChanceCard(card.CardText);
+
         gui.getUserButtonPressed("Du har trukket dette kort", "Fortsæt");
-        cardDeckSwitch(playerIndex, cardDeck.recieveID());
+        cardDeckSwitch(playerIndex, card);
+
     }
-    public void cardDeckSwitch(int playerIndex, int cardID){
-        boolean checkGetOutOfJail = (cardDeck.getCardDeck()[cardID] instanceof GetOutOfJailCard);
+    public void cardDeckSwitch(int playerIndex, ChanceCard card) {
+
+        Player player = PlayerController.players[playerIndex];
+
+
+        boolean checkGetOutOfJail = (card instanceof GetOutOfJailCard);
         if(checkGetOutOfJail) {
 
         }
-        boolean checkGoToJailCard = (cardDeck.getCardDeck()[cardID] instanceof GoToJailCard);
+        boolean checkGoToJailCard = (card instanceof GoToJailCard);
         if(checkGetOutOfJail) {
 
         }
-        boolean checkIncreasePrice = (cardDeck.getCardDeck()[cardID] instanceof IncreasePrice);
-        boolean checkMoneyFromPlayer = (cardDeck.getCardDeck()[cardID] instanceof MoneyFromPlayer);
-        boolean checkMove = (cardDeck.getCardDeck()[cardID] instanceof Move);
-        boolean checkMoveToShipping = (cardDeck.getCardDeck()[cardID] instanceof MoveToShipping);
-        boolean checkMoveToSpecific = (cardDeck.getCardDeck()[cardID] instanceof MovetoSpecific);
-        boolean checkPayMoney = (cardDeck.getCardDeck()[cardID] instanceof PayMoney);
-        boolean checkReceiveMoney = (cardDeck.getCardDeck()[cardID] instanceof ReceiveMoney);
+        boolean checkIncreasePrice = (card instanceof IncreasePrice);
+        boolean checkMoneyFromPlayer = (card instanceof MoneyFromPlayer);
+        boolean checkMove = (card instanceof Move);
+       if (checkMove) {
+           Move move = (Move) card;
+           playerController.movePlayer(playerIndex, move.getMove());
+           gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+           gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+           updateView(PlayerController.players.length);
+// vælg køb efter rykket nyt loop
+       }
+
+
+        boolean checkMoveToShipping = (card instanceof MoveToShipping);
+        boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
+
+
+        boolean checkPayMoney = (card instanceof PayMoney);
+        if (checkPayMoney){
+        PayMoney payMoney = (PayMoney) card;
+        player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
+            updateView(PlayerController.players.length);
+        }
+
+
+        boolean checkReceiveMoney = (card instanceof ReceiveMoney);
         if(checkReceiveMoney) {
-            ReceiveMoney receiveMoney = (ReceiveMoney) cardDeck.getCardDeck()[cardID];
-            playerController.getSpillere()[playerIndex].playerAccount.setBalance(playerController.getSpillere()[playerIndex].playerAccount.getBalance() + receiveMoney.getReceive());
+            ReceiveMoney receiveMoney = (ReceiveMoney) card;
+           player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+            updateView(PlayerController.players.length);
         }
     }
 

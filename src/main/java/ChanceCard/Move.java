@@ -11,4 +11,8 @@ public class Move extends ChanceCard {
     public int getSpecific(int pos){
         return pos+=this.move;
     }
+
+    public int getMove() {
+        return move;
+    }
 }

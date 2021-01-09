@@ -7,4 +7,8 @@ public class PayMoney extends ChanceCard {
         this.pay = pay;
 
     }
+
+    public int getPay() {
+        return pay;
+    }
 }

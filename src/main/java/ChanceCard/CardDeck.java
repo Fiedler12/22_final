@@ -60,10 +60,13 @@ public class CardDeck {
 
         draw();
     }
-    public void draw() { //returnerer kort tekst og kort ID og vælger det første kort i bunken og sætter et nyt topkort
+    public ChanceCard draw() { //returnerer kort tekst og kort ID og vælger det første kort i bunken og sætter et nyt topkort
+        ChanceCard card = cardDeck[getTopCard()];
         this.T = cardDeck[getTopCard()].CardText;
         this.ID = cardDeck[getTopCard()].CardID;
         setTopCard(getTopCard() + 1);
+        return card;
+
     }
 
     public String recieveT() {return T; }
