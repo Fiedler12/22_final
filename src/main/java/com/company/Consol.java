@@ -111,15 +111,16 @@ public class Consol {
 
         boolean checkGoToJailCard = (card instanceof GoToJailCard);
         if(checkGoToJailCard) {
-        GoToJailCard goToJail = (GoToJailCard) card;
-        gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-        player.setPos(goToJail.getGoToJail());
-        gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-        player.setInJail(true);
-        updateView(PlayerController.players.length);
+            GoToJailCard goToJail = (GoToJailCard) card;
+            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+            player.setPos(goToJail.getGoToJail());
+            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+            player.setInJail(true);
+            updateView(PlayerController.players.length);
         } //DONE
 
         boolean checkIncreasePrice = (card instanceof IncreasePrice);
+
 
         boolean checkMoneyFromPlayer = (card instanceof MoneyFromPlayer);
         if(checkMoneyFromPlayer){
@@ -146,6 +147,7 @@ public class Consol {
                 player.setPos(player.getPos()+1);
                 boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
                 if(Shipping){
+                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
                     break;
                 }
             }
@@ -162,10 +164,10 @@ public class Consol {
 
         boolean checkPayMoney = (card instanceof PayMoney);
         if (checkPayMoney){
-        PayMoney payMoney = (PayMoney) card;
-        player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
+            PayMoney payMoney = (PayMoney) card;
+            player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
             updateView(PlayerController.players.length);
-        } //DONE
+        } //DONE ud over hvis start få ekstra penge
 
 
         boolean checkReceiveMoney = (card instanceof ReceiveMoney);
@@ -173,7 +175,7 @@ public class Consol {
             ReceiveMoney receiveMoney = (ReceiveMoney) card;
            player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
             updateView(PlayerController.players.length);
-        } //DONE
+        } //DONE ud over hvis start få ekstra penge
     }
 
 }

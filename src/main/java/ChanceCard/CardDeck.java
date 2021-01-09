@@ -21,7 +21,7 @@ public class CardDeck {
         cardDeck[7] = new PayMoney("De har købt 4 nye dæk til deres vogn og de koster dig 1000 kr",7,1000);
         cardDeck[8] = new PayMoney("De har fået en parkeringskøbe, betal 200 kr i bøde",8,200 );
         cardDeck[9] = new PayMoney("Betal deres bilforsikring:\n1000 kr",9,1000);
-        cardDeck[10] = new PayMoney("De har været udenlands og købt for manger smønger, betal 200kr i told",10,200);
+        cardDeck[10] = new PayMoney("De har været udenlands og købt for manger smøger, betal 200kr i told",10,200);
         cardDeck[11] = new PayMoney("Tandlægeregning betal 2000kr",11,2000);
         cardDeck[12] = new ReceiveMoney("De har vundet i klasselotteriet. Modtag 500kr",12,500);
         cardDeck[13] = new ReceiveMoney("De har vundet i klasselotteriet. Modtag 500kr",13,500);
@@ -39,8 +39,8 @@ public class CardDeck {
         cardDeck[25] = new MoneyFromPlayer("Det er deres fødselsdag, motag 200 kr fra hver medspiller",25,200);
         cardDeck[26] = new MoneyFromPlayer("De har lagt penge ud til et sammenskudsgilde. Mærkværdigvis betaler alle straks, modtag 500kr fra hver medspiller",26,500);
         cardDeck[27] = new MoneyFromPlayer("De skal holde familiefest og får et tilskud fra hver medspiller på 500kr",27,500);
-        cardDeck[28] = new MovetoSpecific("Ryk frem til START", 28,39 );//placement for start når vi engang for lavet brattet
-        cardDeck[29] = new MovetoSpecific("Ryk frem til START", 29,39 );//placement for start når vi engang for lavet brattet
+        cardDeck[28] = new MovetoSpecific("Ryk frem til START", 28,0 );//placement for start når vi engang for lavet brattet
+        cardDeck[29] = new MovetoSpecific("Ryk frem til START", 29,0 );//placement for start når vi engang for lavet brattet
         cardDeck[30] = new Move("Ryk tre felter frem",30,3);
         cardDeck[31] = new Move("Ryk tre felter tilbage",31,-3);
         cardDeck[32] = new Move("Ryk tre felter tilbage",32,-3);
