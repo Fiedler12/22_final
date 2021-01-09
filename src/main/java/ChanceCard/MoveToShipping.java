@@ -1,10 +1,7 @@
 package ChanceCard;
 
 import Fields.Board;
-import Fields.Shipping;
-import com.company.Player;
 import com.company.PlayerController;
-import gui_fields.GUI_Field;
 
 
 public class MoveToShipping extends ChanceCard {
@@ -13,7 +10,7 @@ public class MoveToShipping extends ChanceCard {
 
 
 
-    public MoveToShipping(String Text, int ID,int playerIndex) {
+    public MoveToShipping(String Text, int ID) {
         super(Text, ID);
 
 

@@ -1,15 +1,13 @@
 package ChanceCard;
 
-import ChanceCard.ChanceCard;
-
 public class MoneyFromPlayer extends ChanceCard {
-    int recieveFromPlayer;
-    public MoneyFromPlayer(String text, int ID, int recieveFromPlayer) {
+    int receiveFromPlayer;
+    public MoneyFromPlayer(String text, int ID, int receiveFromPlayer) {
         super(text, ID);
-        this.recieveFromPlayer = recieveFromPlayer;
+        this.receiveFromPlayer = receiveFromPlayer;
     }
 
-    public int getRecieveFromPlayer() {
-        return recieveFromPlayer;
+    public int getReceiveFromPlayer() {
+        return receiveFromPlayer;
     }
 }

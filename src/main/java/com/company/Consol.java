@@ -113,18 +113,18 @@ public class Consol {
         if(checkGoToJailCard) {
         GoToJailCard goToJail = (GoToJailCard) card;
         gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-        playerController.movePlayer(playerIndex, goToJail.getMoveToJail());
+        player.setPos(goToJail.getGoToJail());
         gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
         player.setInJail(true);
         updateView(PlayerController.players.length);
-        }
+        } //DONE
 
         boolean checkIncreasePrice = (card instanceof IncreasePrice);
 
         boolean checkMoneyFromPlayer = (card instanceof MoneyFromPlayer);
         if(checkMoneyFromPlayer){
             MoneyFromPlayer moneyFromPlayer = (MoneyFromPlayer) card;
-            player.playerAccount.setBalance(player.playerAccount.getBalance() + (-1) * moneyFromPlayer.getRecieveFromPlayer());
+            player.playerAccount.setBalance(player.playerAccount.getBalance() + (-1) * moneyFromPlayer.getReceiveFromPlayer());
 
 
         }
@@ -136,23 +136,36 @@ public class Consol {
            playerController.movePlayer(playerIndex, move.getMove());
            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
            updateView(PlayerController.players.length);
-// vælg køb efter rykket nyt loop
+            // vælg køb efter rykket nyt loop og måske få penge efter start??
         }
 
         boolean checkMoveToShipping = (card instanceof MoveToShipping);
+        if (checkMoveToShipping){
+            while (true){
+                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                player.setPos(player.getPos()+1);
+                boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
+                if(Shipping){
+                    break;
+                }
+            }
+        }
 
         boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
         if(checkMoveToSpecific){
             MovetoSpecific movetoSpecific = (MovetoSpecific) card;
-
-        }
+            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+            player.setPos(movetoSpecific.getFieldID());
+            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+            updateView(PlayerController.players.length);
+        } //Mangler at der sker noget når man lander på det specifikke felt
 
         boolean checkPayMoney = (card instanceof PayMoney);
         if (checkPayMoney){
         PayMoney payMoney = (PayMoney) card;
         player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
             updateView(PlayerController.players.length);
-        }
+        } //DONE
 
 
         boolean checkReceiveMoney = (card instanceof ReceiveMoney);
@@ -160,7 +173,7 @@ public class Consol {
             ReceiveMoney receiveMoney = (ReceiveMoney) card;
            player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
             updateView(PlayerController.players.length);
-        }
+        } //DONE
     }
 
 }

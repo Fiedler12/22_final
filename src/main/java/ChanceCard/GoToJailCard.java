@@ -1,14 +1,14 @@
 package ChanceCard;
 
 public class GoToJailCard extends ChanceCard {
-    int moveToJail;
+    int GoToJail;
 
-    public GoToJailCard(String text, int ID, int moveToJail){
+    public GoToJailCard(String text, int ID, int GoToJail){
         super(text, ID);
-        this.moveToJail = moveToJail;
+        this.GoToJail = GoToJail;
     }
 
-    public int getMoveToJail() {
-        return moveToJail;
+    public int getGoToJail() {
+        return GoToJail;
     }
 }
