@@ -131,6 +131,7 @@ public class Consol {
             case "Byg":
                 break;
             case "Pantsæt":
+                playerPawns();
                 break;
             case "Slå terningen":
                 playerRolls(playerIndex);
@@ -140,9 +141,14 @@ public class Consol {
     public void playerRolls(int playerIndex) {
         dice.roll();
         gui.setDice(dice.die1, dice.die2);
+        gui.getUserButtonPressed("Du har slået: " + dice.getTotal() + ", tryk har for at rykke", "Ryk");
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
         playerController.movePlayer(playerIndex, dice.getTotal());
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+        boolean checkChance = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Chancefield);
+        if (checkChance) {
+            pullCard(playerIndex);
+        }
         boolean checkSubClass = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Ownable);
         if (checkSubClass) {
             Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[playerIndex].getPos()];
@@ -208,6 +214,13 @@ public class Consol {
         updateView(PlayerController.players.length);
     }
 
+    public void playerPawns() {
+
+
+
+    }
+
+
 
     public void pullCard(int playerIndex) {
         gui.getUserButtonPressed("Du er landet på chancefeltet\nTryk på knappen for at trække et kort", "Træk kort");
@@ -244,10 +257,10 @@ public class Consol {
         boolean checkMoneyFromPlayer = (card instanceof MoneyFromPlayer);
         if (checkMoneyFromPlayer) {
             MoneyFromPlayer moneyFromPlayer = (MoneyFromPlayer) card;
-            player.playerAccount.setBalance(player.playerAccount.getBalance() + (playerController.players.length) * moneyFromPlayer.getReceiveFromPlayer());
+            player.playerAccount.setBalance(player.playerAccount.getBalance() + (PlayerController.players.length) * moneyFromPlayer.getReceiveFromPlayer());
             int i = 0;
-            while (i < playerController.players.length) {
-                playerController.players[i].playerAccount.setBalance(playerController.players[i].playerAccount.getBalance() - moneyFromPlayer.getReceiveFromPlayer());
+            while (i < PlayerController.players.length) {
+                PlayerController.players[i].playerAccount.setBalance(PlayerController.players[i].playerAccount.getBalance() - moneyFromPlayer.getReceiveFromPlayer());
                 i++;
             }
             updateView(PlayerController.players.length);
