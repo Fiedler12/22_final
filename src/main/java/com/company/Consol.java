@@ -71,7 +71,7 @@ public class Consol {
                     }
                 }
             }
-            boolean checkSubClass2 = (boardController.getField()[playerController.players[var2].getPos()] instanceof Chancefield);
+            boolean checkSubClass2 = (boardController.getField()[PlayerController.players[var2].getPos()] instanceof Chancefield);
             if (checkSubClass2) {
                 pullCard(PlayerController.players[var2].playerID);
             }
@@ -236,10 +236,10 @@ public class Consol {
         boolean checkMoneyFromPlayer = (card instanceof MoneyFromPlayer);
         if (checkMoneyFromPlayer) {
             MoneyFromPlayer moneyFromPlayer = (MoneyFromPlayer) card;
-            player.playerAccount.setBalance(player.playerAccount.getBalance() + (playerController.players.length) * moneyFromPlayer.getReceiveFromPlayer());
+            player.playerAccount.setBalance(player.playerAccount.getBalance() + (PlayerController.players.length) * moneyFromPlayer.getReceiveFromPlayer());
             int i = 0;
-            while (i < playerController.players.length) {
-                playerController.players[i].playerAccount.setBalance(playerController.players[i].playerAccount.getBalance() - moneyFromPlayer.getReceiveFromPlayer());
+            while (i < PlayerController.players.length) {
+                PlayerController.players[i].playerAccount.setBalance(PlayerController.players[i].playerAccount.getBalance() - moneyFromPlayer.getReceiveFromPlayer());
                 i++;
             }
             updateView(PlayerController.players.length);
