@@ -151,6 +151,7 @@ public class Consol {
                     if (isBrewery) {
                         PlayerController.players[playerIndex].setBreweryOwned(PlayerController.players[playerIndex].getBreweryOwned() + 1);
                     }
+                    gui.getUserButtonPressed("Du har nu købt" + ownable.getName(), "Ok");
                 }
             } else if (ownable.getOwnedID() == playerController.getPlayers()[playerIndex].getPlayerID()) {
                 gui.displayChanceCard("Du ejer selv dette felt.");
@@ -166,32 +167,36 @@ public class Consol {
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
                     }
-                    if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 2) {
+                    else if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 2) {
                         ((Shipping) ownable).landOnowned(2);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
 
                     }
-                    if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 3) {
+                    else if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 3) {
                         ((Shipping) ownable).landOnowned(3);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
 
                     }
-                    if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 4) {
+                    else if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 4) {
                         ((Shipping) ownable).landOnowned(4);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
 
                     }
+                    gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
                 } else {
                     if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
                         int toPay = dice.getTotal() * 10;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
+
                     }
-                    if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
+                    else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
                         int toPay = dice.getTotal() * 10;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
                     }
                 }
             }
