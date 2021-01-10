@@ -118,11 +118,11 @@ public class Consol {
                         }
                     }
                 } else {
-                    boolean selection1 = gui.getUserLeftButtonPressed("Vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens (Du har 3 forsøg)", "Betal 1000 kr");
+                    boolean selection1 = gui.getUserLeftButtonPressed(playerController.getPlayers()[playerIndex].getName() + "Vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens (Du har 3 forsøg)", "Betal 1000 kr");
                     if (selection1) {
                         int t = 0;
                         while (t < 3) {
-                            gui.getUserButtonPressed(player.getName() + "tryk på knappen for at slå", "Kast terningerne");
+                            gui.getUserButtonPressed(player.getName() + " tryk på knappen for at slå", "Kast terningerne");
                             dice.roll();
                             gui.setDice(dice.die1, dice.die2);
                             if (dice.die1 == dice.die2) {
@@ -253,7 +253,7 @@ public class Consol {
         Player player = PlayerController.players[playerIndex];
         boolean checkGoToJail = (boardController.getField()[player.getPos()] instanceof GoToJail);
         if (checkGoToJail) {
-            gui.getUserButtonPressed("Du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start","Fortsæt");
+            gui.getUserButtonPressed(playerController.getPlayers()[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start","Fortsæt");
             player.setInJail(true);
             gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
             GoToJail goToJail = new GoToJail(30,10);
