@@ -125,7 +125,7 @@ public class Consol {
     public void playerRolls(int playerIndex) {
         dice.roll();
         gui.setDice(dice.die1, dice.die2);
-        gui.getUserButtonPressed("Du har slået:" + dice.getTotal() + ", tryk har for at rykke", "Ryk");
+        gui.getUserButtonPressed("Du har slået: " + dice.getTotal() + ", tryk har for at rykke", "Ryk");
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
         playerController.movePlayer(playerIndex, dice.getTotal());
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
