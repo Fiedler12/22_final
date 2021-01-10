@@ -313,7 +313,7 @@ public class Consol {
                 i++;
             }
             updateView(PlayerController.players.length);
-        }
+        } //DONE
 
         boolean checkMove = (card instanceof Move);
         if (checkMove) {
@@ -323,6 +323,7 @@ public class Consol {
             gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
             updateView(PlayerController.players.length);
             // vælg køb efter rykket nyt loop og måske få penge efter start??
+            //Hvis man får -3 kortet ved første chancefelt får man position -1 hvilket den ikke er glad for
         }
 
         boolean checkMoveToShipping = (card instanceof MoveToShipping);
