@@ -1,7 +1,6 @@
 package com.company;
 
 import Fields.*;
-import gui_fields.GUI_Ownable;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
 
@@ -140,55 +139,55 @@ public class Consol {
                     if (isBrewery) {
                         PlayerController.players[playerIndex].setBreweryOwned(PlayerController.players[playerIndex].getBreweryOwned() + 1);
                     }
-                } else if (ownable.getOwnedID() == playerController.getPlayers()[playerIndex].getPlayerID()) {
-                    gui.displayChanceCard("Du ejer selv dette felt.");
-                } else if (ownable.getOwnedID() != -1 && ownable.getOwnedID() != playerController.getPlayers()[playerIndex].getPlayerID()) {
-                    boolean checkStreet = (ownable instanceof Street);
-                    if (checkStreet) {
-                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Street) ownable).currentRent);
+                }
+            } else if (ownable.getOwnedID() == playerController.getPlayers()[playerIndex].getPlayerID()) {
+                gui.displayChanceCard("Du ejer selv dette felt.");
+            } else if (ownable.getOwnedID() != -1 && ownable.getOwnedID() != playerController.getPlayers()[playerIndex].getPlayerID()) {
+                boolean checkStreet = (ownable instanceof Street);
+                if (checkStreet) {
+                    PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Street) ownable).currentRent);
+                }
+                boolean checkShipping = (ownable instanceof Shipping);
+                if (checkShipping) {
+                    if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 1) {
+                        ((Shipping) ownable).landOnowned(1);
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
+                        PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
                     }
-                    boolean checkShipping = (ownable instanceof Brewery);
-                    if (checkShipping) {
-                        if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 1) {
-                            ((Shipping) ownable).landOnowned(1);
-                            PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
-                            PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(playerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-                        }
-                        if (playerController.players[ownable.getOwnedID()].getShippingOwned() == 2) {
-                            ((Shipping) ownable).landOnowned(2);
-                            playerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
-                            PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
+                    if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 2) {
+                        ((Shipping) ownable).landOnowned(2);
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
+                        PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
 
-                        }
-                        if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 3) {
-                            ((Shipping) ownable).landOnowned(3);
-                            PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
-                            PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-
-                        }
-                        if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 4) {
-                            ((Shipping) ownable).landOnowned(4);
-                            PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
-                            PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-
-                        }
                     }
-                    else {
-                            if(PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
-                                int toPay = dice.getTotal() * 10;
-                                PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
-                            }
-                            if(PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
-                                int toPay = dice.getTotal() * 10;
-                                PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
-                            }
-                        }
+                    if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 3) {
+                        ((Shipping) ownable).landOnowned(3);
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
+                        PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
+
+                    }
+                    if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 4) {
+                        ((Shipping) ownable).landOnowned(4);
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
+                        PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
+
+                    }
+                } else {
+                    if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
+                        int toPay = dice.getTotal() * 10;
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
+                    }
+                    if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
+                        int toPay = dice.getTotal() * 10;
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                     }
                 }
             }
+        }
         updateView(PlayerController.players.length);
     }
 }
+
 
 
 
