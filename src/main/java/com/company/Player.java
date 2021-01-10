@@ -15,6 +15,8 @@ public class Player {
     boolean inJail;
     boolean hasJailCard;
     List<Integer> owns = new ArrayList<Integer>();
+    List<Integer> pawned = new ArrayList<Integer>();
+
 
     public boolean isHasJailCard() {
         return hasJailCard;
@@ -73,7 +75,7 @@ public class Player {
         owns.remove(address);
     }
 
-    public int[] getOwns() {
+    public int[] getOwns(int index) {
         int i = 0;
         int[] ownedIDs;
         ownedIDs = new int[owns.size()];
@@ -82,6 +84,12 @@ public class Player {
             i++;
         }
         return ownedIDs;
+    }
+
+    public void pawns (int fieldID, int value) {
+        pawned.add(fieldID);
+        playerAccount.setBalance(playerAccount.getBalance() + value);
+        owns.remove(fieldID);
     }
 
     public int getShippingOwned() {

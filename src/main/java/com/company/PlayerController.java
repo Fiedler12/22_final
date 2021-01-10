@@ -1,4 +1,5 @@
 package com.company;
+import gui_fields.GUI_Car;
 import gui_fields.GUI_Player;
 import java.awt.*;
 
@@ -6,6 +7,7 @@ public class PlayerController {
         static Player[] players;
         GUI_Player[] gui_players;
         Color[] colors = new Color[6];
+        GUI_Car[] cars = new GUI_Car[6];
         public PlayerController() {
             colors[0] = Color.white;
             colors[1] = Color.yellow;
@@ -38,10 +40,15 @@ public class PlayerController {
             players[playerIndex].sells(removeNumber);
         }
 
-        public int[] getOwnedIDs(int playerIndex) {
-            int[] playerOwns = new int[players[playerIndex].owns.size()];
-            players[playerIndex].getOwns();
-            return playerOwns;
+        public void playerPawns(int playerIndex) {
+
         }
 
+    public Color[] getColors() {
+        return colors;
+    }
+
+    public GUI_Car[] getCars() {
+        return cars;
+    }
 }
