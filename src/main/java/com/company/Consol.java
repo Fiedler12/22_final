@@ -116,6 +116,7 @@ public class Consol {
             case "Byg":
                 break;
             case "Pantsæt":
+                playerPawns();
                 break;
             case "Slå terningen":
                 playerRolls(playerIndex);
@@ -198,6 +199,11 @@ public class Consol {
         updateView(PlayerController.players.length);
     }
 
+    public void playerPawns() {
+
+
+
+    }
 
 
 
