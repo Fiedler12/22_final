@@ -40,9 +40,12 @@ public class Player {
 
     public void setPos(int pos) {
         this.pos = pos;
-        if(pos > 39) {
+        if (pos > 39) {
             this.pos = getPos() - 40;
             playerAccount.setBalance(playerAccount.getBalance() + 4000);
+        }
+        if (pos < 0) {
+            this.pos = getPos() + 40;
         }
     }
 
