@@ -100,7 +100,6 @@ public class Consol {
 
     public void playGame() {
         int playerIndex = 0;
-        Player player = playerController.getPlayers()[playerIndex];
         while (true) {
             if (playerIndex > PlayerController.players.length - 1) {
                 playerIndex = 0;
