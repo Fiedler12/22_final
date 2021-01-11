@@ -223,12 +223,12 @@ public class Consol {
                     gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
                 } else {
                     if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
-                        int toPay = dice.getTotal() * 10;
+                        int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
 
                     } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
-                        int toPay = dice.getTotal() * 10;
+                        int toPay = dice.getTotal() * 200;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
                     }
