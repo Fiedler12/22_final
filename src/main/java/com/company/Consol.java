@@ -102,13 +102,18 @@ public class Consol {
         String choice = gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur. Vælg hvad du vil benytte din tur til:", "Køb eller sælg", "Byg", "Pantsæt", "Slå terningen");
         switch (choice) {
             case "Køb eller sælg":
+                String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse")
+                    switch(choiceBuyOrSell) {
+                        case "Køb af spiller.":
+
+                    }
                 break;
             case "Byg":
                 break;
             case "Pantsæt":
                 if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
-                    String choice2 = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
-                    switch (choice2) {
+                    String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
+                    switch (choicePawn) {
                         case "Pantsæt en ny.":
                             if(playerController.getPlayers()[playerIndex].owns.size() == 0) {
                                 gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
