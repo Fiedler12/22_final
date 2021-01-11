@@ -150,7 +150,7 @@ public class Consol {
             case "Byg":
                 break;
             case "Pantsæt":
-                if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
+                if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
                     gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
                     turn(playerIndex);
                 }
