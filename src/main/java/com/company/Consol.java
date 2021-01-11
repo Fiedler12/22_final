@@ -43,7 +43,6 @@ public class Consol {
             playerIndex++;
         }
         int playerIndex1 = 0;
-        Player player = PlayerController.players[playerIndex1];
         while (playerIndex1 < amount) { //første tur (giver ikke mulighed for andet end at slå med terning
             gui.getUserButtonPressed(PlayerController.players[playerIndex1].getName() + " det er din tur, tryk på knappen for at slå", "Kast terningerne");
             dice.roll();
@@ -52,8 +51,9 @@ public class Consol {
             playerController.movePlayer(playerIndex1, dice.getTotal());
             gui.getFields()[PlayerController.players[playerIndex1].getPos()].setCar(playerController.getGui_players()[playerIndex1], true);
             updateView(PlayerController.players.length);
-            boolean checkSubClass1 = (boardController.getField()[PlayerController.players[playerIndex1].getPos()] instanceof Ownable);
-            if (checkSubClass1) {
+
+            boolean checkOwnable = (boardController.getField()[PlayerController.players[playerIndex1].getPos()] instanceof Ownable);
+            if (checkOwnable) {
                 Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[playerIndex1].getPos()];
                 if (ownable.getOwnedID() == -1) {
                     boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
@@ -72,18 +72,27 @@ public class Consol {
                     }
                 }
             }
+
             boolean checkChanceField = (boardController.getField()[PlayerController.players[playerIndex1].getPos()] instanceof Chancefield);
             if (checkChanceField) {
                 pullCard(PlayerController.players[playerIndex1].playerID);
             }
+
             boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex1].getPos()] instanceof GoToJail);
             if (checkGoToJail) {
+                GoToJail goToJail = (GoToJail) boardController.getField()[PlayerController.players[playerIndex1].getPos()];
                 PlayerController.players[playerIndex1].setInJail(true);
                 gui.getFields()[PlayerController.players[playerIndex1].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                GoToJail goToJail = new GoToJail(30,10);
                 PlayerController.players[playerIndex1].setPos(goToJail.getPrison());
                 gui.getFields()[PlayerController.players[playerIndex1].getPos()].setCar(playerController.getGui_players()[playerIndex1], true);
                 updateView(PlayerController.players.length);
+            }
+
+            boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex1].getPos()] instanceof TaxField);
+            if (checkTaxField) {
+                Player player = playerController.getPlayers()[playerIndex];
+                TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
+                player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
             }
             playerIndex1++;
         }
@@ -91,66 +100,80 @@ public class Consol {
 
     public void playGame() {
         int playerIndex = 0;
+        Player player = playerController.getPlayers()[playerIndex];
         while (true) {
             if (playerIndex > PlayerController.players.length - 1) {
                 playerIndex = 0;
             }
-            Player player = playerController.getPlayers()[playerIndex];
-            if (player.isInJail()) {
-                if (player.isHasJailCard()) {
-                    boolean selection = gui.getUserLeftButtonPressed("Vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
+            if (PlayerController.players[playerIndex].isInJail()) {
+                if (PlayerController.players[playerIndex].isHasJailCard()) {
+                    boolean selection = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
                     if (selection) {
-                        player.setHasJailCard(false);
-                        player.setInJail(false);
+                        PlayerController.players[playerIndex].setHasJailCard(false);
+                        PlayerController.players[playerIndex].setInJail(false);
                     } else {
-                        boolean selection1 = gui.getUserLeftButtonPressed("Vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
+                        boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
                         if (selection1) {
-                            dice.roll();
-                            gui.setDice(dice.die1, dice.die2);
-                            if (dice.die1 == dice.die2) {
-                                player.setInJail(false);
-                                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                                playerController.movePlayer(playerIndex, dice.getTotal());
-                                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                            } else {
-
+                            int t = 3;
+                            while (t > 0) {
+                                gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " tryk på knappen for at slå", "Kast terningerne");
+                                dice.roll();
+                                gui.setDice(dice.die1, dice.die2);
+                                if (dice.die1 == dice.die2) {
+                                    PlayerController.players[playerIndex].setInJail(false);
+                                    gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                                    playerController.movePlayer(playerIndex, dice.getTotal());
+                                    gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                                    break;
+                                } else {
+                                    t--;
+                                    gui.getUserButtonPressed("Den gik desværre ikke\nDu har " + t + " forsøg tilbage", "Fortsæt");
+                                }
                             }
+
+                        } else {
+                            PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - 1000);
+                            PlayerController.players[playerIndex].setInJail(false);
+                            updateView(playerController.getPlayers().length);
                         }
                     }
                 } else {
-                    boolean selection1 = gui.getUserLeftButtonPressed(playerController.getPlayers()[playerIndex].getName() + "Vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens (Du har 3 forsøg)", "Betal 1000 kr");
+                    boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
                     if (selection1) {
-                        int t = 0;
-                        while (t < 3) {
-                            gui.getUserButtonPressed(player.getName() + " tryk på knappen for at slå", "Kast terningerne");
+                        int t = 3;
+                        while (t > 0) {
+                            gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " tryk på knappen for at slå", "Kast terningerne");
                             dice.roll();
                             gui.setDice(dice.die1, dice.die2);
                             if (dice.die1 == dice.die2) {
-                                player.setInJail(false);
+                                PlayerController.players[playerIndex].setInJail(false);
                                 gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                                 playerController.movePlayer(playerIndex, dice.getTotal());
                                 gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
                                 break;
                             } else {
-                                gui.getUserButtonPressed("Den gik desværre ikke prøv igen", "Fortsæt");
-                                t++;
+                                t--;
+                                gui.getUserButtonPressed("Den gik desværre ikke\nDu har " + t + " forsøg tilbage", "Fortsæt");
                             }
                         }
 
                     } else {
-                        player.playerAccount.setBalance(player.playerAccount.getBalance() - 1000);
-                        player.setInJail(false);
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - 1000);
+                        PlayerController.players[playerIndex].setInJail(false);
                         updateView(playerController.getPlayers().length);
                     }
                 }
-            }
-            if (!player.isInJail()) {
-                turn(playerIndex);
-                updateView(playerController.getPlayers().length);
-            }
-            playerIndex++;
+                }
+                if (!PlayerController.players[playerIndex].isInJail()) {
+                    turn(playerIndex);
+                    updateView(playerController.getPlayers().length);
+                }
+                playerIndex++;
+
         }
     }
+
+
 
     public void updateView(int amount) {
         int t = 0;
@@ -250,15 +273,15 @@ public class Consol {
 
             }
         }
-        Player player = PlayerController.players[playerIndex];
-        boolean checkGoToJail = (boardController.getField()[player.getPos()] instanceof GoToJail);
+        //Player player = playerController.getPlayers()[playerIndex];
+        boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
         if (checkGoToJail) {
-            gui.getUserButtonPressed(playerController.getPlayers()[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start","Fortsæt");
-            player.setInJail(true);
-            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+            gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start","Fortsæt");
+            PlayerController.players[playerIndex].setInJail(true);
+            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
             GoToJail goToJail = new GoToJail(30,10);
-            player.setPos(goToJail.getPrison());
-            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+            PlayerController.players[playerIndex].setPos(goToJail.getPrison());
+            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
         }
         updateView(PlayerController.players.length);
     }
