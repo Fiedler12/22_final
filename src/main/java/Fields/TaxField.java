@@ -3,7 +3,7 @@ package Fields;
 public class TaxField extends Field{
     public TaxField(int id, boolean percentage, int taxPrice){
         super(id);
-        setPayTax(true);
+        //setPayTax(true);
         this.percentage = percentage;
         this.taxPrice = taxPrice;
         if (percentage){
@@ -16,6 +16,9 @@ public class TaxField extends Field{
     int taxPrice;
     int tenPercent;
 
+    public int getTaxPrice() {
+        return taxPrice;
+    }
 
     public boolean isPercentage() {
         return percentage;
