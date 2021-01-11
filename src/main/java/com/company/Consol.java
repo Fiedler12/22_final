@@ -153,6 +153,7 @@ public class Consol {
                 if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
                     gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
                     turn(playerIndex);
+                    break;
                 }
                     if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
                         String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
@@ -267,7 +268,7 @@ public class Consol {
                 }
             }
         }
-            //Player player = playerController.getPlayers()[playerIndex];
+
             boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
             if (checkGoToJail) {
                 gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
@@ -285,6 +286,7 @@ public class Consol {
             boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
             if (checkTaxField) {
                 Player player = playerController.getPlayers()[playerIndex];
+                gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale","Betal");
                 TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
                 player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
             }
@@ -386,7 +388,6 @@ public class Consol {
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
                 updateView(PlayerController.players.length);
                 // vælg køb efter rykket nyt loop og måske få penge efter start??
-                //Hvis man får -3 kortet ved første chancefelt får man position -1 hvilket den ikke er glad for
             }
 
             boolean checkMoveToShipping = (card instanceof MoveToShipping);
