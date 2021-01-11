@@ -111,6 +111,12 @@ public class Consol {
             case "Byg":
                 break;
             case "Pantsæt":
+
+                if(playerController.getPlayers()[playerIndex].owns.size() == 0) {
+                    gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
+                    turn(playerIndex);
+                    break;
+                }
                 if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
                     String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
                     switch (choicePawn) {
