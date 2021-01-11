@@ -36,6 +36,7 @@ public class PlayerController {
         public void playerBuys(int playerIndex, int fieldID, int price) {
             players[playerIndex].buys(fieldID, price);
         }
+
         public void playerSells(int playerIndex, int removeNumber) {
             players[playerIndex].sells(removeNumber);
         }
@@ -43,6 +44,8 @@ public class PlayerController {
         public void playerPawns(int playerIndex, int fieldID, int value) {
             players[playerIndex].pawns(fieldID, value);
         }
+
+        public void buysBackPawn(int playerIndex, int fieldID, int value) {players[playerIndex].buyBackPawn(fieldID, value);}
 
     public Color[] getColors() {
         return colors;

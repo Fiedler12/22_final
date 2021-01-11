@@ -250,7 +250,7 @@ public class Consol {
             }
         }
         Ownable ownable = (Ownable) boardController.getField()[pawned[idChosen]];
-        playerController.playerPawns(playerIndex, pawned[idChosen], ownable.getPawnValue());
+        playerController.buysBackPawn(playerIndex, idChosen, ownable.getPawnValue());
         ownable.setOwnedID(playerIndex);
     }
 
