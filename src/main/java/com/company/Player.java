@@ -15,6 +15,8 @@ public class Player {
     boolean inJail;
     boolean hasJailCard;
     List<Integer> owns = new ArrayList<Integer>();
+    List<Integer> pawned = new ArrayList<Integer>();
+
 
     public boolean isHasJailCard() {
         return hasJailCard;
@@ -40,7 +42,7 @@ public class Player {
         this.pos = pos;
         if(pos > 39) {
             this.pos = getPos() - 40;
-            playerAccount.setBalance(+ 4000);
+            playerAccount.setBalance(playerAccount.getBalance() + 4000);
         }
     }
 
@@ -73,7 +75,7 @@ public class Player {
         owns.remove(address);
     }
 
-    public int[] getOwns() {
+    public int[] getOwns(int index) {
         int i = 0;
         int[] ownedIDs;
         ownedIDs = new int[owns.size()];
@@ -84,6 +86,17 @@ public class Player {
         return ownedIDs;
     }
 
+    public void pawns (int fieldID, int value) {
+        pawned.add(fieldID);
+        playerAccount.setBalance(playerAccount.getBalance() + value);
+        owns.remove((Integer)fieldID);
+    }
+
+    public void buyBackPawn (int fieldID, int value) {
+        pawned.remove((Integer)fieldID);
+        playerAccount.setBalance(playerAccount.getBalance() - value);
+        owns.add(fieldID);
+    }
     public int getShippingOwned() {
         return shippingOwned;
     }
