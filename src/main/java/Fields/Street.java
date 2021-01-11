@@ -29,7 +29,6 @@ public class Street extends Ownable {
         this.secondaryColor = secondaryColor;
         houseCount = 0;
         this.currentRent = currentRent;
-        this.pawnValue = pawnValue;
         this.housePrice = housePrice;
         this.firstHouse = firstHouse;
         this.secondHouse = secondHouse;

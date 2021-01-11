@@ -40,8 +40,8 @@ public class PlayerController {
             players[playerIndex].sells(removeNumber);
         }
 
-        public void playerPawns(int playerIndex) {
-
+        public void playerPawns(int playerIndex, int fieldID, int value) {
+            players[playerIndex].pawns(fieldID, value);
         }
 
     public Color[] getColors() {

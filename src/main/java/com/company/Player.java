@@ -89,7 +89,7 @@ public class Player {
     public void pawns (int fieldID, int value) {
         pawned.add(fieldID);
         playerAccount.setBalance(playerAccount.getBalance() + value);
-        owns.remove(fieldID);
+        owns.remove((Integer)fieldID);
     }
 
     public int getShippingOwned() {

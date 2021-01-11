@@ -91,12 +91,7 @@ public class Consol {
                 case "Byg":
                     break;
                 case "Pantsæt":
-                    if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
-                        playerPawns(playerIndex);
-                    } else {
-                        gui.getUserButtonPressed("Du har ejer ikke nogen grunde endnu. Vælg venligst en anden handling.", "OK");
-                        turn(playerIndex);
-                    }
+                    playerPawns(playerIndex);
                     break;
                 case "Slå terningen":
                     playerRolls(playerIndex);
@@ -129,7 +124,7 @@ public class Consol {
                         boolean isStreet = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Street);
                         if (isStreet) {
                             Street street = (Street) boardController.getField()[PlayerController.players[playerIndex].getPos()];
-                            Integer rent = street.currentRent;
+                            int rent = street.currentRent;
                             String stringRent;
                             stringRent = Integer.toString(rent);
                             gui_ownable.setRent(stringRent);
@@ -200,13 +195,21 @@ public class Consol {
         public void playerPawns ( int playerIndex){
             int[] owns = new int[playerController.getPlayers()[playerIndex].owns.size()];
             String[] names = new String[playerController.getPlayers()[playerIndex].owns.size()];
-            int i = 0;
-            while (i < playerController.getPlayers()[playerIndex].owns.size()) {
-
+            for (int i = 0; i < owns.length; i++) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
+                owns[i] = playerController.getPlayers()[playerIndex].owns.get(i);
+                names[i] = ownable.getName();
             }
-            int counter;
-            String chosenElement = gui.getUserSelection(
-                    "Hvilken ejendom vil du pantsætte? ", "", "", "");
+            int idChosen;
+            String chosenElement = gui.getUserSelection("Hvilken ejendom vil du pantsætte? ", names);
+            for (idChosen = 0; idChosen < names.length; idChosen++) {
+                boolean chosen = names[idChosen].equals(chosenElement);
+                if (chosen) {
+                    break;
+                }
+            }
+            Ownable ownable = (Ownable) boardController.getField()[owns[idChosen]];
+            playerController.playerPawns(playerIndex, owns[idChosen], ownable.getPawnValue());
         }
 
 
