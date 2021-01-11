@@ -92,6 +92,11 @@ public class Player {
         owns.remove((Integer)fieldID);
     }
 
+    public void buyBackPawn (int fieldID, int value) {
+        pawned.remove((Integer)fieldID);
+        playerAccount.setBalance(playerAccount.getBalance() - value);
+        owns.add(fieldID);
+    }
     public int getShippingOwned() {
         return shippingOwned;
     }
