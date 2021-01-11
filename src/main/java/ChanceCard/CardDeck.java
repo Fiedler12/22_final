@@ -39,8 +39,8 @@ public class CardDeck {
         cardDeck[25] = new MoneyFromPlayer("Det er deres fødselsdag, motag 200 kr fra hver medspiller",25,200);
         cardDeck[26] = new MoneyFromPlayer("De har lagt penge ud til et sammenskudsgilde. Mærkværdigvis betaler alle straks, modtag 500kr fra hver medspiller",26,500);
         cardDeck[27] = new MoneyFromPlayer("De skal holde familiefest og får et tilskud fra hver medspiller på 500kr",27,500);
-        cardDeck[28] = new MovetoSpecific("Ryk frem til START", 28,0 );//placement for start når vi engang for lavet brattet
-        cardDeck[29] = new MovetoSpecific("Ryk frem til START", 29,0 );//placement for start når vi engang for lavet brattet
+        cardDeck[28] = new MovetoSpecific("Ryk frem til START", 28,40 );//placement for start når vi engang for lavet brattet
+        cardDeck[29] = new MovetoSpecific("Ryk frem til START", 29,40 );//placement for start når vi engang for lavet brattet
         cardDeck[30] = new Move("Ryk tre felter frem",30,3);
         cardDeck[31] = new Move("Ryk tre felter tilbage",31,-3);
         cardDeck[32] = new Move("Ryk tre felter tilbage",32,-3);
