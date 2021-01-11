@@ -95,6 +95,11 @@ public class Consol {
                     String choice2 = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
                     switch (choice2) {
                         case "Pantsæt en ny.":
+                            if(playerController.getPlayers()[playerIndex].owns.size() == 0) {
+                                gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
+                                        turn(playerIndex);
+                                        break;
+                            }
                             playerPawns(playerIndex);
                             break;
 
@@ -103,7 +108,9 @@ public class Consol {
                             break;
                     }
                 }
-                playerPawns(playerIndex);
+                else {
+                    playerPawns(playerIndex);
+                }
                 break;
             case "Slå terningen":
                 playerRolls(playerIndex);
@@ -221,9 +228,9 @@ public class Consol {
                 break;
             }
         }
-        Ownable ownable = (Ownable) boardController.getField()[owns[idChosen]];
-        playerController.playerPawns(playerIndex, owns[idChosen], ownable.getPawnValue());
-        ownable.setOwnedID(-2);
+        Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
+        playerController.playerPawns(playerIndex, owns[idChosen], ownableChosen.getPawnValue());
+        ownableChosen.setOwnedID(-2);
     }
 
     public void playerBuysBack(int playerIndex) {
