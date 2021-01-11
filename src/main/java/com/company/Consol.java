@@ -55,21 +55,36 @@ public class Consol {
     }
 
     public void playGame() {
-        int t = 0;
+        int playerIndex = 0;
         while (true) {
-            if (t > PlayerController.players.length - 1) {
-                t = 0;
+            if (playerIndex > PlayerController.players.length - 1) {
+                playerIndex = 0;
             }
-            if (PlayerController.players[t].isInJail()) {
-                if (playerController.getPlayers()[t].isHasJailCard()) {
-                    boolean selection = gui.getUserLeftButtonPressed("Vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal M1");
+            Player player = playerController.getPlayers()[playerIndex];
+            if (player.isInJail()) {
+                if (player.isHasJailCard()) {
+                    boolean selection = gui.getUserLeftButtonPressed("Vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
                     if (selection) {
-                        playerController.getPlayers()[t].setHasJailCard(false);
+                        player.setHasJailCard(false);
+                        player.setInJail(false);
+                    }
+                    else{
+                        boolean selection1 = gui.getUserLeftButtonPressed("Vil du prøve at slå 2 ens eller betale 1000 kr","Prøv at slå 2 ens","Betal 1000 kr");
+                        if (selection1){
+                            dice.roll();
+                            gui.setDice(dice.die1,dice.die2);
+                            if (dice.die1==dice.die2){
+                                player.setInJail(false);
+                                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                                playerController.movePlayer(playerIndex,dice.getTotal());
+                                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                            }
+                        }
                     }
                 }
             }
-            turn(t);
-            t++;
+            turn(playerIndex);
+            playerIndex++;
             updateView(playerController.getPlayers().length);
         }
     }
@@ -309,42 +324,41 @@ public class Consol {
                 // vælg køb efter rykket nyt loop og måske få penge efter start??
             }
 
-            boolean checkMoveToShipping = (card instanceof MoveToShipping);
-            if (checkMoveToShipping) {
-                while (true) {
-                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                    player.setPos(player.getPos() + 1);
-                    boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
-                    if (Shipping) {
-                        gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                        break;
-                    }
+        boolean checkMoveToShipping = (card instanceof MoveToShipping);
+        if (checkMoveToShipping) {
+            while (true) {
+                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                player.setPos(player.getPos() + 1);
+                boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
+                if (Shipping) {
+                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                    break;
                 }
             }
+        } //mangler at tillade køb af shipping eller betale leje
 
-            boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
-            if (checkMoveToSpecific) {
-                MovetoSpecific movetoSpecific = (MovetoSpecific) card;
-                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                player.setPos(movetoSpecific.getFieldID());
-                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                updateView(PlayerController.players.length);
-            } //Mangler at der sker noget når man lander på det specifikke felt
+        boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
+        if (checkMoveToSpecific) {
+            MovetoSpecific movetoSpecific = (MovetoSpecific) card;
+            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+            player.setPos(movetoSpecific.getFieldID());
+            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+            updateView(PlayerController.players.length);
+        } //Mangler at der sker noget når man lander på det specifikke felt og får start penge
 
-            boolean checkPayMoney = (card instanceof PayMoney);
-            if (checkPayMoney) {
-                PayMoney payMoney = (PayMoney) card;
-                player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
-                updateView(PlayerController.players.length);
-            } //DONE
+        boolean checkPayMoney = (card instanceof PayMoney);
+        if (checkPayMoney) {
+            PayMoney payMoney = (PayMoney) card;
+            player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
+            updateView(PlayerController.players.length);
+        } //DONE
 
 
-            boolean checkReceiveMoney = (card instanceof ReceiveMoney);
-            if (checkReceiveMoney) {
-                ReceiveMoney receiveMoney = (ReceiveMoney) card;
-                player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
-                updateView(PlayerController.players.length);
-            } //DONE
-        }
+        boolean checkReceiveMoney = (card instanceof ReceiveMoney);
+        if (checkReceiveMoney) {
+            ReceiveMoney receiveMoney = (ReceiveMoney) card;
+            player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+            updateView(PlayerController.players.length);
+        } //DONE
+    }
 }
-
