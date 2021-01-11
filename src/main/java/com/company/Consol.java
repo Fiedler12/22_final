@@ -230,8 +230,8 @@ public class Consol {
         int[] pawned = new int[playerController.getPlayers()[playerIndex].pawned.size()];
         String[] names = new String[playerController.getPlayers()[playerIndex].pawned.size()];
         for (int i = 0; i < pawned.length; i++) {
-            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
-            pawned[i] = playerController.getPlayers()[playerIndex].owns.get(i);
+            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].pawned.get(i)];
+            pawned[i] = playerController.getPlayers()[playerIndex].pawned.get(i);
             names[i] = ownable.getName();
         }
         int idChosen;
