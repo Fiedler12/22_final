@@ -54,6 +54,7 @@ public class Consol {
             playerRolls(var2);
             checkSubClasses(var2);
             var2++;
+
         }
     }
 
@@ -165,7 +166,6 @@ public class Consol {
                             }
                             if (idChosen != playerIndex) {
                                 gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
-                                turn(playerIndex);
                                 break;
                             }
                         }
@@ -197,7 +197,7 @@ public class Consol {
                     case "Pantsæt":
                         if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
                             gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
-                            turn(playerIndex);
+                            break;
                         }
                         if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
                             String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
@@ -205,11 +205,12 @@ public class Consol {
                                 case "Pantsæt en ny.":
                                     if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
                                         gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
-                                        turn(playerIndex);
                                         break;
                                     }
-                                    playerPawns(playerIndex);
-                                    break;
+                                    if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
+                                        playerPawns(playerIndex);
+                                        break;
+                                    }
 
                                 case "Køb grund tilbage.":
                                     playerBuysBack(playerIndex);
@@ -223,6 +224,9 @@ public class Consol {
                         playerRolls(playerIndex);
                         checkSubClasses(playerIndex);
                         break;
+                }
+                if (!choice.equals("Slå terningen")){
+                    turn(playerIndex);
                 }
         }
 
@@ -330,14 +334,25 @@ public class Consol {
                 pullCard(PlayerController.players[playerIndex].playerID);
             }
 
-            boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
-            if (checkTaxField) {
-                Player player = playerController.getPlayers()[playerIndex];
-                gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale","Betal");
-                TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
+        boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
+        if (checkTaxField) {
+            Player player = playerController.getPlayers()[playerIndex];
+            gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale", "Betal");
+            TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
+            boolean select2 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " Betal 10% eller 4000k ", "10%", "4000kr");
+            if (select2) {
+
+                player.playerAccount.setBalance((int)(player.playerAccount.getBalance() *0.9));
+            }
+            else{
                 player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
             }
             updateView(PlayerController.players.length);
+
+        }
+
+        //Poops and the sperms
+
         }
 
         public void playerPawns ( int playerIndex){
