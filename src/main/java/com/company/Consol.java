@@ -360,7 +360,7 @@ public class Consol {
         public void playerBuysBack ( int playerIndex){
             int[] pawned = new int[playerController.getPlayers()[playerIndex].pawned.size()];
             String[] names = new String[playerController.getPlayers()[playerIndex].pawned.size()];
-            for (int i = 0; i < pawned.length; i++) {
+            for (int i = 0; i < names.length; i++) {
                 Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].pawned.get(i)];
                 pawned[i] = playerController.getPlayers()[playerIndex].pawned.get(i);
                 names[i] = ownable.getName();
@@ -375,7 +375,7 @@ public class Consol {
             }
             Ownable ownableChosen = (Ownable) boardController.getField()[pawned[idChosen]];
             GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[pawned[idChosen]];
-            playerController.buysBackPawn(playerIndex, idChosen, ownableChosen.getPawnValue());
+            playerController.buysBackPawn(playerIndex, pawned[idChosen], ownableChosen.getPawnValue());
             ownableChosen.setOwnedID(playerIndex);
             gui_ownable.setBorder(playerController.colors[playerIndex]);
         }
