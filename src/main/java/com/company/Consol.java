@@ -55,6 +55,7 @@ public class Consol {
             gui.getUserButtonPressed("I skal nu til at starte spillet. " + PlayerController.players[var2].getName() + ", tryk på knappen for at slå", "Kast terningerne");
             playerRolls(var2);
             var2++;
+
         }
     }
 
@@ -332,6 +333,8 @@ public class Consol {
                 player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
             }
             updateView(PlayerController.players.length);
+
+
         }
 
         public void playerPawns ( int playerIndex){
