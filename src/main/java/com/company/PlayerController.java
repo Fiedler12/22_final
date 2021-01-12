@@ -37,10 +37,6 @@ public class PlayerController {
             players[playerIndex].buys(fieldID, price);
         }
 
-        public void playerSells(int playerIndex, int removeNumber) {
-            players[playerIndex].sells(removeNumber);
-        }
-
         public void playerPawns(int playerIndex, int fieldID, int value) {
             players[playerIndex].pawns(fieldID, value);
         }
@@ -55,5 +51,10 @@ public class PlayerController {
 
     public GUI_Car[] getCars() {
         return cars;
+    }
+
+    public void trade(int playerSelling, int playerBuying,int fieldID, int price) {
+            players[playerSelling].sells(fieldID, price);
+            players[playerBuying].buys(fieldID, price);
     }
 }

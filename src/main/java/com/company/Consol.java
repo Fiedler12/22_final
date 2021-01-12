@@ -55,6 +55,7 @@ public class Consol {
             gui.getUserButtonPressed("I skal nu til at starte spillet. " + PlayerController.players[var2].getName() + ", tryk på knappen for at slå", "Kast terningerne");
             playerRolls(var2);
             var2++;
+
         }
     }
 
@@ -339,6 +340,8 @@ public class Consol {
 
             }
             updateView(PlayerController.players.length);
+
+
         }
 
         }
