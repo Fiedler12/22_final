@@ -207,8 +207,10 @@ public class Consol {
                                         turn(playerIndex);
                                         break;
                                     }
-                                    playerPawns(playerIndex);
-                                    break;
+                                    if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
+                                        playerPawns(playerIndex);
+                                        break;
+                                    }
 
                                 case "Køb grund tilbage.":
                                     playerBuysBack(playerIndex);
