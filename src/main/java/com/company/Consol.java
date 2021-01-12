@@ -2,10 +2,14 @@ package com.company;
 
 import ChanceCard.*;
 import Fields.*;
+import gui_fields.GUI_Board;
 import gui_fields.GUI_Car;
 import gui_fields.GUI_Ownable;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Consol {
     BoardController boardController = new BoardController();
@@ -145,14 +149,20 @@ public class Consol {
                 switch (choiceBuyOrSell) {
                     case "Køb af spiller.":
                         String[] playerNames = new String[playerController.getPlayers().length];
-                        for (int i = 0; i < playerController.players.length; i++) {
+                        for (int i = 0; i < PlayerController.players.length; i++) {
                             playerNames[i] = playerController.getPlayers()[i].getName();
                         }
                         String selectPlayer = gui.getUserButtonPressed("Hvilken spiller vil du handle med?", playerNames);
                         int idChosen;
                         for (idChosen = 0; idChosen < playerNames.length; idChosen++) {
-                            boolean chosen = playerNames[idChosen].equals(selectPlayer);
+                            boolean chosen = playerController.getPlayers()[idChosen].getName().equals(selectPlayer);
                             if (chosen) {
+                                idChosen = playerController.getPlayers()[idChosen].playerID;
+                                break;
+                            }
+                            if (idChosen != playerIndex) {
+                                gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
+                                turn(playerIndex);
                                 break;
                             }
                         }
@@ -162,21 +172,23 @@ public class Consol {
                             Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[idChosen].owns.get(i)];
                             owns[i] = playerController.getPlayers()[idChosen].owns.get(i);
                             names[i] = ownable.getName();
-                            break;
                         }
                         int ownableChosen;
                         String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
                         for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
-                            boolean chosen = names[idChosen].equals(chosenElement);
+                            boolean chosen = names[ownableChosen].equals(chosenElement);
                             if (chosen) {
                                 break;
                             }
-
+                            Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
+                            int offer = gui.getUserInteger("Læg et bud på denne grund");
+                            String answer = gui.getUserButtonPressed(playerController.getPlayers()[idChosen].getName() + " ,ønsker du at sælge " + tradeOwnable.getName() + " til: " + playerController.getPlayers()[playerIndex].getName() + " for: " + offer + " kr.", "Ja", "Nej", "Modbud");
                         }
-                }
+
                     case "Sælg mine huse":
 
-                    break;
+                        break;
+                }
                     case "Byg":
                         break;
                     case "Pantsæt":
@@ -298,7 +310,6 @@ public class Consol {
                 }
             }
         }
-            //Player player = playerController.getPlayers()[playerIndex];
             boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
             if (checkGoToJail) {
                 gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
@@ -340,14 +351,16 @@ public class Consol {
                 }
             }
             Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
+            GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[owns[idChosen]];
             playerController.playerPawns(playerIndex, owns[idChosen], ownableChosen.getPawnValue());
             ownableChosen.setOwnedID(-2);
+            gui_ownable.setBorder(Color.magenta,playerController.colors[playerIndex]);
         }
 
         public void playerBuysBack ( int playerIndex){
             int[] pawned = new int[playerController.getPlayers()[playerIndex].pawned.size()];
             String[] names = new String[playerController.getPlayers()[playerIndex].pawned.size()];
-            for (int i = 0; i < pawned.length; i++) {
+            for (int i = 0; i < names.length; i++) {
                 Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].pawned.get(i)];
                 pawned[i] = playerController.getPlayers()[playerIndex].pawned.get(i);
                 names[i] = ownable.getName();
@@ -360,9 +373,11 @@ public class Consol {
                     break;
                 }
             }
-            Ownable ownable = (Ownable) boardController.getField()[pawned[idChosen]];
-            playerController.buysBackPawn(playerIndex, idChosen, ownable.getPawnValue());
-            ownable.setOwnedID(playerIndex);
+            Ownable ownableChosen = (Ownable) boardController.getField()[pawned[idChosen]];
+            GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[pawned[idChosen]];
+            playerController.buysBackPawn(playerIndex, pawned[idChosen], ownableChosen.getPawnValue());
+            ownableChosen.setOwnedID(playerIndex);
+            gui_ownable.setBorder(playerController.colors[playerIndex]);
         }
 
 
