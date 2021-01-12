@@ -228,6 +228,10 @@ public class Consol {
                 if (choice != "Slå terningen"){
                     turn(playerIndex);
                 }
+                if (choice != "Slå terningen"){
+                    turn(playerIndex);
+                }
+                updateView(playerController.getPlayers().length);
         }
 
 
