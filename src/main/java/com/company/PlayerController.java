@@ -13,7 +13,7 @@ public class PlayerController {
             colors[1] = Color.yellow;
             colors[2] = Color.blue;
             colors[3] = Color.PINK;
-            colors[4] = Color.black;
+            colors[4] = Color.red;
             colors[5] = Color.GREEN;
         }
 

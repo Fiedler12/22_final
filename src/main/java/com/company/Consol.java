@@ -2,13 +2,10 @@ package com.company;
 
 import ChanceCard.*;
 import Fields.*;
-import gui_fields.GUI_Board;
 import gui_fields.GUI_Car;
 import gui_fields.GUI_Ownable;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
-
-import javax.swing.*;
 import java.awt.*;
 
 public class Consol {
@@ -50,10 +47,12 @@ public class Consol {
             gui.getFields()[PlayerController.players[var].getPos()].setCar(playerController.getGui_players()[var], true);
             var++;
         }
+        gui.showMessage("I skal nu til at starte spillet");
         int var2 = 0;
         while (var2 < amount) {
-            gui.getUserButtonPressed("I skal nu til at starte spillet. " + PlayerController.players[var2].getName() + ", tryk på knappen for at slå", "Kast terningerne");
+            gui.getUserButtonPressed(PlayerController.players[var2].getName() + ", det er din tur, tryk på knappen for at slå", "Kast terningerne");
             playerRolls(var2);
+            checkSubClasses(var2);
             var2++;
 
         }
@@ -80,10 +79,12 @@ public class Consol {
                                 dice.roll();
                                 gui.setDice(dice.die1, dice.die2);
                                 if (dice.die1 == dice.die2) {
+                                    gui.getUserButtonPressed("Du har slået 2 ens. Du er nu en fri mand\nDu rykker det du slog og får en ekstra tur","Juhuu");
                                     PlayerController.players[playerIndex].setInJail(false);
                                     gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                                     playerController.movePlayer(playerIndex, dice.getTotal());
                                     gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                                    checkSubClasses(playerIndex);
                                     break;
                                 } else {
                                     t--;
@@ -106,10 +107,12 @@ public class Consol {
                             dice.roll();
                             gui.setDice(dice.die1, dice.die2);
                             if (dice.die1 == dice.die2) {
+                                gui.getUserButtonPressed("Du har slået 2 ens. Du er nu en fri mand\nDu rykker det du slog og får en ekstra tur","Juhuu");
                                 PlayerController.players[playerIndex].setInJail(false);
                                 gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                                 playerController.movePlayer(playerIndex, dice.getTotal());
                                 gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                                checkSubClasses(playerIndex);
                                 break;
                             } else {
                                 t--;
@@ -143,7 +146,7 @@ public class Consol {
     }
 
     public void turn(int playerIndex) {
-        String choice = gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur. Vælg hvad du vil benytte din tur til:", "Køb eller sælg", "Byg", "Pantsæt", "Slå terningen");
+        String choice = gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur. Vælg hvad du vil benytte din tur til:", "Køb eller sælg", "Byg hus/hotel", "Pantsæt", "Slå terningen");
         switch (choice) {
             case "Køb eller sælg":
                 String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse");
@@ -163,7 +166,6 @@ public class Consol {
                             }
                             if (idChosen != playerIndex) {
                                 gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
-                                turn(playerIndex);
                                 break;
                             }
                         }
@@ -195,7 +197,6 @@ public class Consol {
                     case "Pantsæt":
                         if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
                             gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
-                            turn(playerIndex);
                             break;
                         }
                         if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
@@ -204,7 +205,6 @@ public class Consol {
                                 case "Pantsæt en ny.":
                                     if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
                                         gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
-                                        turn(playerIndex);
                                         break;
                                     }
                                     if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
@@ -222,7 +222,11 @@ public class Consol {
                         break;
                     case "Slå terningen":
                         playerRolls(playerIndex);
+                        checkSubClasses(playerIndex);
                         break;
+                }
+                if (choice != "Slå terningen"){
+                    turn(playerIndex);
                 }
         }
 
@@ -234,8 +238,10 @@ public class Consol {
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
         playerController.movePlayer(playerIndex, dice.getTotal());
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-        boolean checkSubClass = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Ownable);
-        if (checkSubClass) {
+    }
+    public void checkSubClasses (int playerIndex){
+        boolean checkOwnable = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Ownable);
+        if (checkOwnable) {
             Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[playerIndex].getPos()];
             GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[playerController.getPlayers()[playerIndex].getPos()];
             if (ownable.getOwnedID() == -1) {
@@ -412,7 +418,7 @@ public class Consol {
                 player.setHasJailCard(true);
             }
             //TODO at kunne sælge kortet (skal nok ikke laves her i switchen)
-            //find ud af om det er spilleren der skal have boolean jailcard eller konstruktøren
+
 
             boolean checkGoToJailCard = (card instanceof GoToJailCard);
             if (checkGoToJailCard) {
@@ -445,9 +451,9 @@ public class Consol {
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                 playerController.movePlayer(playerIndex, move.getMove());
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                checkSubClasses(playerIndex);
                 updateView(PlayerController.players.length);
-                // vælg køb efter rykket nyt loop og måske få penge efter start??
-                //Hvis man får -3 kortet ved første chancefelt får man position -1 hvilket den ikke er glad for
+                //DONE
             }
 
             boolean checkMoveToShipping = (card instanceof MoveToShipping);
@@ -461,7 +467,9 @@ public class Consol {
                         break;
                     }
                 }
-            } //mangler at tillade køb af shipping eller betale leje
+                checkSubClasses(playerIndex);
+                updateView(PlayerController.players.length);
+            }
 
             boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
             if (checkMoveToSpecific) {
@@ -469,8 +477,9 @@ public class Consol {
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                 player.setPos(movetoSpecific.getFieldID());
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                checkSubClasses(playerIndex);
                 updateView(PlayerController.players.length);
-            } //Mangler at der sker noget når man lander på det specifikke felt og får start penge
+            }
 
             boolean checkPayMoney = (card instanceof PayMoney);
             if (checkPayMoney) {
