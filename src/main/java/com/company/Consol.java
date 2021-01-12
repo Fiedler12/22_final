@@ -178,7 +178,7 @@ public class Consol {
                             }
                             Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
                             int offer = gui.getUserInteger("Læg et bud på denne grund");
-                            String answer = gui.getUserButtonPressed("Ønsker du at sælge " + tradeOwnable.getName() + " for:" + offer + " kr.", "Ja", "Nej", "Modbud");
+                            String answer = gui.getUserButtonPressed(playerController.getPlayers()[idChosen].getName() + " ,ønsker du at sælge " + tradeOwnable.getName() + " til: " + playerController.getPlayers()[playerIndex].getName() + " for: " + offer + " kr.", "Ja", "Nej", "Modbud");
                         }
 
                     case "Sælg mine huse":
