@@ -332,22 +332,16 @@ public class Consol {
             boolean select2 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + "Betal 10% eller 4000k ", "10%", "4000kr");
             if (select2) {
 
-                player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
-            }
-else{
                 player.playerAccount.setBalance((int)(player.playerAccount.getBalance() *0.9));
+            }
+            else{
+                player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
 
             }
-           /* boolean selection = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
-            if (selection) {
-                PlayerController.players[playerIndex].setHasJailCard(false);
-                PlayerController.players[playerIndex].setInJail(false);
-            */
-
-
             updateView(PlayerController.players.length);
         }
     }
+
         public void playerPawns ( int playerIndex){
             int[] owns = new int[playerController.getPlayers()[playerIndex].owns.size()];
             String[] names = new String[playerController.getPlayers()[playerIndex].owns.size()];
