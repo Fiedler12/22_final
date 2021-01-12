@@ -344,7 +344,7 @@ public class Consol {
             }
             updateView(PlayerController.players.length);
 
-
+// poops
         }
 
         }
