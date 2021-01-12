@@ -35,7 +35,7 @@ public class Board {
             fields[27] = new Street("Kgs. Nytorv", 27,5200, "5.200 kr", "Leje af grund: 450kr. \n m/ 1 hus: 2.200 \n 2 huse: 6.600 \n 3 huse: 16.000 \n 4 huse: 19.500 \n hotel: 23.000", "", Color.white, Color.black, 0, 450, 600, 1000, 250, 750, 2250, 4000, 6000);
             fields[28] = new Brewery("Brewery", 28, 3000, 10);
             fields[29] = new Street("Østergade", 29,5800, "5.600 kr", "Leje af grund: 500kr. \n m/ 1 hus: 2.400 \n 2 huse: 7.200 \n 3 huse: 17.000 \n 4 huse: 20.500 \n hotel: 24.000", "", Color.white, Color.black, 0, 500, 600, 1000, 250, 750, 2250, 4000, 6000);
-            fields[30] = new GoToJail(30);
+            fields[30] = new GoToJail(30,10);
             fields[31] = new Street("Amagertorv", 31,6000, "6.000 kr", "Leje af grund: 550kr. \n m/ 1 hus: 2.600 \n 2 huse: 7.800 \n 3 huse: 18.000 \n 4 huse: 22.000 \n hotel: 25.000", "", Color.yellow, Color.black, 0, 550, 600, 1000, 250, 750, 2250, 4000, 6000);
             fields[32] = new Street("Vimmelskaftet", 32,6000, "6.000 kr", "Leje af grund: 550kr. \n m/ 1 hus: 2.600 \n 2 huse: 7.800 \n 3 huse: 18.000 \n 4 huse: 22.000 \n hotel: 25.000", "", Color.yellow, Color.black, 0, 550, 600, 1000, 250, 750, 2250, 4000, 6000);
             fields[33] = new Chancefield(33);

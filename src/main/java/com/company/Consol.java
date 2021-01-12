@@ -60,32 +60,71 @@ public class Consol {
             if (playerIndex > PlayerController.players.length - 1) {
                 playerIndex = 0;
             }
-            Player player = playerController.getPlayers()[playerIndex];
-            if (player.isInJail()) {
-                if (player.isHasJailCard()) {
-                    boolean selection = gui.getUserLeftButtonPressed("Vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
+            if (PlayerController.players[playerIndex].isInJail()) {
+                if (PlayerController.players[playerIndex].isHasJailCard()) {
+                    boolean selection = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
                     if (selection) {
-                        player.setHasJailCard(false);
-                        player.setInJail(false);
+                        PlayerController.players[playerIndex].setHasJailCard(false);
+                        PlayerController.players[playerIndex].setInJail(false);
+                    } else {
+                        boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
+                        if (selection1) {
+                            int t = 3;
+                            while (t > 0) {
+                                gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " tryk på knappen for at slå", "Kast terningerne");
+                                dice.roll();
+                                gui.setDice(dice.die1, dice.die2);
+                                if (dice.die1 == dice.die2) {
+                                    PlayerController.players[playerIndex].setInJail(false);
+                                    gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                                    playerController.movePlayer(playerIndex, dice.getTotal());
+                                    gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                                    break;
+                                } else {
+                                    t--;
+                                    gui.getUserButtonPressed("Den gik desværre ikke\nDu har " + t + " forsøg tilbage", "Fortsæt");
+                                }
+                            }
+
+                        } else {
+                            PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - 1000);
+                            PlayerController.players[playerIndex].setInJail(false);
+                            updateView(playerController.getPlayers().length);
+                        }
                     }
-                    else{
-                        boolean selection1 = gui.getUserLeftButtonPressed("Vil du prøve at slå 2 ens eller betale 1000 kr","Prøv at slå 2 ens","Betal 1000 kr");
-                        if (selection1){
+                } else {
+                    boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
+                    if (selection1) {
+                        int t = 3;
+                        while (t > 0) {
+                            gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " tryk på knappen for at slå", "Kast terningerne");
                             dice.roll();
-                            gui.setDice(dice.die1,dice.die2);
-                            if (dice.die1==dice.die2){
-                                player.setInJail(false);
+                            gui.setDice(dice.die1, dice.die2);
+                            if (dice.die1 == dice.die2) {
+                                PlayerController.players[playerIndex].setInJail(false);
                                 gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                                playerController.movePlayer(playerIndex,dice.getTotal());
+                                playerController.movePlayer(playerIndex, dice.getTotal());
                                 gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                                break;
+                            } else {
+                                t--;
+                                gui.getUserButtonPressed("Den gik desværre ikke\nDu har " + t + " forsøg tilbage", "Fortsæt");
                             }
                         }
+
+                    } else {
+                        PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - 1000);
+                        PlayerController.players[playerIndex].setInJail(false);
+                        updateView(playerController.getPlayers().length);
                     }
                 }
             }
-            turn(playerIndex);
+            if (!PlayerController.players[playerIndex].isInJail()) {
+                turn(playerIndex);
+                updateView(playerController.getPlayers().length);
+            }
             playerIndex++;
-            updateView(playerController.getPlayers().length);
+
         }
     }
 
@@ -103,40 +142,74 @@ public class Consol {
         switch (choice) {
             case "Køb eller sælg":
                 String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse");
-                    switch(choiceBuyOrSell) {
-                        case "Køb af spiller.":
+                switch (choiceBuyOrSell) {
+                    case "Køb af spiller.":
+                        String[] playerNames = new String[playerController.getPlayers().length];
+                        for (int i = 0; i < playerController.players.length; i++) {
+                            playerNames[i] = playerController.getPlayers()[i].getName();
+                        }
+                        String selectPlayer = gui.getUserButtonPressed("Hvilken spiller vil du handle med?", playerNames);
+                        int idChosen;
+                        for (idChosen = 0; idChosen < playerNames.length; idChosen++) {
+                            boolean chosen = playerNames[idChosen].equals(selectPlayer);
+                            if (chosen) {
+                                break;
+                            }
+                        }
+                        int[] owns = new int[playerController.getPlayers()[idChosen].owns.size()];
+                        String[] names = new String[playerController.getPlayers()[idChosen].owns.size()];
+                        for (int i = 0; i < owns.length; i++) {
+                            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[idChosen].owns.get(i)];
+                            owns[i] = playerController.getPlayers()[idChosen].owns.get(i);
+                            names[i] = ownable.getName();
+                            break;
+                        }
+                        int ownableChosen;
+                        String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
+                        for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
+                            boolean chosen = names[idChosen].equals(chosenElement);
+                            if (chosen) {
+                                break;
+                            }
 
-                    }
-                break;
-            case "Byg":
-                break;
-            case "Pantsæt":
-                if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
-                    String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
-                    switch (choicePawn) {
-                        case "Pantsæt en ny.":
-                            if(playerController.getPlayers()[playerIndex].owns.size() == 0) {
-                                gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
+                        }
+                }
+                    case "Sælg mine huse":
+
+                    break;
+                    case "Byg":
+                        break;
+                    case "Pantsæt":
+                        if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
+                            gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
+                            turn(playerIndex);
+                        }
+                        if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
+                            String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
+                            switch (choicePawn) {
+                                case "Pantsæt en ny.":
+                                    if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
+                                        gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
                                         turn(playerIndex);
                                         break;
-                            }
-                            playerPawns(playerIndex);
-                            break;
+                                    }
+                                    playerPawns(playerIndex);
+                                    break;
 
-                        case "Køb grund tilbage.":
-                            playerBuysBack(playerIndex);
-                            break;
-                    }
+                                case "Køb grund tilbage.":
+                                    playerBuysBack(playerIndex);
+                                    break;
+                            }
+                        } else {
+                            playerPawns(playerIndex);
+                        }
+                        break;
+                    case "Slå terningen":
+                        playerRolls(playerIndex);
+                        break;
                 }
-                else {
-                    playerPawns(playerIndex);
-                }
-                break;
-            case "Slå terningen":
-                playerRolls(playerIndex);
-                break;
         }
-    }
+
 
     public void playerRolls(int playerIndex) {
         dice.roll();
@@ -145,10 +218,6 @@ public class Consol {
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
         playerController.movePlayer(playerIndex, dice.getTotal());
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-        boolean checkChance = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Chancefield);
-        if (checkChance) {
-            pullCard(playerIndex);
-        }
         boolean checkSubClass = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Ownable);
         if (checkSubClass) {
             Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[playerIndex].getPos()];
@@ -217,62 +286,84 @@ public class Consol {
                     gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
                 } else {
                     if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
-                        int toPay = dice.getTotal() * 10;
+                        int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
 
                     } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
-                        int toPay = dice.getTotal() * 20;
+                        int toPay = dice.getTotal() * 200;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
                     }
                 }
             }
         }
-        updateView(PlayerController.players.length);
-    }
-
-    public void playerPawns(int playerIndex) {
-        int[] owns = new int[playerController.getPlayers()[playerIndex].owns.size()];
-        String[] names = new String[playerController.getPlayers()[playerIndex].owns.size()];
-        for (int i = 0; i < owns.length; i++) {
-            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
-            owns[i] = playerController.getPlayers()[playerIndex].owns.get(i);
-            names[i] = ownable.getName();
-        }
-        int idChosen;
-        String chosenElement = gui.getUserSelection("Hvilken ejendom vil du pantsætte? ", names);
-        for (idChosen = 0; idChosen < names.length; idChosen++) {
-            boolean chosen = names[idChosen].equals(chosenElement);
-            if (chosen) {
-                break;
+            //Player player = playerController.getPlayers()[playerIndex];
+            boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
+            if (checkGoToJail) {
+                gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
+                PlayerController.players[playerIndex].setInJail(true);
+                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                GoToJail goToJail = new GoToJail(30, 10);
+                PlayerController.players[playerIndex].setPos(goToJail.getPrison());
+                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
             }
-        }
-        Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
-        playerController.playerPawns(playerIndex, owns[idChosen], ownableChosen.getPawnValue());
-        ownableChosen.setOwnedID(-2);
-    }
-
-    public void playerBuysBack(int playerIndex) {
-        int[] pawned = new int[playerController.getPlayers()[playerIndex].pawned.size()];
-        String[] names = new String[playerController.getPlayers()[playerIndex].pawned.size()];
-        for (int i = 0; i < pawned.length; i++) {
-            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].pawned.get(i)];
-            pawned[i] = playerController.getPlayers()[playerIndex].pawned.get(i);
-            names[i] = ownable.getName();
-        }
-        int idChosen;
-        String chosenElement = gui.getUserSelection("Hvilken ejendom vil du købe tilbage? ", names);
-        for (idChosen = 0; idChosen < names.length; idChosen++) {
-            boolean chosen = names[idChosen].equals(chosenElement);
-            if (chosen) {
-                break;
+            boolean checkChanceField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Chancefield);
+            if (checkChanceField) {
+                pullCard(PlayerController.players[playerIndex].playerID);
             }
+
+            boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
+            if (checkTaxField) {
+                Player player = playerController.getPlayers()[playerIndex];
+                gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale","Betal");
+                TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
+                player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
+            }
+            updateView(PlayerController.players.length);
         }
-        Ownable ownable = (Ownable) boardController.getField()[pawned[idChosen]];
-        playerController.buysBackPawn(playerIndex, idChosen, ownable.getPawnValue());
-        ownable.setOwnedID(playerIndex);
-    }
+
+        public void playerPawns ( int playerIndex){
+            int[] owns = new int[playerController.getPlayers()[playerIndex].owns.size()];
+            String[] names = new String[playerController.getPlayers()[playerIndex].owns.size()];
+            for (int i = 0; i < owns.length; i++) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
+                owns[i] = playerController.getPlayers()[playerIndex].owns.get(i);
+                names[i] = ownable.getName();
+            }
+            int idChosen;
+            String chosenElement = gui.getUserSelection("Hvilken ejendom vil du pantsætte? ", names);
+            for (idChosen = 0; idChosen < names.length; idChosen++) {
+                boolean chosen = names[idChosen].equals(chosenElement);
+                if (chosen) {
+                    break;
+                }
+            }
+            Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
+            playerController.playerPawns(playerIndex, owns[idChosen], ownableChosen.getPawnValue());
+            ownableChosen.setOwnedID(-2);
+        }
+
+        public void playerBuysBack ( int playerIndex){
+            int[] pawned = new int[playerController.getPlayers()[playerIndex].pawned.size()];
+            String[] names = new String[playerController.getPlayers()[playerIndex].pawned.size()];
+            for (int i = 0; i < pawned.length; i++) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].pawned.get(i)];
+                pawned[i] = playerController.getPlayers()[playerIndex].pawned.get(i);
+                names[i] = ownable.getName();
+            }
+            int idChosen;
+            String chosenElement = gui.getUserSelection("Hvilken ejendom vil du købe tilbage? ", names);
+            for (idChosen = 0; idChosen < names.length; idChosen++) {
+                boolean chosen = names[idChosen].equals(chosenElement);
+                if (chosen) {
+                    break;
+                }
+            }
+            Ownable ownable = (Ownable) boardController.getField()[pawned[idChosen]];
+            playerController.buysBackPawn(playerIndex, idChosen, ownable.getPawnValue());
+            ownable.setOwnedID(playerIndex);
+        }
 
 
         public void pullCard ( int playerIndex){
@@ -317,7 +408,7 @@ public class Consol {
                     i++;
                 }
                 updateView(PlayerController.players.length);
-            }
+            } //DONE
 
             boolean checkMove = (card instanceof Move);
             if (checkMove) {
@@ -327,43 +418,46 @@ public class Consol {
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
                 updateView(PlayerController.players.length);
                 // vælg køb efter rykket nyt loop og måske få penge efter start??
+                //Hvis man får -3 kortet ved første chancefelt får man position -1 hvilket den ikke er glad for
             }
 
-        boolean checkMoveToShipping = (card instanceof MoveToShipping);
-        if (checkMoveToShipping) {
-            while (true) {
-                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                player.setPos(player.getPos() + 1);
-                boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
-                if (Shipping) {
-                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                    break;
+            boolean checkMoveToShipping = (card instanceof MoveToShipping);
+            if (checkMoveToShipping) {
+                while (true) {
+                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                    player.setPos(player.getPos() + 1);
+                    boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
+                    if (Shipping) {
+                        gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                        break;
+                    }
                 }
-            }
-        } //mangler at tillade køb af shipping eller betale leje
+            } //mangler at tillade køb af shipping eller betale leje
 
-        boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
-        if (checkMoveToSpecific) {
-            MovetoSpecific movetoSpecific = (MovetoSpecific) card;
-            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-            player.setPos(movetoSpecific.getFieldID());
-            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-            updateView(PlayerController.players.length);
-        } //Mangler at der sker noget når man lander på det specifikke felt og får start penge
+            boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
+            if (checkMoveToSpecific) {
+                MovetoSpecific movetoSpecific = (MovetoSpecific) card;
+                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                player.setPos(movetoSpecific.getFieldID());
+                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                updateView(PlayerController.players.length);
+            } //Mangler at der sker noget når man lander på det specifikke felt og får start penge
 
-        boolean checkPayMoney = (card instanceof PayMoney);
-        if (checkPayMoney) {
-            PayMoney payMoney = (PayMoney) card;
-            player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
-            updateView(PlayerController.players.length);
-        } //DONE
+            boolean checkPayMoney = (card instanceof PayMoney);
+            if (checkPayMoney) {
+                PayMoney payMoney = (PayMoney) card;
+                player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
+                updateView(PlayerController.players.length);
+            } //DONE
 
 
-        boolean checkReceiveMoney = (card instanceof ReceiveMoney);
-        if (checkReceiveMoney) {
-            ReceiveMoney receiveMoney = (ReceiveMoney) card;
-            player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
-            updateView(PlayerController.players.length);
-        } //DONE
+            boolean checkReceiveMoney = (card instanceof ReceiveMoney);
+            if (checkReceiveMoney) {
+                ReceiveMoney receiveMoney = (ReceiveMoney) card;
+                player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+                updateView(PlayerController.players.length);
+            } //DONE
+        }
     }
-}
+
+
