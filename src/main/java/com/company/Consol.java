@@ -310,30 +310,44 @@ public class Consol {
                 }
             }
         }
-            boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
-            if (checkGoToJail) {
-                gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
-                PlayerController.players[playerIndex].setInJail(true);
-                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                GoToJail goToJail = new GoToJail(30, 10);
-                PlayerController.players[playerIndex].setPos(goToJail.getPrison());
-                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-            }
-            boolean checkChanceField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Chancefield);
-            if (checkChanceField) {
-                pullCard(PlayerController.players[playerIndex].playerID);
-            }
-
-            boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
-            if (checkTaxField) {
-                Player player = playerController.getPlayers()[playerIndex];
-                gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale","Betal");
-                TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
-                player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
-            }
-            updateView(PlayerController.players.length);
+        boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
+        if (checkGoToJail) {
+            gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
+            PlayerController.players[playerIndex].setInJail(true);
+            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+            GoToJail goToJail = new GoToJail(30, 10);
+            PlayerController.players[playerIndex].setPos(goToJail.getPrison());
+            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+        }
+        boolean checkChanceField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Chancefield);
+        if (checkChanceField) {
+            pullCard(PlayerController.players[playerIndex].playerID);
         }
 
+        boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
+        if (checkTaxField) {
+            Player player = playerController.getPlayers()[playerIndex];
+            gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale", "Betal");
+            TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
+            boolean select2 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + "Betal 10% eller 4000k ", "10%", "4000kr");
+            if (select2) {
+
+                player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
+            }
+else{
+                player.playerAccount.setBalance((int)(player.playerAccount.getBalance() *0.9));
+
+            }
+           /* boolean selection = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
+            if (selection) {
+                PlayerController.players[playerIndex].setHasJailCard(false);
+                PlayerController.players[playerIndex].setInJail(false);
+            */
+
+
+            updateView(PlayerController.players.length);
+        }
+    }
         public void playerPawns ( int playerIndex){
             int[] owns = new int[playerController.getPlayers()[playerIndex].owns.size()];
             String[] names = new String[playerController.getPlayers()[playerIndex].owns.size()];
