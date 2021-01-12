@@ -145,14 +145,20 @@ public class Consol {
                 switch (choiceBuyOrSell) {
                     case "Køb af spiller.":
                         String[] playerNames = new String[playerController.getPlayers().length];
-                        for (int i = 0; i < playerController.players.length; i++) {
+                        for (int i = 0; i < PlayerController.players.length; i++) {
                             playerNames[i] = playerController.getPlayers()[i].getName();
                         }
                         String selectPlayer = gui.getUserButtonPressed("Hvilken spiller vil du handle med?", playerNames);
                         int idChosen;
                         for (idChosen = 0; idChosen < playerNames.length; idChosen++) {
-                            boolean chosen = playerNames[idChosen].equals(selectPlayer);
+                            boolean chosen = playerController.getPlayers()[idChosen].getName().equals(selectPlayer);
                             if (chosen) {
+                                idChosen = playerController.getPlayers()[idChosen].playerID;
+                                break;
+                            }
+                            if (idChosen != playerIndex) {
+                                gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
+                                turn(playerIndex);
                                 break;
                             }
                         }
@@ -162,21 +168,23 @@ public class Consol {
                             Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[idChosen].owns.get(i)];
                             owns[i] = playerController.getPlayers()[idChosen].owns.get(i);
                             names[i] = ownable.getName();
-                            break;
                         }
                         int ownableChosen;
                         String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
                         for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
-                            boolean chosen = names[idChosen].equals(chosenElement);
+                            boolean chosen = names[ownableChosen].equals(chosenElement);
                             if (chosen) {
                                 break;
                             }
-
+                            Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
+                            int offer = gui.getUserInteger("Læg et bud på denne grund");
+                            String answer = gui.getUserButtonPressed("Ønsker du at sælge " + tradeOwnable.getName() + " for:" + offer + " kr.", "Ja", "Nej", "Modbud");
                         }
-                }
+
                     case "Sælg mine huse":
 
-                    break;
+                        break;
+                }
                     case "Byg":
                         break;
                     case "Pantsæt":
