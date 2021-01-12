@@ -15,7 +15,7 @@ public class Board {
             fields[8] = new Street("Valby Langgade", 8,2000, "2.000 kr", "Leje af grund: 100 kr. \n m/ 1 hus: 600 \n 2 huse: 1.800 \n 3 huse: 5.400 \n 4 huse: 8.000 \n hotel: 11.000", "", new Color(250,145,10), Color.black, 0, 100, 1000, 250, 750, 2250, 4000, 6000);
             fields[9] = new Street("Allégade", 9,2400, "2.400 kr", "Leje af grund: 150 kr. \n m/ 1 hus: 800 \n 2 huse: 2.000 \n 3 huse: 6.000 \n 4 huse: 9.000 \n hotel: 12.000", "", new Color(250,145,10), Color.black, 0, 150, 1000, 250, 750, 2250, 4000, 6000);
             fields[10] = new Jail(10);
-            fields[11] = new Street("Frederiksberg Allé",11,2800,  "2.800 kr", "Leje af grund: 200 kr. \n m/ 1 hus: 1.000 \n 2 huse: 3.000 \n 3 huse: 9.000 \n 4 huse: 12.500 \n hotel: 15.000", "", new Color(181,249,47), Color.black, 200, 0, 1000, 250, 750, 2250, 4000, 6000);
+            fields[11] = new Street("Frederiksberg Allé",11,2800,  "2.800 kr", "Leje af grund: 200 kr. \n m/ 1 hus: 1.000 \n 2 huse: 3.000 \n 3 huse: 9.000 \n 4 huse: 12.500 \n hotel: 15.000", "", new Color(181,249,47), Color.black, 0, 200, 1000, 250, 750, 2250, 4000, 6000);
             fields[12] = new Brewery("Brewery", 12, 3000, 10);
             fields[13] = new Street("Bülowsvej",13,2800,  "2.800 kr", "Leje af grund: 200 kr. \n m/ 1 hus: 1.000 \n 2 huse: 3.000 \n 3 huse: 9.000 \n 4 huse: 12.500 \n hotel: 15.000", "", new Color(181,249,47), Color.black, 0, 200, 1000, 250, 750, 2250, 4000, 6000);
             fields[14] = new Street("Gl. Kongevej",14,3200,  "3.200 kr", "Leje af grund: 250 kr. \n m/ 1 hus: 1.250 \n 2 huse: 3.750 \n 3 huse: 10.000 \n 4 huse: 14.000 \n hotel: 18.000", "", new Color(181,249,47), Color.black, 0, 250, 1000, 250, 750, 2250, 4000, 6000);
