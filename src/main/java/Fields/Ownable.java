@@ -11,7 +11,7 @@ public abstract class Ownable extends Field {
         this.name = name;
         this.price = price;
         ownedID = -1;
-        pawnValue = price / 2; // TODO Eventuelt indlæs fra argumenter.
+        this.pawnValue = price / 2; // TODO Eventuelt indlæs fra argumenter.
     }
     public int getOwnedID() {
         return ownedID;
