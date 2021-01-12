@@ -373,10 +373,10 @@ public class Consol {
                     break;
                 }
             }
-            Ownable ownable = (Ownable) boardController.getField()[pawned[idChosen]];
+            Ownable ownableChosen = (Ownable) boardController.getField()[pawned[idChosen]];
             GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[pawned[idChosen]];
-            playerController.buysBackPawn(playerIndex, idChosen, ownable.getPawnValue());
-            ownable.setOwnedID(playerIndex);
+            playerController.buysBackPawn(playerIndex, idChosen, ownableChosen.getPawnValue());
+            ownableChosen.setOwnedID(playerIndex);
             gui_ownable.setBorder(playerController.colors[playerIndex]);
         }
 
