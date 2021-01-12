@@ -316,6 +316,7 @@ public class Consol {
             boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
             if (checkTaxField) {
                 Player player = playerController.getPlayers()[playerIndex];
+                gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale","Betal");
                 TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
                 player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
             }
@@ -458,5 +459,5 @@ public class Consol {
             } //DONE
         }
     }
-
+}
 
