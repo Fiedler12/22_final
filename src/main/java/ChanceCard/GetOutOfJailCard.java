@@ -2,11 +2,13 @@ package ChanceCard;
 
 public class GetOutOfJailCard extends ChanceCard{
     int sellValue;
-    boolean ownJailCard;
 
-    public GetOutOfJailCard (String Text, int ID,int getSellValue, boolean isOwnJailCard){
+    public GetOutOfJailCard (String Text, int ID,int sellValue){
         super(Text,ID);
-        this.sellValue = getSellValue;
-        this.ownJailCard = isOwnJailCard;
+        this.sellValue = sellValue;
+    }
+    public int getSellValue() {
+        return sellValue;
     }
 }
+
