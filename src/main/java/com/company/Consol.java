@@ -144,42 +144,72 @@ public class Consol {
                 String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse");
                 switch (choiceBuyOrSell) {
                     case "Køb af spiller.":
-
-                }
-                break;
-            case "Byg":
-                break;
-            case "Pantsæt":
-                if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
-                    gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
-                    turn(playerIndex);
-                    break;
-                }
-                    if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
-                        String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
-                        switch (choicePawn) {
-                            case "Pantsæt en ny.":
-                                if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
-                                    gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
-                                    turn(playerIndex);
-                                    break;
-                                }
-                                playerPawns(playerIndex);
-                                break;
-
-                            case "Køb grund tilbage.":
-                                playerBuysBack(playerIndex);
-                                break;
+                        String[] playerNames = new String[playerController.getPlayers().length];
+                        for (int i = 0; i < playerController.players.length; i++) {
+                            playerNames[i] = playerController.getPlayers()[i].getName();
                         }
-                    } else {
-                        playerPawns(playerIndex);
-                    }
+                        String selectPlayer = gui.getUserButtonPressed("Hvilken spiller vil du handle med?", playerNames);
+                        int idChosen;
+                        for (idChosen = 0; idChosen < playerNames.length; idChosen++) {
+                            boolean chosen = playerNames[idChosen].equals(selectPlayer);
+                            if (chosen) {
+                                break;
+                            }
+                        }
+                        int[] owns = new int[playerController.getPlayers()[idChosen].owns.size()];
+                        String[] names = new String[playerController.getPlayers()[idChosen].owns.size()];
+                        for (int i = 0; i < owns.length; i++) {
+                            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[idChosen].owns.get(i)];
+                            owns[i] = playerController.getPlayers()[idChosen].owns.get(i);
+                            names[i] = ownable.getName();
+                            break;
+                        }
+                        int ownableChosen;
+                        String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
+                        for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
+                            boolean chosen = names[idChosen].equals(chosenElement);
+                            if (chosen) {
+                                break;
+                            }
+
+                        }
+                }
+                    case "Sælg mine huse":
+
                     break;
+                    case "Byg":
+                        break;
+                    case "Pantsæt":
+                        if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
+                            gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
+                            turn(playerIndex);
+                        }
+                        if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
+                            String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
+                            switch (choicePawn) {
+                                case "Pantsæt en ny.":
+                                    if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
+                                        gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
+                                        turn(playerIndex);
+                                        break;
+                                    }
+                                    playerPawns(playerIndex);
+                                    break;
+
+                                case "Køb grund tilbage.":
+                                    playerBuysBack(playerIndex);
+                                    break;
+                            }
+                        } else {
+                            playerPawns(playerIndex);
+                        }
+                        break;
                     case "Slå terningen":
                         playerRolls(playerIndex);
                         break;
                 }
         }
+
 
     public void playerRolls(int playerIndex) {
         dice.roll();
@@ -268,7 +298,7 @@ public class Consol {
                 }
             }
         }
-
+            //Player player = playerController.getPlayers()[playerIndex];
             boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
             if (checkGoToJail) {
                 gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
@@ -388,6 +418,7 @@ public class Consol {
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
                 updateView(PlayerController.players.length);
                 // vælg køb efter rykket nyt loop og måske få penge efter start??
+                //Hvis man får -3 kortet ved første chancefelt får man position -1 hvilket den ikke er glad for
             }
 
             boolean checkMoveToShipping = (card instanceof MoveToShipping);
