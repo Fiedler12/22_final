@@ -149,47 +149,53 @@ public class Consol {
         String choice = gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur. Vælg hvad du vil benytte din tur til:", "Køb eller sælg", "Byg hus/hotel", "Pantsæt", "Slå terningen");
         switch (choice) {
             case "Køb eller sælg":
-                String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse");
+                String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse","Gå tilbage");
                 switch (choiceBuyOrSell) {
                     case "Køb af spiller.":
                         String[] playerNames = new String[playerController.getPlayers().length];
                         for (int i = 0; i < PlayerController.players.length; i++) {
                             playerNames[i] = playerController.getPlayers()[i].getName();
                         }
-                        String selectPlayer = gui.getUserButtonPressed("Hvilken spiller vil du handle med?", playerNames);
-                        int idChosen;
-                        for (idChosen = 0; idChosen < playerNames.length; idChosen++) {
-                            boolean chosen = playerController.getPlayers()[idChosen].getName().equals(selectPlayer);
-                            if (chosen) {
-                                idChosen = playerController.getPlayers()[idChosen].playerID;
-                                break;
+                        boolean select = gui.getUserLeftButtonPressed("Er du sikker på at du vil handle med en anden spiller?", "Ja, jeg vil handle!", "Nej, gå tilbage");
+                        if (select) {
+                            String selectPlayer = gui.getUserButtonPressed("Hvilken spiller vil du handle med?", playerNames);
+                            int idChosen;
+                            for (idChosen = 0; idChosen < playerNames.length; idChosen++) {
+                                boolean chosen = playerController.getPlayers()[idChosen].getName().equals(selectPlayer);
+                                if (chosen) {
+                                    idChosen = playerController.getPlayers()[idChosen].playerID;
+                                    break;
+                                }
+                                if (idChosen == playerIndex) {
+                                    gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
+                                    break;
+                                }
                             }
-                            if (idChosen != playerIndex) {
-                                gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
-                                break;
+                            int[] owns = new int[playerController.getPlayers()[idChosen].owns.size()];
+                            String[] names = new String[playerController.getPlayers()[idChosen].owns.size()];
+                            for (int i = 0; i < owns.length; i++) {
+                                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[idChosen].owns.get(i)];
+                                owns[i] = playerController.getPlayers()[idChosen].owns.get(i);
+                                names[i] = ownable.getName();
                             }
-                        }
-                        int[] owns = new int[playerController.getPlayers()[idChosen].owns.size()];
-                        String[] names = new String[playerController.getPlayers()[idChosen].owns.size()];
-                        for (int i = 0; i < owns.length; i++) {
-                            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[idChosen].owns.get(i)];
-                            owns[i] = playerController.getPlayers()[idChosen].owns.get(i);
-                            names[i] = ownable.getName();
-                        }
-                        int ownableChosen;
-                        String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
-                        for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
-                            boolean chosen = names[ownableChosen].equals(chosenElement);
-                            if (chosen) {
-                                break;
+                            int ownableChosen;
+                            String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
+                            for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
+                                boolean chosen = names[ownableChosen].equals(chosenElement);
+                                if (chosen) {
+                                    break;
+                                }
+                                Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
+                                int offer = gui.getUserInteger("Læg et bud på denne grund");
+                                String answer = gui.getUserButtonPressed(playerController.getPlayers()[idChosen].getName() + " ,ønsker du at sælge " + tradeOwnable.getName() + " til: " + playerController.getPlayers()[playerIndex].getName() + " for: " + offer + " kr.", "Ja", "Nej", "Modbud");
                             }
-                            Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
-                            int offer = gui.getUserInteger("Læg et bud på denne grund");
-                            String answer = gui.getUserButtonPressed(playerController.getPlayers()[idChosen].getName() + " ,ønsker du at sælge " + tradeOwnable.getName() + " til: " + playerController.getPlayers()[playerIndex].getName() + " for: " + offer + " kr.", "Ja", "Nej", "Modbud");
                         }
 
                     case "Sælg mine huse":
 
+                        break;
+
+                    case "Gå tilbage":
                         break;
                 }
                     case "Byg":
@@ -226,9 +232,7 @@ public class Consol {
                         break;
                 }
                 if (choice != "Slå terningen"){
-                    turn(playerIndex);
-                }
-                if (choice != "Slå terningen"){
+                    updateView(playerController.getPlayers().length);
                     turn(playerIndex);
                 }
                 updateView(playerController.getPlayers().length);
@@ -272,7 +276,7 @@ public class Consol {
                     if (isBrewery) {
                         PlayerController.players[playerIndex].setBreweryOwned(PlayerController.players[playerIndex].getBreweryOwned() + 1);
                     }
-                    gui.getUserButtonPressed("Du har nu købt" + ownable.getName(), "Ok");
+                    gui.getUserButtonPressed("Du har nu købt " + ownable.getName(), "Ok");
                 }
             } else if (ownable.getOwnedID() == playerController.getPlayers()[playerIndex].getPlayerID()) {
                 gui.displayChanceCard("Du ejer selv dette felt.");
@@ -281,7 +285,7 @@ public class Consol {
                 if (checkStreet) {
                     PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Street) ownable).currentRent);
                     PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Street) ownable).currentRent);
-                    gui.getUserButtonPressed("Du er landet på" + ownable.getName() + "Dette felt er ikke ejet af dig. Du skal betale" + ((Street) ownable).currentRent, "Betal");
+                    gui.getUserButtonPressed("Du er landet på " + ownable.getName() + " Dette felt er ikke ejet af dig.\nDu skal betale " + ((Street) ownable).currentRent + "kr i leje", "Betal");
                 }
                 boolean checkShipping = (ownable instanceof Shipping);
                 if (checkShipping) {
@@ -358,7 +362,7 @@ public class Consol {
 
         }
 
-        public void playerPawns ( int playerIndex){
+        public void playerPawns ( int playerIndex) {
             int[] owns = new int[playerController.getPlayers()[playerIndex].owns.size()];
             String[] names = new String[playerController.getPlayers()[playerIndex].owns.size()];
             for (int i = 0; i < owns.length; i++) {
@@ -367,41 +371,46 @@ public class Consol {
                 names[i] = ownable.getName();
             }
             int idChosen;
-            String chosenElement = gui.getUserSelection("Hvilken ejendom vil du pantsætte? ", names);
-            for (idChosen = 0; idChosen < names.length; idChosen++) {
-                boolean chosen = names[idChosen].equals(chosenElement);
-                if (chosen) {
-                    break;
+            boolean select = gui.getUserLeftButtonPressed("Er du sikker på at du vil pantsætte?", "Ja, jeg vil pantsætte!", "Nej, gå tilbage");
+            if (select) {
+                String chosenElement = gui.getUserSelection("Hvilken ejendom vil du pantsætte? ", names);
+                for (idChosen = 0; idChosen < names.length; idChosen++) {
+                    boolean chosen = names[idChosen].equals(chosenElement);
+                    if (chosen) {
+                        break;
+                    }
                 }
+                Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
+                GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[owns[idChosen]];
+                playerController.playerPawns(playerIndex, owns[idChosen], ownableChosen.getPawnValue());
+                ownableChosen.setOwnedID(-2);
+                gui_ownable.setBorder(Color.magenta, playerController.colors[playerIndex]);
             }
-            Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
-            GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[owns[idChosen]];
-            playerController.playerPawns(playerIndex, owns[idChosen], ownableChosen.getPawnValue());
-            ownableChosen.setOwnedID(-2);
-            gui_ownable.setBorder(Color.magenta,playerController.colors[playerIndex]);
         }
-
-        public void playerBuysBack ( int playerIndex){
+        public void playerBuysBack ( int playerIndex) {
             int[] pawned = new int[playerController.getPlayers()[playerIndex].pawned.size()];
             String[] names = new String[playerController.getPlayers()[playerIndex].pawned.size()];
-            for (int i = 0; i < names.length; i++) {
-                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].pawned.get(i)];
-                pawned[i] = playerController.getPlayers()[playerIndex].pawned.get(i);
-                names[i] = ownable.getName();
-            }
-            int idChosen;
-            String chosenElement = gui.getUserSelection("Hvilken ejendom vil du købe tilbage? ", names);
-            for (idChosen = 0; idChosen < names.length; idChosen++) {
-                boolean chosen = names[idChosen].equals(chosenElement);
-                if (chosen) {
-                    break;
+            boolean select = gui.getUserLeftButtonPressed("Er du sikker?", "Ja, jeg vil købe en grund tilbage!", "Nej, gå tilbage");
+            if (select) {
+                for (int i = 0; i < names.length; i++) {
+                    Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].pawned.get(i)];
+                    pawned[i] = playerController.getPlayers()[playerIndex].pawned.get(i);
+                    names[i] = ownable.getName();
                 }
+                int idChosen;
+                String chosenElement = gui.getUserSelection("Hvilken ejendom vil du købe tilbage? ", names);
+                for (idChosen = 0; idChosen < names.length; idChosen++) {
+                    boolean chosen = names[idChosen].equals(chosenElement);
+                    if (chosen) {
+                        break;
+                    }
+                }
+                Ownable ownableChosen = (Ownable) boardController.getField()[pawned[idChosen]];
+                GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[pawned[idChosen]];
+                playerController.buysBackPawn(playerIndex, pawned[idChosen], ownableChosen.getPawnValue());
+                ownableChosen.setOwnedID(playerIndex);
+                gui_ownable.setBorder(playerController.colors[playerIndex]);
             }
-            Ownable ownableChosen = (Ownable) boardController.getField()[pawned[idChosen]];
-            GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[pawned[idChosen]];
-            playerController.buysBackPawn(playerIndex, pawned[idChosen], ownableChosen.getPawnValue());
-            ownableChosen.setOwnedID(playerIndex);
-            gui_ownable.setBorder(playerController.colors[playerIndex]);
         }
 
 
@@ -421,7 +430,7 @@ public class Consol {
             if (checkGetOutOfJail) {
                 player.setHasJailCard(true);
             }
-            //TODO at kunne sælge kortet (skal nok ikke laves her i switchen)
+            //TODO at kunne sælge kortet
 
 
             boolean checkGoToJailCard = (card instanceof GoToJailCard);
