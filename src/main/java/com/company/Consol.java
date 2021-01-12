@@ -346,8 +346,6 @@ public class Consol {
 
         }
 
-        //Poops and the sperms
-
         }
 
         public void playerPawns ( int playerIndex){
