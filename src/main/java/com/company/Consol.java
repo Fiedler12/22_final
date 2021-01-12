@@ -347,19 +347,19 @@ public class Consol {
             Player player = playerController.getPlayers()[playerIndex];
             gui.getUserButtonPressed(player.getName() + " Du er landet på et 'Betal Skat' -felt, tryk for at betale", "Betal");
             TaxField taxField = (TaxField) boardController.getField()[PlayerController.players[playerIndex].getPos()];
-            boolean select2 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + "Betal 10% eller 4000k ", "10%", "4000kr");
-            if (select2) {
-
-                player.playerAccount.setBalance((int)(player.playerAccount.getBalance() *0.9));
-            }
-            else{
+            if(player.getPos() == 38) {
                 player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
-
+            }
+            else if (player.getPos() == 4){
+                boolean select2 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + "Betal 10% eller 4000k ", "10%", "4000kr");
+                if (select2) {
+                    player.playerAccount.setBalance((int) (player.playerAccount.getBalance() * 0.9));
+                } else {
+                    player.playerAccount.setBalance(player.playerAccount.getBalance() - taxField.getTaxPrice());
+                }
             }
             updateView(PlayerController.players.length);
-
-        }
-
+            }
         }
 
         public void playerPawns ( int playerIndex) {
