@@ -166,7 +166,6 @@ public class Consol {
                             }
                             if (idChosen != playerIndex) {
                                 gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
-                                turn(playerIndex);
                                 break;
                             }
                         }
@@ -198,7 +197,6 @@ public class Consol {
                     case "Pantsæt":
                         if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
                             gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
-                            turn(playerIndex);
                             break;
                         }
                         if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
@@ -207,7 +205,6 @@ public class Consol {
                                 case "Pantsæt en ny.":
                                     if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
                                         gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
-                                        turn(playerIndex);
                                         break;
                                     }
                                     if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
@@ -227,6 +224,9 @@ public class Consol {
                         playerRolls(playerIndex);
                         checkSubClasses(playerIndex);
                         break;
+                }
+                if (choice != "Slå terningen"){
+                    turn(playerIndex);
                 }
         }
 
