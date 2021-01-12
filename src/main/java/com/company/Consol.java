@@ -196,6 +196,7 @@ public class Consol {
                         if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
                             gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
                             turn(playerIndex);
+                            break;
                         }
                         if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
                             String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
