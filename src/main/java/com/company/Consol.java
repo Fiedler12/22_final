@@ -2,10 +2,14 @@ package com.company;
 
 import ChanceCard.*;
 import Fields.*;
+import gui_fields.GUI_Board;
 import gui_fields.GUI_Car;
 import gui_fields.GUI_Ownable;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Consol {
     BoardController boardController = new BoardController();
@@ -306,7 +310,6 @@ public class Consol {
                 }
             }
         }
-            //Player player = playerController.getPlayers()[playerIndex];
             boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
             if (checkGoToJail) {
                 gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
@@ -348,8 +351,10 @@ public class Consol {
                 }
             }
             Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
+            GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[owns[idChosen]];
             playerController.playerPawns(playerIndex, owns[idChosen], ownableChosen.getPawnValue());
             ownableChosen.setOwnedID(-2);
+            gui_ownable.setBorder(Color.magenta,playerController.colors[playerIndex]);
         }
 
         public void playerBuysBack ( int playerIndex){
@@ -369,8 +374,10 @@ public class Consol {
                 }
             }
             Ownable ownable = (Ownable) boardController.getField()[pawned[idChosen]];
+            GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[pawned[idChosen]];
             playerController.buysBackPawn(playerIndex, idChosen, ownable.getPawnValue());
             ownable.setOwnedID(playerIndex);
+            gui_ownable.setBorder(playerController.colors[playerIndex]);
         }
 
 
