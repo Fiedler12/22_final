@@ -79,7 +79,7 @@ public class Consol {
                                 dice.roll();
                                 gui.setDice(dice.die1, dice.die2);
                                 if (dice.die1 == dice.die2) {
-                                    gui.getUserButtonPressed("Du har slået 2 ens. Du er nu en fri mand\nDu rykker det du slog og får en ekstra tur","Juhuu");
+                                    gui.getUserButtonPressed("Du har slået 2 ens. Du er nu en fri mand\nDu rykker det du slog og får en ekstra tur", "Juhuu");
                                     PlayerController.players[playerIndex].setInJail(false);
                                     gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                                     playerController.movePlayer(playerIndex, dice.getTotal());
@@ -107,7 +107,7 @@ public class Consol {
                             dice.roll();
                             gui.setDice(dice.die1, dice.die2);
                             if (dice.die1 == dice.die2) {
-                                gui.getUserButtonPressed("Du har slået 2 ens. Du er nu en fri mand\nDu rykker det du slog og får en ekstra tur","Juhuu");
+                                gui.getUserButtonPressed("Du har slået 2 ens. Du er nu en fri mand\nDu rykker det du slog og får en ekstra tur", "Juhuu");
                                 PlayerController.players[playerIndex].setInJail(false);
                                 gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                                 playerController.movePlayer(playerIndex, dice.getTotal());
@@ -149,7 +149,7 @@ public class Consol {
         String choice = gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur. Vælg hvad du vil benytte din tur til:", "Køb eller sælg", "Byg hus/hotel", "Pantsæt", "Slå terningen");
         switch (choice) {
             case "Køb eller sælg":
-                String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse","Gå tilbage");
+                String choiceBuyOrSell = gui.getUserButtonPressed("Vil du handle med en anden spiller, eller sælge dine huse?", "Køb af spiller.", "Sælg mine huse", "Gå tilbage");
                 switch (choiceBuyOrSell) {
                     case "Køb af spiller.":
                         String[] playerNames = new String[playerController.getPlayers().length];
@@ -159,23 +159,26 @@ public class Consol {
                         boolean select = gui.getUserLeftButtonPressed("Er du sikker på at du vil handle med en anden spiller?", "Ja, jeg vil handle!", "Nej, gå tilbage");
                         if (select) {
                             String selectPlayer = gui.getUserButtonPressed("Hvilken spiller vil du handle med?", playerNames);
-                            int idChosen;
-                            for (idChosen = 0; idChosen < playerNames.length; idChosen++) {
+                            int idChosen = 0;
+                            while (idChosen < playerNames.length) {
                                 boolean chosen = playerController.getPlayers()[idChosen].getName().equals(selectPlayer);
                                 if (chosen) {
                                     idChosen = playerController.getPlayers()[idChosen].playerID;
                                     break;
                                 }
-                                if (idChosen == playerIndex) {
-                                    gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
-                                    break;
-                                }
+                                idChosen++;
                             }
-                            if(playerController.getPlayers()[idChosen].owns.size() != 0) {
-                            trade(playerIndex, idChosen);
+                            if (idChosen == playerIndex) {
+                                gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
+                                break;
+                            }
+
+                            if (playerController.getPlayers()[idChosen].owns.size() != 0 && idChosen != playerIndex) {
+                                trade(playerIndex, idChosen);
                             }
                             String ok = gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
                             break;
+
                         }
 
                     case "Sælg mine huse":
@@ -185,45 +188,45 @@ public class Consol {
                     case "Gå tilbage":
                         break;
                 }
-                    case "Byg":
-                        break;
-                    case "Pantsæt":
-                        if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
-                            gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
-                            break;
-                        }
-                        if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
-                            String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
-                            switch (choicePawn) {
-                                case "Pantsæt en ny.":
-                                    if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
-                                        gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
-                                        break;
-                                    }
-                                    if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
-                                        playerPawns(playerIndex);
-                                        break;
-                                    }
-
-                                case "Køb grund tilbage.":
-                                    playerBuysBack(playerIndex);
-                                    break;
+            case "Byg":
+                break;
+            case "Pantsæt":
+                if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
+                    gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
+                    break;
+                }
+                if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
+                    String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
+                    switch (choicePawn) {
+                        case "Pantsæt en ny.":
+                            if (playerController.getPlayers()[playerIndex].owns.size() == 0) {
+                                gui.getUserButtonPressed("Du har ikke flere grunde du kan pantsætte.", "Ok");
+                                break;
                             }
-                        } else {
-                            playerPawns(playerIndex);
-                        }
-                        break;
-                    case "Slå terningen":
-                        playerRolls(playerIndex);
-                        checkSubClasses(playerIndex);
-                        break;
+                            if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
+                                playerPawns(playerIndex);
+                                break;
+                            }
+
+                        case "Køb grund tilbage.":
+                            playerBuysBack(playerIndex);
+                            break;
+                    }
+                } else {
+                    playerPawns(playerIndex);
                 }
-                if (choice != "Slå terningen"){
-                    updateView(playerController.getPlayers().length);
-                    turn(playerIndex);
-                }
-                updateView(playerController.getPlayers().length);
+                break;
+            case "Slå terningen":
+                playerRolls(playerIndex);
+                checkSubClasses(playerIndex);
+                break;
         }
+        if (choice != "Slå terningen") {
+            updateView(playerController.getPlayers().length);
+            turn(playerIndex);
+        }
+        updateView(playerController.getPlayers().length);
+    }
 
 
     public void playerRolls(int playerIndex) {
