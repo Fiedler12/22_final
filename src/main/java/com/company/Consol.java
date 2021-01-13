@@ -171,24 +171,7 @@ public class Consol {
                                     break;
                                 }
                             }
-                            int[] owns = new int[playerController.getPlayers()[idChosen].owns.size()];
-                            String[] names = new String[playerController.getPlayers()[idChosen].owns.size()];
-                            for (int i = 0; i < owns.length; i++) {
-                                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[idChosen].owns.get(i)];
-                                owns[i] = playerController.getPlayers()[idChosen].owns.get(i);
-                                names[i] = ownable.getName();
-                            }
-                            int ownableChosen;
-                            String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
-                            for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
-                                boolean chosen = names[ownableChosen].equals(chosenElement);
-                                if (chosen) {
-                                    break;
-                                }
-                                Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
-                                int offer = gui.getUserInteger("Læg et bud på denne grund");
-                                String answer = gui.getUserButtonPressed(playerController.getPlayers()[idChosen].getName() + " ,ønsker du at sælge " + tradeOwnable.getName() + " til: " + playerController.getPlayers()[playerIndex].getName() + " for: " + offer + " kr.", "Ja", "Nej", "Modbud");
-                            }
+                            trade(playerIndex, idChosen);
                         }
 
                     case "Sælg mine huse":
@@ -412,6 +395,56 @@ public class Consol {
                 gui_ownable.setBorder(playerController.colors[playerIndex]);
             }
         }
+        public void trade(int playerIDBuys, int playerIDSells) {
+            int[] owns = new int[playerController.getPlayers()[playerIDSells].owns.size()];
+            String[] names = new String[playerController.getPlayers()[playerIDSells].owns.size()];
+            for (int i = 0; i < owns.length; i++) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIDSells].owns.get(i)];
+                owns[i] = playerController.getPlayers()[playerIDSells].owns.get(i);
+                names[i] = ownable.getName();
+            }
+            int ownableChosen;
+            String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
+            for (ownableChosen = 0; ownableChosen < names.length; ownableChosen++) {
+                boolean chosen = names[ownableChosen].equals(chosenElement);
+                if (chosen) {
+                    break;
+                }
+            }
+                Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
+                GUI_Ownable tradeGui_ownable = (GUI_Ownable) boardController.getGui_fields()[ownableChosen];
+                int offer = gui.getUserInteger("Læg et bud på denne grund");
+                String answer = gui.getUserButtonPressed(playerController.getPlayers()[playerIDSells].getName() + " ,ønsker du at sælge " + tradeOwnable.getName() + " til: " + playerController.getPlayers()[playerIDBuys].getName() + " for: " + offer + " kr.", "Ja", "Nej", "Modbud");
+
+                switch (answer) {
+                    case "Ja" :
+                        playerController.trade(playerIDSells, playerIDBuys, ownableChosen, offer);
+                        tradeOwnable.setOwnedID(playerIDBuys);
+                        updateView(PlayerController.players.length);
+                        tradeGui_ownable.setOwnerName(playerController.getPlayers()[playerIDBuys].getName());
+                        tradeGui_ownable.setBorder(playerController.colors[playerIDBuys]);
+                        break;
+                    case "Nej":
+                        break;
+                    case "Modbud" :
+                        int counterOffer = gui.getUserInteger(playerController.getPlayers()[playerIDSells].getName() + " kom med et modbud.");
+                        String counterAnswer = gui.getUserButtonPressed(playerController.getPlayers()[playerIDBuys] + " du har modtaget et modbud på: " + counterOffer + " vil du købe grunden til denne pris: ", "Ja", "Nej");
+                        switch (counterAnswer) {
+                            case "Ja":
+                                playerController.trade(playerIDSells, playerIDBuys, ownableChosen, counterOffer);
+                                tradeOwnable.setOwnedID(playerIDBuys);
+                                updateView(PlayerController.players.length);
+                                tradeGui_ownable.setOwnerName(playerController.getPlayers()[playerIDBuys].getName());
+                                tradeGui_ownable.setBorder(playerController.colors[playerIDBuys]);
+                                break;
+                            case "Nej":
+                                break;
+
+                        }
+                        break;
+                }
+    }
+
 
 
         public void pullCard ( int playerIndex){
