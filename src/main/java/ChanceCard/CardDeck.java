@@ -69,8 +69,8 @@ public class CardDeck {
 
     }
 
-    public String recieveT() {return T; }
-    public int recieveID() {return ID; }
+    public String receiveT() {return T; }
+    public int receiveID() {return ID; }
 
     public void mix() {
         int t = 0;
