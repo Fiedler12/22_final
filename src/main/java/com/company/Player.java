@@ -76,7 +76,7 @@ public class Player {
 
     public void sells (int fieldID,int price) {
         owns.remove((Integer)fieldID);
-        playerAccount.setBalance(playerAccount.getBalance() - price);
+        playerAccount.setBalance(playerAccount.getBalance() + price);
     }
 
     public int[] getOwns(int index) {
