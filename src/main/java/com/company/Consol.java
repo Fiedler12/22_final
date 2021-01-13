@@ -214,7 +214,7 @@ public class Consol {
                         checkSubClasses(playerIndex);
                         break;
                 }
-                if (choice != "Slå terningen"){
+                if (!choice.equals("Slå terningen")){
                     updateView(playerController.getPlayers().length);
                     turn(playerIndex);
                 }
@@ -513,16 +513,25 @@ public class Consol {
                         break;
                     }
                 }
-                checkSubClasses(playerIndex);
-                updateView(PlayerController.players.length);
+                if (cardDeck.receiveID() == 39){
+                    checkSubClasses(playerIndex);
+                }
+                else {
+              //      if ()
+             //       checkSubClasses(playerIndex);
+            //        updateView(PlayerController.players.length);
+                }
             }
 
             boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
             if (checkMoveToSpecific) {
                 MovetoSpecific movetoSpecific = (MovetoSpecific) card;
-                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                player.setPos(movetoSpecific.getFieldID());
+                while (player.getPos() != movetoSpecific.getFieldID()) {
+                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                    player.setPos(player.getPos() + 1);
+                }
                 gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                updateView(PlayerController.players.length);
                 checkSubClasses(playerIndex);
                 updateView(PlayerController.players.length);
             }
@@ -538,8 +547,19 @@ public class Consol {
             boolean checkReceiveMoney = (card instanceof ReceiveMoney);
             if (checkReceiveMoney) {
                 ReceiveMoney receiveMoney = (ReceiveMoney) card;
-                player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+                if (cardDeck.receiveID() == 24){
+                    if (player.playerAccount.getBalance() <= 12000){
+                        player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+                    }
+                    else {
+                        gui.showMessage("Du har for mange penge på din konto til at modtage legatet");
+                    }
+                }
+                else {
+                    player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+                }
                 updateView(PlayerController.players.length);
+
             } //DONE
         }
     }

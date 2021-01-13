@@ -9,10 +9,10 @@ public class CardTest {
         int t = 0;
         while(t < 100) {
             testDeck.draw();
-            testDeck.recieveID();
-            testDeck.recieveT();
-            System.out.println(testDeck.recieveID());
-            System.out.println(testDeck.recieveT());
+            testDeck.receiveID();
+            testDeck.receiveT();
+            System.out.println(testDeck.receiveID());
+            System.out.println(testDeck.receiveT());
             t++;
         }
 
