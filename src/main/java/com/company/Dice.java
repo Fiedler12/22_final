@@ -1,7 +1,5 @@
 package com.company;
 
-import java.lang.annotation.Native;
-
 public class Dice {
         int die1;  //Første terning
         int die2;
