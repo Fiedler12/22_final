@@ -174,7 +174,7 @@ public class Consol {
                             if(playerController.getPlayers()[idChosen].owns.size() != 0) {
                             trade(playerIndex, idChosen);
                             }
-                            String selectPlayer = gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
+                            String ok = gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
                             break;
                         }
 
