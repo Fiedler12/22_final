@@ -172,12 +172,11 @@ public class Consol {
                                 gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
                                 break;
                             }
-
                             if (playerController.getPlayers()[idChosen].owns.size() != 0 && idChosen != playerIndex) {
                                 trade(playerIndex, idChosen);
                             }
                             if(playerController.getPlayers()[idChosen].owns.size() == 0) {
-                                String ok = gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
+                                gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
                             }
                             break;
                         }
