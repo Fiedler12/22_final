@@ -176,9 +176,10 @@ public class Consol {
                             if (playerController.getPlayers()[idChosen].owns.size() != 0 && idChosen != playerIndex) {
                                 trade(playerIndex, idChosen);
                             }
-                            String ok = gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
+                            if(playerController.getPlayers()[idChosen].owns.size() == 0) {
+                                String ok = gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
+                            }
                             break;
-
                         }
 
                     case "Sælg mine huse":
