@@ -412,13 +412,13 @@ public class Consol {
                 }
             }
                 Ownable tradeOwnable = (Ownable) boardController.getField()[owns[ownableChosen]];
-                GUI_Ownable tradeGui_ownable = (GUI_Ownable) boardController.getGui_fields()[ownableChosen];
+                GUI_Ownable tradeGui_ownable = (GUI_Ownable) boardController.getGui_fields()[owns[ownableChosen]];
                 int offer = gui.getUserInteger("Læg et bud på denne grund");
                 String answer = gui.getUserButtonPressed(playerController.getPlayers()[playerIDSells].getName() + " ,ønsker du at sælge " + tradeOwnable.getName() + " til: " + playerController.getPlayers()[playerIDBuys].getName() + " for: " + offer + " kr.", "Ja", "Nej", "Modbud");
 
                 switch (answer) {
                     case "Ja" :
-                        playerController.trade(playerIDSells, playerIDBuys, ownableChosen, offer);
+                        playerController.trade(playerIDSells, playerIDBuys, owns[ownableChosen], offer);
                         tradeOwnable.setOwnedID(playerIDBuys);
                         updateView(PlayerController.players.length);
                         tradeGui_ownable.setOwnerName(playerController.getPlayers()[playerIDBuys].getName());
