@@ -80,12 +80,12 @@ public class BoardController {
         while (latestID < 40) {
             boolean isStreet = (getField()[latestID] instanceof Street);
             if(isStreet) {
-                for (int i = 0; i < 3; i++) {
+                int i = 0;
+                while (i < 3) {
                     boolean isStreet2 = (getField()[latestID++] instanceof Street);
                     if(isStreet2) {
 
                     }
-                i++;
                 }
             }
         }

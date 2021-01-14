@@ -246,7 +246,6 @@ public class Consol {
             GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[playerController.getPlayers()[playerIndex].getPos()];
             if (ownable.getOwnedID() == -2) {
                 gui.getUserButtonPressed(ownable.getName() + " er pantsat.", "Ok");
-
             }
             if (ownable.getOwnedID() == -1) {
                 boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
@@ -276,7 +275,7 @@ public class Consol {
                 }
             } else if (ownable.getOwnedID() == playerController.getPlayers()[playerIndex].getPlayerID()) {
                 gui.displayChanceCard("Du ejer selv dette felt.");
-            } else if (ownable.getOwnedID() != -1 && ownable.getOwnedID() != playerController.getPlayers()[playerIndex].getPlayerID()) {
+            } else if (ownable.getOwnedID() != -1 && ownable.getOwnedID() != playerController.getPlayers()[playerIndex].getPlayerID() && ownable.getOwnedID() != -2) {
                 boolean checkStreet = (ownable instanceof Street);
                 if (checkStreet) {
                     PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Street) ownable).currentRent);
