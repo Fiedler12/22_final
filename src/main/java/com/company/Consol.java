@@ -138,12 +138,12 @@ public class Consol {
 
     public void updateView(int amount) {
         int t = 0;
-        boardController.getGui_fields();
         while (t < amount) {
             playerController.gui_players[t].setBalance(PlayerController.players[t].playerAccount.getBalance());
             t++;
         }
-        //boardController.checkFields();
+        boardController.checkFields();
+        boardController.getGui_fields();
     }
 
     public void turn(int playerIndex) {

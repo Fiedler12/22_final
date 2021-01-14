@@ -38,6 +38,10 @@ public class Street extends Ownable {
         canBuild = false;
     }
 
+    public void setCurrentRent(int currentRent) {
+        this.currentRent = currentRent;
+    }
+
     public int getCurrentRent() {
         return currentRent;
     }
@@ -83,6 +87,12 @@ public class Street extends Ownable {
 
     public void setCanBuild(boolean canBuild) {
         this.canBuild = canBuild;
+        if (canBuild) {
+            setCurrentRent(noHouse * 2);
+        }
+        if (!canBuild) {
+            currentRent = noHouse;
+        }
     }
 }
 
