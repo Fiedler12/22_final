@@ -244,6 +244,10 @@ public class Consol {
         if (checkOwnable) {
             Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[playerIndex].getPos()];
             GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[playerController.getPlayers()[playerIndex].getPos()];
+            if (ownable.getOwnedID() == -2) {
+                gui.getUserButtonPressed(ownable.getName() + " er pantsat.", "Ok");
+
+            }
             if (ownable.getOwnedID() == -1) {
                 boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
                 if (yes) {
