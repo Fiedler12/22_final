@@ -72,19 +72,18 @@ public class BoardController {
         GUI_Street guiRodovreVej = (GUI_Street) getGui_fields()[1];
         Street hvidovrevej = (Street) board.getFields()[3];
         GUI_Street guiHvidovreVej = (GUI_Street) getGui_fields()[3];
-        if (rodorvevej.getOwnedID() == hvidovrevej.getOwnedID() && rodorvevej.getOwnedID() != -1) {
+        if (rodorvevej.getOwnedID() == hvidovrevej.getOwnedID() && rodorvevej.getOwnedID() > -1) {
             rodorvevej.setCanBuild(true);
             guiRodovreVej.setRent(Integer.toString(rodorvevej.currentRent));
             hvidovrevej.setCanBuild(true);
-            guiHvidovreVej.setRent(Integer.toString(hvidovrevej.currentRent));
 
         }
         else {
             rodorvevej.setCanBuild(false);
             guiRodovreVej.setRent(Integer.toString(rodorvevej.currentRent));
             hvidovrevej.setCanBuild(false);
-            guiHvidovreVej.setRent(Integer.toString(hvidovrevej.currentRent));
         }
+        guiHvidovreVej.setRent(Integer.toString(hvidovrevej.currentRent));
         Street roskildevej = (Street) board.getFields()[6];
         GUI_Street guiRoskildevej = (GUI_Street) getGui_fields()[6];
         Street valbyLanggade = (Street) board.getFields()[8];
@@ -115,21 +114,20 @@ public class BoardController {
         Street glKongevej = (Street) board.getFields()[14];
         GUI_Street guiGlKongevej = (GUI_Street) getGui_fields()[14];
 
-        if (frederiksbergAlle.getOwnedID() < -1 && frederiksbergAlle.getOwnedID() == bulowsvej.getOwnedID() && bulowsvej.getOwnedID() == glKongevej.getOwnedID()) {
+        if (frederiksbergAlle.getOwnedID() > -1 && frederiksbergAlle.getOwnedID() == bulowsvej.getOwnedID() && bulowsvej.getOwnedID() == glKongevej.getOwnedID()) {
             frederiksbergAlle.setCanBuild(true);
             guiFrederiksbergAlle.setRent(Integer.toString(frederiksbergAlle.currentRent));
             bulowsvej.setCanBuild(true);
             guiBulowsvej.setRent(Integer.toString(bulowsvej.currentRent));
             glKongevej.setCanBuild(true);
-            guiGlKongevej.setRent(Integer.toString(glKongevej.currentRent));
         } else {
             frederiksbergAlle.setCanBuild(false);
             guiFrederiksbergAlle.setRent(Integer.toString(frederiksbergAlle.currentRent));
             bulowsvej.setCanBuild(false);
             guiBulowsvej.setRent(Integer.toString(bulowsvej.currentRent));
             glKongevej.setCanBuild(false);
-            guiGlKongevej.setRent(Integer.toString(glKongevej.currentRent));
         }
+        guiGlKongevej.setRent(Integer.toString(glKongevej.currentRent));
         Street bernstorffsvej = (Street) board.getFields()[16];
         GUI_Street guiBernstroffsVej = (GUI_Street) getGui_fields()[16];
         Street hellerupvej = (Street) board.getFields()[18];
@@ -137,7 +135,7 @@ public class BoardController {
         Street strandvejen  = (Street) board.getFields()[19];
         GUI_Street guiStrandvejen = (GUI_Street) getGui_fields()[19];
 
-        if (bernstorffsvej.getOwnedID() < -1 && bernstorffsvej.getOwnedID() == hellerupvej.getOwnedID() && hellerupvej.getOwnedID() == strandvejen.getOwnedID()) {
+        if (bernstorffsvej.getOwnedID() > -1 && bernstorffsvej.getOwnedID() == hellerupvej.getOwnedID() && hellerupvej.getOwnedID() == strandvejen.getOwnedID()) {
             bernstorffsvej.setCanBuild(true);
             guiBernstroffsVej.setRent(Integer.toString(bernstorffsvej.currentRent));
             hellerupvej.setCanBuild(true);
@@ -158,7 +156,7 @@ public class BoardController {
         GUI_Street guiOsterbrogade = (GUI_Street) getGui_fields()[23];
         Street gronningen = (Street) board.getFields()[24];
         GUI_Street guiGronningen = (GUI_Street) getGui_fields()[24];
-        if (trianglen.getOwnedID() < -1 && trianglen.getOwnedID() == osterbrogade.getOwnedID() && osterbrogade.getOwnedID() == gronningen.getOwnedID()) {
+        if (trianglen.getOwnedID() > -1 && trianglen.getOwnedID() == osterbrogade.getOwnedID() && osterbrogade.getOwnedID() == gronningen.getOwnedID()) {
             trianglen.setCanBuild(true);
             guiTrianglen.setRent(Integer.toString(trianglen.currentRent));
             osterbrogade.setCanBuild(true);
@@ -179,7 +177,7 @@ public class BoardController {
         GUI_Street guiKgsNytorv = (GUI_Street) getGui_fields()[27];
         Street ostergade = (Street) board.getFields()[29];
         GUI_Street guiOstergade = (GUI_Street) getGui_fields()[29];
-        if(bredgade.getOwnedID() < -1 && bredgade.getOwnedID() == kgsNytorv.getOwnedID() && kgsNytorv.getOwnedID() == ostergade.getOwnedID()) {
+        if(bredgade.getOwnedID() > -1 && bredgade.getOwnedID() == kgsNytorv.getOwnedID() && kgsNytorv.getOwnedID() == ostergade.getOwnedID()) {
             bredgade.setCanBuild(true);
             guiBredgade.setRent(Integer.toString(bredgade.currentRent));
             kgsNytorv.setCanBuild(true);
@@ -200,7 +198,7 @@ public class BoardController {
         GUI_Street guiVimmelskaftet = (GUI_Street) getGui_fields()[32];
         Street nygade = (Street) board.getFields()[34];
         GUI_Street guiNygade = (GUI_Street) getGui_fields()[34];
-        if(amagerTorv.getOwnedID() < -1 && amagerTorv.getOwnedID() == vimmelskaftet.getOwnedID() && vimmelskaftet.getOwnedID() == nygade.getOwnedID()) {
+        if(amagerTorv.getOwnedID() > -1 && amagerTorv.getOwnedID() == vimmelskaftet.getOwnedID() && vimmelskaftet.getOwnedID() == nygade.getOwnedID()) {
             amagerTorv.setCanBuild(true);
             guiAmagerTorv.setRent(Integer.toString(amagerTorv.currentRent));
             vimmelskaftet.setCanBuild(true);
@@ -219,7 +217,7 @@ public class BoardController {
         GUI_Street guiFrederiksberggade = (GUI_Street) getGui_fields()[37];
         Street radhuspladsen = (Street) board.getFields()[39];
         GUI_Street guiRadhuspladsen = (GUI_Street) getGui_fields()[39];
-        if(frederiksberggade.getOwnedID() < -1 && frederiksberggade.getOwnedID() == radhuspladsen.getOwnedID()) {
+        if(frederiksberggade.getOwnedID() > -1 && frederiksberggade.getOwnedID() == radhuspladsen.getOwnedID()) {
             frederiksberggade.setCanBuild(true);
             guiFrederiksberggade.setRent(Integer.toString(frederiksberggade.currentRent));
             radhuspladsen.setCanBuild(true);
