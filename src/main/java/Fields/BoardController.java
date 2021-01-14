@@ -82,15 +82,14 @@ public class BoardController {
             rodorvevej.setCanBuild(true);
             guiRodovreVej.setRent(Integer.toString(rodorvevej.currentRent));
             hvidovrevej.setCanBuild(true);
-            guiHvidovreVej.setRent(Integer.toString(hvidovrevej.currentRent));
 
         }
         else {
             rodorvevej.setCanBuild(false);
             guiRodovreVej.setRent(Integer.toString(rodorvevej.currentRent));
             hvidovrevej.setCanBuild(false);
-            guiHvidovreVej.setRent(Integer.toString(hvidovrevej.currentRent));
         }
+        guiHvidovreVej.setRent(Integer.toString(hvidovrevej.currentRent));
         Street roskildevej = (Street) board.getFields()[6];
         GUI_Street guiRoskildevej = (GUI_Street) getGui_fields()[6];
         Street valbyLanggade = (Street) board.getFields()[8];
@@ -127,15 +126,14 @@ public class BoardController {
             bulowsvej.setCanBuild(true);
             guiBulowsvej.setRent(Integer.toString(bulowsvej.currentRent));
             glKongevej.setCanBuild(true);
-            guiGlKongevej.setRent(Integer.toString(glKongevej.currentRent));
         } else {
             frederiksbergAlle.setCanBuild(false);
             guiFrederiksbergAlle.setRent(Integer.toString(frederiksbergAlle.currentRent));
             bulowsvej.setCanBuild(false);
             guiBulowsvej.setRent(Integer.toString(bulowsvej.currentRent));
             glKongevej.setCanBuild(false);
-            guiGlKongevej.setRent(Integer.toString(glKongevej.currentRent));
         }
+        guiGlKongevej.setRent(Integer.toString(glKongevej.currentRent));
         Street bernstorffsvej = (Street) board.getFields()[16];
         GUI_Street guiBernstroffsVej = (GUI_Street) getGui_fields()[16];
         Street hellerupvej = (Street) board.getFields()[18];
