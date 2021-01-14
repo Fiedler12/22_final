@@ -309,6 +309,7 @@ public class Consol {
                     if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
                         int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
+                        PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + toPay);
                         gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
 
                     } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
@@ -436,7 +437,7 @@ public class Consol {
                         break;
                     case "Modbud" :
                         int counterOffer = gui.getUserInteger(playerController.getPlayers()[playerIDSells].getName() + " kom med et modbud.");
-                        String counterAnswer = gui.getUserButtonPressed(playerController.getPlayers()[playerIDBuys] + " du har modtaget et modbud på: " + counterOffer + " vil du købe grunden til denne pris: ", "Ja", "Nej");
+                        String counterAnswer = gui.getUserButtonPressed(playerController.getPlayers()[playerIDBuys].name + " du har modtaget et modbud på: " + counterOffer + " vil du købe grunden til denne pris: ", "Ja", "Nej");
                         switch (counterAnswer) {
                             case "Ja":
                                 playerController.trade(playerIDSells, playerIDBuys, ownableChosen, counterOffer);
