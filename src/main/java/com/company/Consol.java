@@ -99,7 +99,7 @@ public class Consol {
                         }
                     }
                 } else {
-                    boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " du er i fængsel og disse muligheder for at komme ud\nVil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
+                    boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " du er i fængsel og har disse muligheder for at komme ud \nVil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
                     if (selection1) {
                         int t = 3;
                         while (t > 0) {
