@@ -143,7 +143,7 @@ public class Consol {
             playerController.gui_players[t].setBalance(PlayerController.players[t].playerAccount.getBalance());
             t++;
         }
-        boardController.checkFields();
+        //boardController.checkFields();
     }
 
     public void turn(int playerIndex) {
