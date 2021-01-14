@@ -234,7 +234,7 @@ public class BoardController {
             frederiksberggade.setCanBuild(false);
             guiFrederiksberggade.setRent(Integer.toString(frederiksberggade.currentRent));
             radhuspladsen.setCanBuild(false);
-            guiRadhuspladsen.setRent(Integer.toString(rodorvevej.currentRent));
+            guiRadhuspladsen.setRent(Integer.toString(radhuspladsen.currentRent));
         }
 
     }
