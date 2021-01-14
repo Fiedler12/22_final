@@ -12,8 +12,8 @@ public class Dice {
         public void roll() {  /*Vi får roll funktionen til at sørge for at hver terning giver os et tilfældigt
         tal mellem 1-6 for hver gang vi roller. Det er også nemt at ændre værdien af terningen
         og det er også nemt at sørge for at hver terning har et vidst antal øjne*/
-            die1 = (5);
-            die2 = (5);
+            die1 = (int)(Math.random() * 6 + 1);
+            die2 = (int)(Math.random() * 6 + 1);
         }
 
         public int getTotal() { //Giv et resultat for de 2 terninger lagt sammen

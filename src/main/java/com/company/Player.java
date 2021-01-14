@@ -99,7 +99,8 @@ public class Player {
 
     public void buyBackPawn (int fieldID, int value) {
         owns.add(fieldID);
-        playerAccount.setBalance(playerAccount.getBalance() - value);
+        int rounded = (((value / 10) + 99) / 100) * 100;
+        playerAccount.setBalance(playerAccount.getBalance() - value - rounded);
         pawned.remove((Integer)fieldID);
     }
     public int getShippingOwned() {
