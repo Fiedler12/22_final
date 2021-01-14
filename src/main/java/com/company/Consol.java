@@ -143,6 +143,7 @@ public class Consol {
             playerController.gui_players[t].setBalance(PlayerController.players[t].playerAccount.getBalance());
             t++;
         }
+        boardController.checkFields();
     }
 
     public void turn(int playerIndex) {
@@ -284,39 +285,45 @@ public class Consol {
                         ((Shipping) ownable).landOnowned(1);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 500 kr.");
+                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 500 kr.", "Betal");
+                        updateView(PlayerController.players.length);
                     } else if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 2) {
                         ((Shipping) ownable).landOnowned(2);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 1000 kr. fordi han ejer 1 andet rederi");
-
+                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 1000 kr. fordi han ejer 1 andet rederi","Betal");
+                        updateView(PlayerController.players.length);
                     } else if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 3) {
                         ((Shipping) ownable).landOnowned(3);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 2000 kr. fordi denne person ejer 2 rederier mere.");
-
+                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 2000 kr. fordi denne person ejer 2 rederier mere.", "Betal");
+                        updateView(PlayerController.players.length);
                     } else if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 4) {
                         ((Shipping) ownable).landOnowned(4);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 4000 kr. fordi personen ejer alle rederierne.");
-
+                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 4000 kr. fordi personen ejer alle rederierne.", "Betal");
+                        updateView(PlayerController.players.length);
                     }
                     gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
-                } else {
-                    if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
+                } boolean checkBrewery = (ownable instanceof Brewery);
+                if(checkBrewery) {
+                if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
                         int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        updateView(PlayerController.players.length);
 
-                    } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
+
+                } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
                         int toPay = dice.getTotal() * 200;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay);
-                    }
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        updateView(PlayerController.players.length);
+
+                }
                 }
             }
         }
@@ -432,7 +439,17 @@ public class Consol {
                         updateView(PlayerController.players.length);
                         tradeGui_ownable.setOwnerName(playerController.getPlayers()[playerIDBuys].getName());
                         tradeGui_ownable.setBorder(playerController.colors[playerIDBuys]);
-                        break;
+                        boolean checkBrewery = (tradeOwnable instanceof Brewery);
+                        if(checkBrewery) {
+                            playerController.getPlayers()[playerIDSells].setBreweryOwned(playerController.getPlayers()[playerIDSells].getBreweryOwned() - 1);
+                            playerController.getPlayers()[playerIDBuys].setBreweryOwned(playerController.getPlayers()[playerIDBuys].getBreweryOwned() + 1);
+                        }
+                        boolean checkShipping = (tradeOwnable instanceof Shipping);
+                        if(checkShipping) {
+                            playerController.getPlayers()[playerIDSells].setShippingOwned(playerController.getPlayers()[playerIDSells].getShippingOwned() - 1);
+                            playerController.getPlayers()[playerIDBuys].setShippingOwned(playerController.getPlayers()[playerIDBuys].getShippingOwned() + 1);
+                        }
+                            break;
                     case "Nej":
                         break;
                     case "Modbud" :
@@ -445,6 +462,16 @@ public class Consol {
                                 updateView(PlayerController.players.length);
                                 tradeGui_ownable.setOwnerName(playerController.getPlayers()[playerIDBuys].getName());
                                 tradeGui_ownable.setBorder(playerController.colors[playerIDBuys]);
+                                boolean checkBrewery2 = (tradeOwnable instanceof Brewery);
+                                if(checkBrewery2) {
+                                    playerController.getPlayers()[playerIDSells].setBreweryOwned(playerController.getPlayers()[playerIDSells].getBreweryOwned() - 1);
+                                    playerController.getPlayers()[playerIDBuys].setBreweryOwned(playerController.getPlayers()[playerIDBuys].getBreweryOwned() + 1);
+                                }
+                                boolean checkShipping2 = (tradeOwnable instanceof Shipping);
+                                if(checkShipping2) {
+                                    playerController.getPlayers()[playerIDSells].setShippingOwned(playerController.getPlayers()[playerIDSells].getShippingOwned() - 1);
+                                    playerController.getPlayers()[playerIDBuys].setShippingOwned(playerController.getPlayers()[playerIDBuys].getShippingOwned() + 1);
+                                }
                                 break;
                             case "Nej":
                                 break;

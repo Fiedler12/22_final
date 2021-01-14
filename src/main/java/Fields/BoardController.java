@@ -1,5 +1,6 @@
 package Fields;
 
+import com.company.PlayerController;
 import gui_fields.*;
 
 import java.awt.*;
@@ -72,5 +73,22 @@ public class BoardController {
     }
 
     public Field[] getField() {return board.fields;}
+
+    public void checkFields() {
+        int sameowner = 0;
+        int latestID = 0;
+        while (latestID < 40) {
+            boolean isStreet = (getField()[latestID] instanceof Street);
+            if(isStreet) {
+                for (int i = 0; i < 3; i++) {
+                    boolean isStreet2 = (getField()[latestID++] instanceof Street);
+                    if(isStreet2) {
+
+                    }
+
+                }
+            }
+        }
+    }
 
 }

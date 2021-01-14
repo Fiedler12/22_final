@@ -17,6 +17,7 @@ public class Street extends Ownable {
     int thirdHouse;
     int fourthHouse;
     int hotel;
+    boolean canBuild;
 
     public Street(String name, int id, int price, String subText, String description, String rent, Color mainColor, Color secondaryColor, int currentRent, int noHouse, int housePrice, int firstHouse, int secondHouse, int thirdHouse, int fourthHouse, int hotel) {
         super(name, id, price);
@@ -34,6 +35,7 @@ public class Street extends Ownable {
         this.thirdHouse = thirdHouse;
         this.fourthHouse = fourthHouse;
         this.hotel = hotel;
+        canBuild = false;
     }
 
     public int getCurrentRent() {
@@ -75,10 +77,12 @@ public class Street extends Ownable {
         currentRent = noHouse;
     }
 
-    @Override
-    public int landOnOwned() {
-        int toPay = currentRent;
-        return toPay;
+    public boolean isCanBuild() {
+        return canBuild;
+    }
+
+    public void setCanBuild(boolean canBuild) {
+        this.canBuild = canBuild;
     }
 }
 
