@@ -367,6 +367,16 @@ public class Consol {
             }
             updateView(PlayerController.players.length);
             }
+        boolean checkJailField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Jail);
+        if (checkJailField) {
+            if (!PlayerController.players[playerIndex].isInJail()) {
+                gui.showMessage("Du er på besøg i fængslet.");
+            }
+        }
+        boolean checkParkingField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Parking);
+        if (checkParkingField) {
+            gui.showMessage("Du er ankommet til gratis parkering.\nTag en pause :-)");
+        }
         checkPlayerAccount(playerIndex);
         }
 

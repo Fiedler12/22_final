@@ -8,9 +8,6 @@ public class Parking extends Field{
 
     boolean parking;
 
-    public boolean isParking() {
-        return parking;
-    }
     public void setParking(boolean parking) {
         this.parking = parking;
     }

@@ -7,7 +7,7 @@ public class CardDeck {
     int ID;
     int TopCard;
 
-
+    // Her har vi vores array af chancekortne med tekst og deres specielle værdier som er defineret i typen af chancekortets kontruktør
     public CardDeck() {
         setTopCard(0);
         cardDeck = new ChanceCard[46];
@@ -39,8 +39,8 @@ public class CardDeck {
         cardDeck[25] = new MoneyFromPlayer("Det er deres fødselsdag, motag 200 kr fra hver medspiller",25,200);
         cardDeck[26] = new MoneyFromPlayer("De har lagt penge ud til et sammenskudsgilde. Mærkværdigvis betaler alle straks, modtag 500kr fra hver medspiller",26,500);
         cardDeck[27] = new MoneyFromPlayer("De skal holde familiefest og får et tilskud fra hver medspiller på 500kr",27,500);
-        cardDeck[28] = new MovetoSpecific("Ryk frem til START", 28,0 );//placement for start når vi engang for lavet brattet
-        cardDeck[29] = new MovetoSpecific("Ryk frem til START", 29,0 );//placement for start når vi engang for lavet brattet
+        cardDeck[28] = new MovetoSpecific("Ryk frem til START", 28,0 );
+        cardDeck[29] = new MovetoSpecific("Ryk frem til START", 29,0 );
         cardDeck[30] = new Move("Ryk tre felter frem",30,3);
         cardDeck[31] = new Move("Ryk tre felter tilbage",31,-3);
         cardDeck[32] = new Move("Ryk tre felter tilbage",32,-3);
@@ -60,18 +60,19 @@ public class CardDeck {
 
         draw();
     }
-    public ChanceCard draw() { //returnerer kort tekst og kort ID og vælger det første kort i bunken og sætter et nyt topkort
+    // Her har vi vores draw metode som returnerer kort tekst og kort ID og vælger det første kort i bunken og sætter et nyt topkort
+    public ChanceCard draw() {
         ChanceCard card = cardDeck[getTopCard()];
         this.T = cardDeck[getTopCard()].CardText;
         this.ID = cardDeck[getTopCard()].CardID;
         setTopCard(getTopCard() + 1);
         return card;
-
     }
 
     public String receiveT() {return T; }
     public int receiveID() {return ID; }
 
+    // Her er vores blande metode som tager 2 tilfældige kort og bytter deres plads. Den process kører den 1000 gange.
     public void mix() {
         int t = 0;
         while (t < 1000) { //blander alle kortene 1000 gange
@@ -90,6 +91,7 @@ public class CardDeck {
         return TopCard;
     }
 
+    // Her har vi en metode som sørger for at vi holder os inden for arrayet
     public void setTopCard(int topKort) {
         this.TopCard = topKort;
         if(topKort > 45) {
@@ -97,7 +99,4 @@ public class CardDeck {
         }
     }
 
-    public ChanceCard[] getCardDeck() {
-        return cardDeck;
-    }
 }

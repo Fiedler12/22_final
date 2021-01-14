@@ -25,7 +25,6 @@ public class BoardController {
                 }
                 checkSubClass = (board.getFields()[i] instanceof Shipping);
                 if (checkSubClass) {
-                    Shipping shipping = (Shipping) board.getFields()[i];
                     gui_fields[5] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \nHvis 2 redderier ejes: 1.000 kr \nHvis 3 redderier ejes: 2.000 kr \nHvis 4 redderier ejes: 4.000 kr","", new Color(13,90,184),Color.black);
                     gui_fields[15] = new GUI_Shipping("default","Mols-linien","4.000 kr","Leje: 500 kr. \nHvis 2 redderier ejes: 1.000 kr \nHvis 3 redderier ejes: 2.000 kr\nHvis 4 redderier ejes: 4.000 kr","", new Color(13,90,184),Color.black);
                     gui_fields[25] = new GUI_Shipping("default","Scandlines","4.000 kr","Leje: 500 kr. \nHvis 2 redderier ejes: 1.000 kr \nHvis 3 redderier ejes: 2.000 kr\nHvis 4 redderier ejes: 4.000 kr","", new Color(13,90,184),Color.black);
@@ -34,28 +33,23 @@ public class BoardController {
                 }
                 checkSubClass = (board.getFields()[i] instanceof Brewery);
                 if (checkSubClass) {
-                    Brewery brewery = (Brewery) board.getFields()[i];
                     gui_fields[12] = new GUI_Brewery("default", "Tuborg", "3.000 kr","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
                     gui_fields[28] = new GUI_Brewery("default", "Carlsberg", "3.000 kr","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Chancefield);
                 if (checkSubClass) {
-                    Chancefield chancefield = (Chancefield) board.getFields()[i];
                     gui_fields[i] = new GUI_Chance("?","Prøv Lykken", "ta' et chancekort", Color.black, new Color(0,255,0));
                 }
                 checkSubClass = (board.getFields()[i] instanceof GoToJail);
                 if (checkSubClass) {
-                    GoToJail goToJail = (GoToJail) board.getFields()[i];
                     gui_fields[i] = new GUI_Jail("default", "Gå i fængsel", "Gå i fængsel", "Du skal i fængsel!\nFor at komme ud af fængslet skal du, i din næste tur, enten betale 1000 kr, bruge et løsladelseskort eller slå 2 ens med terningerne", new Color(125, 125, 125), Color.BLACK);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Jail);
                 if (checkSubClass) {
-                    Jail jail = (Jail) board.getFields()[i];
                     gui_fields[i] = new GUI_Jail("default", "Fængsel", "Fængsel", "Du er nu på besøg i fængslet", new Color(125, 125, 125), Color.BLACK);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Parking);
                 if (checkSubClass) {
-                    Parking parking = (Parking) board.getFields()[i];
                     gui_fields[i] = new GUI_Refuge("default", "Gratis parkering", "Parkering", "Ta' en pause, du har helle", Color.WHITE, Color.BLACK);
                 }
                 checkSubClass = (board.getFields()[i] instanceof TaxField);

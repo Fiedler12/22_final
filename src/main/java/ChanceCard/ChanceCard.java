@@ -6,8 +6,5 @@ public abstract class ChanceCard {
     public  ChanceCard(String CardText, int CardID){
         this.CardID = CardID;
         this.CardText = CardText;
-
-
     }
-
 }
