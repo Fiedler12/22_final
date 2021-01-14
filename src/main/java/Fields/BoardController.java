@@ -85,7 +85,7 @@ public class BoardController {
                     if(isStreet2) {
 
                     }
-
+                i++;
                 }
             }
         }
