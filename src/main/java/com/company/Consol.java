@@ -190,7 +190,8 @@ public class Consol {
                         case "Gå tilbage":
                             break;
                     }
-                case "Byg":
+                case "Byg hus/hotel":
+                    build(playerIndex);
                     break;
                 case "Pantsæt":
                     if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
@@ -660,6 +661,60 @@ public class Consol {
                 updateView(PlayerController.players.length);
             } //DONE
         }
+
+        public void build(int playerIndex) {
+        int counter = 0;
+        int i = 0;
+        while (i < playerController.getPlayers()[playerIndex].owns.size()) {
+            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
+            boolean checkStreet = ownable instanceof Street;
+            if(checkStreet) {
+                counter++;
+            }
+            i++;
+        }
+        int[] ownsStreets = new int[counter];
+        int i2 = 0;
+        int place = 0;
+        while (i2 < playerController.getPlayers()[playerIndex].owns.size()) {
+            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i2)];
+            boolean checkStreet = ownable instanceof Street;
+            if(checkStreet) {
+                ownsStreets[place] = playerController.getPlayers()[playerIndex].owns.get(i2);
+                place++;
+            }
+            i2++;
+        }
+        int buildCounter = 0;
+        int i3 = 0;
+        while (i3 < ownsStreets.length) {
+            Street street = (Street) boardController.getField()[ownsStreets[i3]];
+            if (street.isCanBuild()) {
+                buildCounter++;
+            }
+            i3++;
+        }
+        int[] canBuild = new int[buildCounter];
+        String[] names = new String[buildCounter];
+        int i4 = 0;
+        int place2 = 0;
+        while (i4 < ownsStreets.length) {
+            Street street = (Street) boardController.getField()[ownsStreets[i4]];
+            if (street.isCanBuild()) {
+                canBuild[place2] = ownsStreets[i4];
+                names[place2] = street.getName();
+                place2++;
+            }
+            i4++;
+        }
+        if (canBuild.length == 0) {
+            gui.getUserButtonPressed("Du har ingen grunde du kan bygge på.", "Fortsæt");
+        }
+        else {
+            String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
+        }
     }
+}
+
 
 
