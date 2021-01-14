@@ -252,30 +252,35 @@ public class Consol {
                 gui.getUserButtonPressed(ownable.getName() + " er pantsat.", "Ok");
             }
             if (ownable.getOwnedID() == -1) {
-                boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
-                if (yes) {
-                    playerController.playerBuys(playerIndex, PlayerController.players[playerIndex].getPos(), ownable.getPrice());
-                    ownable.setOwnedID(playerIndex);
-                    updateView(PlayerController.players.length);
-                    gui_ownable.setOwnerName(playerController.getPlayers()[playerIndex].getName());
-                    gui_ownable.setBorder(playerController.colors[playerIndex]);
-                    boolean isStreet = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Street);
-                    if (isStreet) {
-                        Street street = (Street) boardController.getField()[PlayerController.players[playerIndex].getPos()];
-                        int rent = street.currentRent;
-                        String stringRent;
-                        stringRent = Integer.toString(rent);
-                        gui_ownable.setRent(stringRent);
+                if (playerController.getPlayers()[playerIndex].playerAccount.getBalance() < ownable.getPrice()) {
+                    gui.showMessage("Du har ikke råd til denne grund");
+                }
+                else {
+                    boolean yes = gui.getUserLeftButtonPressed("Ønsker du at købe " + ownable.getName() + "?", "Ja", "Nej");
+                    if (yes) {
+                        playerController.playerBuys(playerIndex, PlayerController.players[playerIndex].getPos(), ownable.getPrice());
+                        ownable.setOwnedID(playerIndex);
+                        updateView(PlayerController.players.length);
+                        gui_ownable.setOwnerName(playerController.getPlayers()[playerIndex].getName());
+                        gui_ownable.setBorder(playerController.colors[playerIndex]);
+                        boolean isStreet = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Street);
+                        if (isStreet) {
+                            Street street = (Street) boardController.getField()[PlayerController.players[playerIndex].getPos()];
+                            int rent = street.currentRent;
+                            String stringRent;
+                            stringRent = Integer.toString(rent);
+                            gui_ownable.setRent(stringRent);
+                        }
+                        boolean isShipping = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Shipping);
+                        if (isShipping) {
+                            PlayerController.players[playerIndex].setShippingOwned(PlayerController.players[playerIndex].getShippingOwned() + 1);
+                        }
+                        boolean isBrewery = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Brewery);
+                        if (isBrewery) {
+                            PlayerController.players[playerIndex].setBreweryOwned(PlayerController.players[playerIndex].getBreweryOwned() + 1);
+                        }
+                        gui.getUserButtonPressed("Du har nu købt " + ownable.getName(), "Ok");
                     }
-                    boolean isShipping = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Shipping);
-                    if (isShipping) {
-                        PlayerController.players[playerIndex].setShippingOwned(PlayerController.players[playerIndex].getShippingOwned() + 1);
-                    }
-                    boolean isBrewery = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Brewery);
-                    if (isBrewery) {
-                        PlayerController.players[playerIndex].setBreweryOwned(PlayerController.players[playerIndex].getBreweryOwned() + 1);
-                    }
-                    gui.getUserButtonPressed("Du har nu købt " + ownable.getName(), "Ok");
                 }
             } else if (ownable.getOwnedID() == playerController.getPlayers()[playerIndex].getPlayerID()) {
                 gui.displayChanceCard("Du ejer selv dette felt.");
@@ -642,7 +647,7 @@ public class Consol {
             if (checkReceiveMoney) {
                 ReceiveMoney receiveMoney = (ReceiveMoney) card;
                 if (cardDeck.receiveID() == 24){
-                    if (player.playerAccount.getBalance() <= 12000){
+                    if (player.playerAccount.getBalance() <= 5000){
                         player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
                     }
                     else {
