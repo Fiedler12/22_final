@@ -1,6 +1,5 @@
 package Fields;
 
-import com.company.PlayerController;
 import gui_fields.*;
 
 import java.awt.*;
@@ -62,7 +61,7 @@ public class BoardController {
                 checkSubClass = (board.getFields()[i] instanceof TaxField);
                 if (checkSubClass) {
                     gui_fields[4] = new GUI_Tax("Betal indkomstskat", "","Du skal enten betale 10% af dine værdier eller 4.000 kr",new Color(100,225,247),Color.BLACK);
-                    gui_fields[38] = new GUI_Tax("Ekstra ordinær statskat", "Betal 2.000 kr","Du betaler nu 2.000kr til banken.",new Color(100,225,247),Color.BLACK);
+                    gui_fields[38] = new GUI_Tax("Ekstraordinær statskat", "Betal 2.000 kr","Du betaler nu 2.000kr til banken.",new Color(100,225,247),Color.BLACK);
                 }
                 i++;
             }
@@ -75,20 +74,102 @@ public class BoardController {
     public Field[] getField() {return board.fields;}
 
     public void checkFields() {
-        int sameowner = 0;
-        int latestID = 0;
-        while (latestID < 40) {
-            boolean isStreet = (getField()[latestID] instanceof Street);
-            if(isStreet) {
-                int i = 0;
-                while (i < 3) {
-                    boolean isStreet2 = (getField()[latestID++] instanceof Street);
-                    if(isStreet2) {
-
-                    }
-                }
-            }
+        Street rødorvevej = (Street) board.getFields()[1];
+        Street hvidovrevej = (Street) board.getFields()[3];
+        if (rødorvevej.getOwnedID() == hvidovrevej.getOwnedID() && rødorvevej.getOwnedID() != -1) {
+            rødorvevej.setCanBuild(true);
+            hvidovrevej.setCanBuild(true);
         }
+        else {
+            rødorvevej.setCanBuild(false);
+            hvidovrevej.setCanBuild(false);
+        }
+        Street roskildevej = (Street) board.getFields()[6];
+        Street valbyLanggade = (Street) board.getFields()[8];
+        Street allegade = (Street) board.getFields()[9];
+
+        if (roskildevej.getOwnedID() > -1 && roskildevej.getOwnedID() == valbyLanggade.getOwnedID() && valbyLanggade.getOwnedID() == allegade.getOwnedID()) {
+          roskildevej.setCanBuild(true);
+          valbyLanggade.setCanBuild(true);
+          allegade.setCanBuild(true);
+        }
+        else {
+            roskildevej.setCanBuild(false);
+            valbyLanggade.setCanBuild(false);
+            allegade.setCanBuild(false);
+        }
+        Street frederiksbergAlle = (Street) board.getFields()[11];
+        Street bulowsvej = (Street) board.getFields()[13];
+        Street glKongevej = (Street) board.getFields()[14];
+
+        if (frederiksbergAlle.getOwnedID() < -1 && frederiksbergAlle.getOwnedID() == bulowsvej.getOwnedID() && bulowsvej.getOwnedID() == glKongevej.getOwnedID()) {
+            frederiksbergAlle.setCanBuild(true);
+            bulowsvej.setCanBuild(true);
+            glKongevej.setCanBuild(true);
+        } else {
+            frederiksbergAlle.setCanBuild(false);
+            bulowsvej.setCanBuild(false);
+            glKongevej.setCanBuild(false);
+        }
+        Street bernstorffsvej = (Street) board.getFields()[16];
+        Street hellerupvej = (Street) board.getFields()[18];
+        Street strandvejen  = (Street) board.getFields()[19];
+
+        if (bernstorffsvej.getOwnedID() < -1 && bernstorffsvej.getOwnedID() == hellerupvej.getOwnedID() && hellerupvej.getOwnedID() == strandvejen.getOwnedID()) {
+            bernstorffsvej.setCanBuild(true);
+            bulowsvej.setCanBuild(true);
+            glKongevej.setCanBuild(true);
+        } else {
+            bernstorffsvej.setCanBuild(false);
+            hellerupvej.setCanBuild(false);
+            glKongevej.setCanBuild(false);
+        }
+        Street trianglen = (Street) board.getFields()[21];
+        Street osterbrogade = (Street) board.getFields()[23];
+        Street gronningen = (Street) board.getFields()[24];
+        if (trianglen.getOwnedID() < -1 && trianglen.getOwnedID() == osterbrogade.getOwnedID() && osterbrogade.getOwnedID() == gronningen.getOwnedID()) {
+            trianglen.setCanBuild(true);
+            osterbrogade.setCanBuild(true);
+            gronningen.setCanBuild(true);
+        } else {
+            trianglen.setCanBuild(false);
+            osterbrogade.setCanBuild(false);
+            gronningen.setCanBuild(false);
+        }
+        Street bredgade = (Street) board.getFields()[26];
+        Street kgsNytorv = (Street) board.getFields()[27];
+        Street ostergade = (Street) board.getFields()[29];
+        if(bredgade.getOwnedID() < -1 && bredgade.getOwnedID() == kgsNytorv.getOwnedID() && kgsNytorv.getOwnedID() == ostergade.getOwnedID()) {
+            bredgade.setCanBuild(true);
+            kgsNytorv.setCanBuild(true);
+            ostergade.setCanBuild(true);
+        } else {
+            bredgade.setCanBuild(false);
+            kgsNytorv.setCanBuild(false);
+            ostergade.setCanBuild(false);
+        }
+        Street amagerTorv = (Street) board.getFields()[31];
+        Street vimmelskaftet = (Street) board.getFields()[32];
+        Street nygade = (Street) board.getFields()[34];
+        if(amagerTorv.getOwnedID() < -1 && amagerTorv.getOwnedID() == vimmelskaftet.getOwnedID() && vimmelskaftet.getOwnedID() == nygade.getOwnedID()) {
+            amagerTorv.setCanBuild(true);
+            vimmelskaftet.setCanBuild(true);
+            nygade.setCanBuild(true);
+        } else {
+            amagerTorv.setCanBuild(false);
+            vimmelskaftet.setCanBuild(false);
+            nygade.setCanBuild(false);
+        }
+        Street frederiksberggade = (Street) board.getFields()[37];
+        Street radhuspladsen = (Street) board.getFields()[39];
+        if(frederiksberggade.getOwnedID() < -1 && frederiksberggade.getOwnedID() == radhuspladsen.getOwnedID()) {
+            frederiksberggade.setCanBuild(true);
+            radhuspladsen.setCanBuild(true);
+        } else {
+            frederiksberggade.setCanBuild(false);
+            radhuspladsen.setCanBuild(false);
+        }
+
     }
 
 }
