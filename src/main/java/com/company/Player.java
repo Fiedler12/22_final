@@ -14,6 +14,7 @@ public class Player {
     int breweryOwned;
     boolean inJail;
     boolean hasJailCard;
+    boolean bankrupt;
     List<Integer> owns = new ArrayList<Integer>();
     List<Integer> pawned = new ArrayList<Integer>();
 
@@ -116,5 +117,14 @@ public class Player {
     public void setBreweryOwned(int breweryOwned) {
         this.breweryOwned = breweryOwned;
     }
+
+    public boolean isBankrupt() {
+        return bankrupt;
+    }
+
+    public void setBankrupt(boolean bankrupt) {
+        this.bankrupt = bankrupt;
+    }
 }
+
 
