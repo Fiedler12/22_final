@@ -66,7 +66,7 @@ public class Consol {
             }
             if (PlayerController.players[playerIndex].isInJail()) {
                 if (PlayerController.players[playerIndex].isHasJailCard()) {
-                    boolean selection = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du bruge dit 'kom-ud-af-fængselskort'", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
+                    boolean selection = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " du er i fængsel og da du har et 'kom-ud-af-fængsel' -kort kan du bruge det for at komme ud\nVil du bruge dit 'kom-ud-af-fængsel' -kort", "Brug fængselskort", "Betal eller prøv at slå 2 ens med terningerne");
                     if (selection) {
                         PlayerController.players[playerIndex].setHasJailCard(false);
                         PlayerController.players[playerIndex].setInJail(false);
@@ -99,7 +99,7 @@ public class Consol {
                         }
                     }
                 } else {
-                    boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " vil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
+                    boolean selection1 = gui.getUserLeftButtonPressed(PlayerController.players[playerIndex].getName() + " du er i fængsel og disse muligheder for at komme ud\nVil du prøve at slå 2 ens eller betale 1000 kr", "Prøv at slå 2 ens", "Betal 1000 kr");
                     if (selection1) {
                         int t = 3;
                         while (t > 0) {
@@ -236,6 +236,7 @@ public class Consol {
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
         playerController.movePlayer(playerIndex, dice.getTotal());
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+        updateView(playerController.getPlayers().length);
     }
     public void checkSubClasses (int playerIndex){
         boolean checkOwnable = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Ownable);
