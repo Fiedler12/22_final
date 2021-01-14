@@ -35,7 +35,7 @@ public class CardDeck {
         cardDeck[21] = new ReceiveMoney("Deres præmieobligation er udtrykket, de modtager 1000kr",21,1000);
         cardDeck[22] = new ReceiveMoney("De har solgt nogle gamle møbler på auktion, modtag 1000kr",22,1000);
         cardDeck[23] = new ReceiveMoney("Værdien af egen avl fra nyttehaven udgør 200kr som de modtager",23,200);
-        cardDeck[24] = new ReceiveMoney("De modtager Matador-legatet på 40000kr, men kun hvis dine værdier ikke overstiger 15000",24,40000);
+        cardDeck[24] = new ReceiveMoney("De modtager Matador-legatet på 40000kr, men kun hvis din konto ikke overstiger 5000kr",24,40000);
         cardDeck[25] = new MoneyFromPlayer("Det er deres fødselsdag, motag 200 kr fra hver medspiller",25,200);
         cardDeck[26] = new MoneyFromPlayer("De har lagt penge ud til et sammenskudsgilde. Mærkværdigvis betaler alle straks, modtag 500kr fra hver medspiller",26,500);
         cardDeck[27] = new MoneyFromPlayer("De skal holde familiefest og får et tilskud fra hver medspiller på 500kr",27,500);
