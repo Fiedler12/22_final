@@ -717,7 +717,7 @@ public class Consol {
                 if (canBuild.length == 0) {
                     gui.getUserButtonPressed("Du har ingen grunde du kan bygge på.", "Fortsæt");
                 } else {
-                    String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
+                    String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at bygge på? ", names);
                 }
             }
         }
