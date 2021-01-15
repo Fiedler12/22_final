@@ -186,11 +186,9 @@ public class Consol {
                                 if (idChosen == playerIndex) {
                                     gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
                                     break;
-                                }
-                                else if (playerController.getPlayers()[idChosen].owns.size() != 0 && idChosen != playerIndex) {
+                                } else if (playerController.getPlayers()[idChosen].owns.size() != 0 && idChosen != playerIndex) {
                                     trade(playerIndex, idChosen);
-                                }
-                                else if (playerController.getPlayers()[idChosen].owns.size() == 0) {
+                                } else if (playerController.getPlayers()[idChosen].owns.size() == 0) {
                                     gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
                                 }
                                 break;
@@ -200,7 +198,7 @@ public class Consol {
                             sellHouse(playerIndex);
                             break;
 
-                            case "Gå tilbage":
+                        case "Gå tilbage":
                             break;
                     }
                     break;
@@ -262,7 +260,8 @@ public class Consol {
         gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
         updateView(playerController.getPlayers().length);
     }
-    public void checkSubClasses (int playerIndex){
+
+    public void checkSubClasses(int playerIndex) {
         boolean checkOwnable = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Ownable);
         if (checkOwnable) {
             Ownable ownable = (Ownable) boardController.getField()[PlayerController.players[playerIndex].getPos()];
@@ -322,7 +321,7 @@ public class Consol {
                         ((Shipping) ownable).landOnowned(2);
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - ((Shipping) ownable).getToPay());
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + ((Shipping) ownable).getToPay());
-                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 1000 kr. fordi han ejer 1 andet rederi","Betal");
+                        gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 1000 kr. fordi han ejer 1 andet rederi", "Betal");
                         updateView(PlayerController.players.length);
                     } else if (PlayerController.players[ownable.getOwnedID()].getShippingOwned() == 3) {
                         ((Shipping) ownable).landOnowned(3);
@@ -338,9 +337,10 @@ public class Consol {
                         updateView(PlayerController.players.length);
                     }
                     gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
-                } boolean checkBrewery = (ownable instanceof Brewery);
-                if(checkBrewery) {
-                if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
+                }
+                boolean checkBrewery = (ownable instanceof Brewery);
+                if (checkBrewery) {
+                    if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
                         int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + toPay);
@@ -348,7 +348,7 @@ public class Consol {
                         updateView(PlayerController.players.length);
 
 
-                } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
+                    } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
                         int toPay = dice.getTotal() * 200;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
@@ -358,19 +358,19 @@ public class Consol {
                 }
             }
         }
-            boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
-            if (checkGoToJail) {
-                gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
-                PlayerController.players[playerIndex].setInJail(true);
-                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                GoToJail goToJail = new GoToJail(30, 10);
-                PlayerController.players[playerIndex].setPos(goToJail.getPrison());
-                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-            }
-            boolean checkChanceField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Chancefield);
-            if (checkChanceField) {
-                pullCard(PlayerController.players[playerIndex].playerID);
-            }
+        boolean checkGoToJail = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof GoToJail);
+        if (checkGoToJail) {
+            gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + " du er landet på 'Gå i fængsel' -feltet. Du ryger nu i fængsel uden at modtage penge for at passere start", "Fortsæt");
+            PlayerController.players[playerIndex].setInJail(true);
+            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+            GoToJail goToJail = new GoToJail(30, 10);
+            PlayerController.players[playerIndex].setPos(goToJail.getPrison());
+            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+        }
+        boolean checkChanceField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof Chancefield);
+        if (checkChanceField) {
+            pullCard(PlayerController.players[playerIndex].playerID);
+        }
 
         boolean checkTaxField = (boardController.getField()[PlayerController.players[playerIndex].getPos()] instanceof TaxField);
         if (checkTaxField) {
@@ -402,23 +402,23 @@ public class Consol {
         checkPlayerAccount(playerIndex);
     }
 
-        public void checkPlayerAccount (int playerIndex) {
-            Player player = playerController.getPlayers()[playerIndex];
+    public void checkPlayerAccount(int playerIndex) {
+        Player player = playerController.getPlayers()[playerIndex];
 
-            while (player.playerAccount.getBalance() < 0) {
-                String fallit = gui.getUserButtonPressed(player.getName() + ", du har ikke råd til at betale det du skal, du har nu disse muligheder", "Pantsæt grund", "Sælg hus/hotel", "Giv op");
-                switch (fallit) {
-                    case "Pantsæt grund":
-                        playerPawns(playerIndex);
-                        updateView(PlayerController.players.length);
-                        if (player.playerAccount.getBalance() >= 0) {
-                            gui.showMessage("Du har nu nok penge til at betale det du skylder");
-                            break;
-                        } else {
-                            gui.showMessage("Du har stadig ikke nok penge til at betale det du skylder");
-                        }
-                    case "Sælg hus/hotel":
+        while (player.playerAccount.getBalance() < 0) {
+            String fallit = gui.getUserButtonPressed(player.getName() + ", du har ikke råd til at betale det du skal, du har nu disse muligheder", "Pantsæt grund", "Sælg hus/hotel", "Giv op");
+            switch (fallit) {
+                case "Pantsæt grund":
+                    playerPawns(playerIndex);
+                    updateView(PlayerController.players.length);
+                    if (player.playerAccount.getBalance() >= 0) {
+                        gui.showMessage("Du har nu nok penge til at betale det du skylder");
                         break;
+                    } else {
+                        gui.showMessage("Du har stadig ikke nok penge til at betale det du skylder");
+                    }
+                case "Sælg hus/hotel":
+                    break;
 
                 case "Giv op":
                     player.playerAccount.setBalance(0);
@@ -618,65 +618,63 @@ public class Consol {
             //DONE
         }
 
-            boolean checkMoveToShipping = (card instanceof MoveToShipping);
-            if (checkMoveToShipping) {
-                while (true) {
-                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                    player.setPos(player.getPos() + 1);
-                    boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
-                    if (Shipping) {
-                        gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                        break;
-                    }
+        boolean checkMoveToShipping = (card instanceof MoveToShipping);
+        if (checkMoveToShipping) {
+            while (true) {
+                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                player.setPos(player.getPos() + 1);
+                boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
+                if (Shipping) {
+                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                    break;
                 }
-                if (cardDeck.receiveID() == 39){
-                    checkSubClasses(playerIndex);
-                }
-               // else {
-              //      if ()
-             //       checkSubClasses(playerIndex);
-            //        updateView(PlayerController.players.length);
-               // }
             }
-
-            boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
-            if (checkMoveToSpecific) {
-                MovetoSpecific movetoSpecific = (MovetoSpecific) card;
-                while (player.getPos() != movetoSpecific.getFieldID()) {
-                    gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                    player.setPos(player.getPos() + 1);
-                }
-                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                updateView(PlayerController.players.length);
+            if (cardDeck.receiveID() == 39) {
                 checkSubClasses(playerIndex);
-                updateView(PlayerController.players.length);
             }
-
-            boolean checkPayMoney = (card instanceof PayMoney);
-            if (checkPayMoney) {
-                PayMoney payMoney = (PayMoney) card;
-                player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
-                updateView(PlayerController.players.length);
-            } //DONE
-
-
-            boolean checkReceiveMoney = (card instanceof ReceiveMoney);
-            if (checkReceiveMoney) {
-                ReceiveMoney receiveMoney = (ReceiveMoney) card;
-                if (cardDeck.receiveID() == 24){
-                    if (player.playerAccount.getBalance() <= 5000){
-                        player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
-                    }
-                    else {
-                        gui.showMessage("Du har for mange penge på din konto til at modtage legatet");
-                    }
-                }
-                else {
-                    player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
-                }
-                updateView(PlayerController.players.length);
-            } //DONE
+            // else {
+            //      if ()
+            //       checkSubClasses(playerIndex);
+            //        updateView(PlayerController.players.length);
+            // }
         }
+
+        boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
+        if (checkMoveToSpecific) {
+            MovetoSpecific movetoSpecific = (MovetoSpecific) card;
+            while (player.getPos() != movetoSpecific.getFieldID()) {
+                gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                player.setPos(player.getPos() + 1);
+            }
+            gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+            updateView(PlayerController.players.length);
+            checkSubClasses(playerIndex);
+            updateView(PlayerController.players.length);
+        }
+
+        boolean checkPayMoney = (card instanceof PayMoney);
+        if (checkPayMoney) {
+            PayMoney payMoney = (PayMoney) card;
+            player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
+            updateView(PlayerController.players.length);
+        } //DONE
+
+
+        boolean checkReceiveMoney = (card instanceof ReceiveMoney);
+        if (checkReceiveMoney) {
+            ReceiveMoney receiveMoney = (ReceiveMoney) card;
+            if (cardDeck.receiveID() == 24) {
+                if (player.playerAccount.getBalance() <= 5000) {
+                    player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+                } else {
+                    gui.showMessage("Du har for mange penge på din konto til at modtage legatet");
+                }
+            } else {
+                player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
+            }
+            updateView(PlayerController.players.length);
+        } //DONE
+    }
 
     public void build(int playerIndex) {
         int counter = 0;
@@ -768,7 +766,8 @@ public class Consol {
                 }
             }
         }
-        public void build(int playerIndex) {
+    }
+        public void sellHouse (int playerIndex){
             int counter = 0;
             int i = 0;
             while (i < playerController.getPlayers()[playerIndex].owns.size()) {
@@ -802,160 +801,62 @@ public class Consol {
                     i3++;
                 }
                 int[] canBuild = new int[buildCounter];
-                String[] names = new String[buildCounter];
                 int i4 = 0;
                 int place2 = 0;
                 while (i4 < ownsStreets.length) {
                     Street street = (Street) boardController.getField()[ownsStreets[i4]];
                     if (street.isCanBuild()) {
                         canBuild[place2] = ownsStreets[i4];
-                        names[place2] = street.getName();
                         place2++;
                     }
                     i4++;
                 }
-                if (canBuild.length == 0) {
-                    gui.getUserButtonPressed("Du har ingen grunde du kan bygge på.", "Fortsæt");
+                int houseBuildCounter = 0;
+                for (int j = 0; j < canBuild.length; j++) {
+                    Street street = (Street) boardController.getField()[canBuild[j]];
+                    if (street.getHouseCount() != 0) {
+                        houseBuildCounter++;
+                    }
+                }
+                int[] streetsWithHouse = new int[houseBuildCounter];
+                String[] names = new String[houseBuildCounter];
+                int place3 = 0;
+                for (int j = 0; j < canBuild.length; j++) {
+                    Street street = (Street) boardController.getField()[canBuild[j]];
+                    if (street.getHouseCount() != 0) {
+                        streetsWithHouse[place3] = canBuild[j];
+                        names[place3] = street.getName();
+                        place3++;
+                    }
+                }
+                if (names.length == 0) {
+                    gui.showMessage("Du har ikke nogen huse at sælge.");
                 } else {
                     String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at bygge på? ", names);
-                    int streetChosen;
-                    for (streetChosen = 0; streetChosen < names.length; streetChosen++) {
-                        boolean chosen = names[streetChosen].equals(chosenElement);
+                    int houseChosen;
+                    for (houseChosen = 0; houseChosen < names.length; houseChosen++) {
+                        boolean chosen = names[houseChosen].equals(chosenElement);
                         if (chosen) {
                             break;
                         }
                     }
-                    Street buildOnStreet = (Street) boardController.getField()[canBuild[streetChosen]];
-                    GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[streetChosen]];
-                    boolean equalBuild = true;
-                    for (int j = 0; j < canBuild.length && equalBuild; j++) {
-                        Street compareStreet = (Street) boardController.getField()[canBuild[j]];
-                        if (buildOnStreet.getMainColor().equals(compareStreet.getMainColor())) {
-                            if (buildOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
-                                equalBuild = false;
-                                break;
-                            } else {
-                                equalBuild = true;
-                            }
-                        }
-                    }
-                            if (equalBuild) {
-                                if (playerController.getPlayers()[playerIndex].playerAccount.getBalance() >= buildOnStreet.getHousePrice()) {
-                                    if (buildOnStreet.getHouseCount() < 4) {
-                                        buildOnStreet.build(1);
-                                        buildGui_Street.setHouses(buildOnStreet.getHouseCount());
-                                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
-                                        gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
-                                    } else if (buildOnStreet.getHouseCount() == 5) {
-                                        gui.getUserButtonPressed("Du kan ikke bygge mere på denne grund.", "Fortsæt");
-                                    } else {
-                                        buildOnStreet.build(1);
-                                        buildGui_Street.setHotel(true);
-                                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
-                                        gui.getUserButtonPressed("Du har nu bygget et hotel på: " + buildOnStreet.getName(), "Fortsæt");
-                                    }
-                                }
-                                else {
-                                    gui.showMessage("Du har ikke råd til det hus/hotel");
-                                }
-                            }
-                            else {
-                                gui.getUserButtonPressed("Du skal bygge ligeligt på dine grunde af samme farve.", "Fortsæt");
-                            }
-                }
-            }
-    }
-
-    public void sellHouse(int playerIndex) {
-        int counter = 0;
-        int i = 0;
-        while (i < playerController.getPlayers()[playerIndex].owns.size()) {
-            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
-            boolean checkStreet = ownable instanceof Street;
-            if (checkStreet) {
-                counter++;
-            }
-            i++;
-        }
-        int[] ownsStreets = new int[counter];
-        int i2 = 0;
-        int place = 0;
-        while (i2 < playerController.getPlayers()[playerIndex].owns.size()) {
-            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i2)];
-            boolean checkStreet = ownable instanceof Street;
-            if (checkStreet) {
-                ownsStreets[place] = playerController.getPlayers()[playerIndex].owns.get(i2);
-                place++;
-            }
-            i2++;
-        }
-        if (ownsStreets.length != 0) {
-            int buildCounter = 0;
-            int i3 = 0;
-            while (i3 < ownsStreets.length) {
-                Street street = (Street) boardController.getField()[ownsStreets[i3]];
-                if (street.isCanBuild()) {
-                    buildCounter++;
-                }
-                i3++;
-            }
-            int[] canBuild = new int[buildCounter];
-            int i4 = 0;
-            int place2 = 0;
-            while (i4 < ownsStreets.length) {
-                Street street = (Street) boardController.getField()[ownsStreets[i4]];
-                if (street.isCanBuild()) {
-                    canBuild[place2] = ownsStreets[i4];
-                    place2++;
-                }
-                i4++;
-            }
-            int houseBuildCounter = 0;
-            for (int j = 0; j < canBuild.length; j++) {
-                Street street = (Street) boardController.getField()[canBuild[j]];
-                if (street.getHouseCount() != 0) {
-                    houseBuildCounter++;
-                }
-            }
-            int[] streetsWithHouse = new int[houseBuildCounter];
-            String[] names = new String[houseBuildCounter];
-            int place3 = 0;
-            for (int j = 0; j < canBuild.length; j++) {
-                Street street = (Street) boardController.getField()[canBuild[j]];
-                if (street.getHouseCount() != 0) {
-                    streetsWithHouse[place3] = canBuild[j];
-                    names[place3] = street.getName();
-                    place3++;
-                }
-            }
-            if(names.length == 0) {
-                gui.showMessage("Du har ikke nogen huse at sælge.");
-            }
-            else {
-                String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at bygge på? ", names);
-                int houseChosen;
-                for (houseChosen = 0; houseChosen < names.length; houseChosen++) {
-                    boolean chosen = names[houseChosen].equals(chosenElement);
-                    if (chosen) {
-                        break;
+                    Street sellHouseOnStreet = (Street) boardController.getField()[canBuild[houseChosen]];
+                    GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
+                    if (sellHouseOnStreet.getHouseCount() == 5) {
+                        sellHouseOnStreet.sellHouse(1);
+                        buildGui_Street.setHotel(false);
+                        buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
+                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - (sellHouseOnStreet.getHousePrice() / 2));
+                    } else {
+                        sellHouseOnStreet.sellHouse(1);
+                        buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
+                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - (sellHouseOnStreet.getHousePrice() / 2));
                     }
                 }
-                Street sellHouseOnStreet = (Street) boardController.getField()[canBuild[houseChosen]];
-                GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
-                if (sellHouseOnStreet.getHouseCount() == 5) {
-                    sellHouseOnStreet.sellHouse(1);
-                    buildGui_Street.setHotel(false);
-                    buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                    playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - (sellHouseOnStreet.getHousePrice() / 2));
-                } else {
-                    sellHouseOnStreet.sellHouse(1);
-                    buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                    playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - (sellHouseOnStreet.getHousePrice() / 2));
-                }
-            }
             }
         }
 }
+
 
 
 
