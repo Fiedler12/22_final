@@ -728,14 +728,30 @@ public class Consol {
                     }
                     Street buildOnStreet = (Street) boardController.getField()[canBuild[streetChosen]];
                     GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[streetChosen]];
-                    for (int j = 0; j < canBuild.length; j++) {
-
+                    boolean equalBuild = true;
+                    for (int j = 0; j < canBuild.length && equalBuild; j++) {
+                        Street compareStreet = (Street) boardController.getField()[canBuild[j]];
+                        if (buildOnStreet.getMainColor().equals(compareStreet.getMainColor())) {
+                            if (buildOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
+                                equalBuild = false;
+                                break;
+                            } else {
+                                equalBuild = true;
+                            }
+                        }
                     }
-                    buildOnStreet.build(1);
-                    buildGui_Street.setHouses(1);
+                            if (equalBuild) {
+                                buildOnStreet.build(1);
+                                buildGui_Street.setHouses(buildOnStreet.getHouseCount());
+                                gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
+
+                            }
+                            else {
+                                gui.getUserButtonPressed("Du skal bygge ligeligt på dine grunde af samme farve.", "Fortsæt");
+                            }
                 }
             }
-        }
+    }
 }
 
 
