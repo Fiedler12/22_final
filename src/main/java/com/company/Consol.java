@@ -828,17 +828,21 @@ public class Consol {
                     place3++;
                 }
             }
-            String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at bygge på? ", names);
-            int houseChosen;
-            for (houseChosen = 0; houseChosen < names.length; houseChosen++) {
-                boolean chosen = names[houseChosen].equals(chosenElement);
-                if (chosen) {
-                    break;
-                }
+            if(names.length == 0) {
+                gui.showMessage("Du har ikke nogen huse at sælge.");
             }
+            else {
+                String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at bygge på? ", names);
+                int houseChosen;
+                for (houseChosen = 0; houseChosen < names.length; houseChosen++) {
+                    boolean chosen = names[houseChosen].equals(chosenElement);
+                    if (chosen) {
+                        break;
+                    }
+                }
                 Street sellHouseOnStreet = (Street) boardController.getField()[canBuild[houseChosen]];
                 GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
-                if(sellHouseOnStreet.getHouseCount() == 5) {
+                if (sellHouseOnStreet.getHouseCount() == 5) {
                     sellHouseOnStreet.sellHouse(1);
                     buildGui_Street.setHotel(false);
                     buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
@@ -848,6 +852,7 @@ public class Consol {
                     buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
                     playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - (sellHouseOnStreet.getHousePrice() / 2));
                 }
+            }
             }
         }
 }
