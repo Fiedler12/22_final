@@ -53,6 +53,7 @@ public class Consol {
             gui.getUserButtonPressed(PlayerController.players[var2].getName() + ", det er din tur, tryk på knappen for at slå", "Kast terningerne");
             playerRolls(var2);
             checkSubClasses(var2);
+            ekstraTur(var2);
             var2++;
 
         }
@@ -226,17 +227,7 @@ public class Consol {
                     turn(playerIndex);
                 }
                 updateView(playerController.getPlayers().length);
-
-            int t = 1;
-            while (t<3);
-            if (dice.die1 == dice.die2);
-            gui.getUserButtonPressed("Du har slået to ens og derfor får du et ekstra slag", "Slå igen");
-            gui.getFields()[playerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex],false);
-            PlayerController.movePlayer(playerIndex,dice.getTotal());
-            gui.getFields()[playerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex],true);
-            checkSubClasses(playerIndex);
-
-
+                ekstraTur(playerIndex);
 
         }
 
@@ -581,6 +572,41 @@ public class Consol {
                 }
                 updateView(PlayerController.players.length);
             } //DONE
+        }
+        public void ekstraTur(int playerIndex){
+            int t = 0;
+            while (t<2) {
+                if (dice.die1 == dice.die2) {
+                    gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", du har slået to ens. Tryk på knappen og slå en gang til", "Kast terningerne");
+                    dice.roll();
+                    gui.setDice(dice.die1, dice.die2);
+                    gui.getUserButtonPressed("Du har slået: " + dice.getTotal(), "Ok");
+                    t++;
+                    if (t==2){
+                        break;
+                    }
+                    gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                    playerController.movePlayer(playerIndex, dice.getTotal());
+                    gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                    updateView(playerController.getPlayers().length);
+                    checkSubClasses(playerIndex);
+                }
+                else {
+                    break;
+                }
+            }
+
+            if (t==2) {
+                gui.showMessage(playerController.getPlayers()[playerIndex].getName() + " har slået to ens 3 gange i træk og ryger i fængsel.");
+                GoToJail goToJail = new GoToJail(30,10);
+                playerController.getPlayers()[playerIndex].setInJail(true);
+                gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                playerController.getPlayers()[playerIndex].setPos(goToJail.getPrison());
+                gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                playerController.getPlayers()[playerIndex].setInJail(true);
+                updateView(PlayerController.players.length);
+
+            }
         }
     }
 
