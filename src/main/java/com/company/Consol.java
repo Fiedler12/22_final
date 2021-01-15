@@ -428,6 +428,12 @@ public class Consol {
                     updateView(PlayerController.players.length);
                     gui.showMessage(player.getName() + " du er erklæret fallit og er nu ude af spillet");
                     playersGivenUp++;
+                    for (int i = 0; i < player.owns.size(); i++) {
+                        Ownable ownable = (Ownable) boardController.getField()[player.owns.get(i)];
+                        GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[i];
+                        ownable.setOwnedID(-1);
+                        gui_ownable.setBorder(null);
+                    }
                     break;
             }
         }
@@ -594,16 +600,92 @@ public class Consol {
         }
 
         boolean checkIncreasePrice = (card instanceof IncreasePrice);
-
+        if (checkIncreasePrice) {
+            IncreasePrice increasePrice = (IncreasePrice) card;
+            int counter = 0;
+            int i = 0;
+            while (i < playerController.getPlayers()[playerIndex].owns.size()) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
+                boolean checkStreet = ownable instanceof Street;
+                if (checkStreet) {
+                    counter++;
+                }
+                i++;
+            }
+            int[] ownsStreets = new int[counter];
+            int i2 = 0;
+            int place = 0;
+            while (i2 < playerController.getPlayers()[playerIndex].owns.size()) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i2)];
+                boolean checkStreet = ownable instanceof Street;
+                if (checkStreet) {
+                    ownsStreets[place] = playerController.getPlayers()[playerIndex].owns.get(i2);
+                    place++;
+                }
+                i2++;
+            }
+            if (ownsStreets.length != 0) {
+                int buildCounter = 0;
+                int i3 = 0;
+                while (i3 < ownsStreets.length) {
+                    Street street = (Street) boardController.getField()[ownsStreets[i3]];
+                    if (street.isCanBuild()) {
+                        buildCounter++;
+                    }
+                    i3++;
+                }
+                int[] canBuild = new int[buildCounter];
+                int i4 = 0;
+                int place2 = 0;
+                while (i4 < ownsStreets.length) {
+                    Street street = (Street) boardController.getField()[ownsStreets[i4]];
+                    if (street.isCanBuild()) {
+                        canBuild[place2] = ownsStreets[i4];
+                        place2++;
+                    }
+                    i4++;
+                }
+                int houseBuildCounter = 0;
+                for (int j = 0; j < canBuild.length; j++) {
+                    Street street = (Street) boardController.getField()[canBuild[j]];
+                    if (street.getHouseCount() != 0) {
+                        houseBuildCounter++;
+                    }
+                }
+                int[] streetsWithHouse = new int[houseBuildCounter];
+                int place3 = 0;
+                for (int j = 0; j < canBuild.length; j++) {
+                    Street street = (Street) boardController.getField()[canBuild[j]];
+                    if (street.getHouseCount() != 0) {
+                        streetsWithHouse[place3] = canBuild[j];
+                        place3++;
+                    }
+                }
+                int houseCounter = 0;
+                int hotelCounter = 0;
+                for (int j = 0; j < streetsWithHouse.length; j++) {
+                    Street street = (Street) boardController.getField()[streetsWithHouse[j]];
+                    if (street.getHouseCount() < 5) {
+                        houseCounter = houseCounter + street.getHouseCount();
+                    }
+                    else if (street.getHouseCount() == 5) {
+                        hotelCounter++;
+                    }
+                }
+                player.playerAccount.setBalance(player.playerAccount.getBalance() - ((hotelCounter * increasePrice.getPrHotel()) + (houseCounter * increasePrice.getPrHouse())));
+            }
+        }
 
         boolean checkMoneyFromPlayer = (card instanceof MoneyFromPlayer);
         if (checkMoneyFromPlayer) {
             MoneyFromPlayer moneyFromPlayer = (MoneyFromPlayer) card;
-            player.playerAccount.setBalance(player.playerAccount.getBalance() + (PlayerController.players.length) * moneyFromPlayer.getReceiveFromPlayer());
+            player.playerAccount.setBalance(player.playerAccount.getBalance() + ((PlayerController.players.length) - playersGivenUp) * moneyFromPlayer.getReceiveFromPlayer());
             int i = 0;
             while (i < PlayerController.players.length) {
-                PlayerController.players[i].playerAccount.setBalance(PlayerController.players[i].playerAccount.getBalance() - moneyFromPlayer.getReceiveFromPlayer());
-                i++;
+                if (!playerController.getPlayers()[i].isBankrupt()) {
+                    PlayerController.players[i].playerAccount.setBalance(PlayerController.players[i].playerAccount.getBalance() - moneyFromPlayer.getReceiveFromPlayer());
+                    i++;
+                }
             }
             updateView(PlayerController.players.length);
         }
@@ -824,7 +906,7 @@ public class Consol {
                 if (names.length == 0) {
                     gui.showMessage("Du har ikke nogen huse at sælge.");
                 } else {
-                    String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at bygge på? ", names);
+                    String chosenElement = gui.getUserSelection("Fra hvilken grund ønsker du at sælge en bygning? ", names);
                     int houseChosen;
                     for (houseChosen = 0; houseChosen < names.length; houseChosen++) {
                         boolean chosen = names[houseChosen].equals(chosenElement);

@@ -10,5 +10,11 @@ public class IncreasePrice extends ChanceCard{
         this.prHouse = prHouse;
     }
 
+    public int getPrHouse() {
+        return prHouse;
+    }
 
+    public int getPrHotel() {
+        return prHotel;
+    }
 }
