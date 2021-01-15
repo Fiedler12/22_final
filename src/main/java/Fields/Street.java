@@ -42,6 +42,8 @@ public class Street extends Ownable {
         this.currentRent = currentRent;
     }
 
+    public int getHousePrice() { return housePrice; }
+
     public int getCurrentRent() {
         return currentRent;
     }

@@ -743,6 +743,7 @@ public class Consol {
                             if (equalBuild) {
                                 buildOnStreet.build(1);
                                 buildGui_Street.setHouses(buildOnStreet.getHouseCount());
+                                playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
                                 gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
 
                             }
