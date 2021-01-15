@@ -30,7 +30,7 @@ public class PlayerController {
             this.gui_players = new GUI_Player[amount];
         }
 
-        public void movePlayer(int playerIndex, int roll) {
+        public static void movePlayer(int playerIndex, int roll) {
             players[playerIndex].setPos(players[playerIndex].getPos() + roll);
         }
         public void playerBuys(int playerIndex, int fieldID, int price) {

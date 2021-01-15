@@ -226,6 +226,18 @@ public class Consol {
                     turn(playerIndex);
                 }
                 updateView(playerController.getPlayers().length);
+
+            int t = 1;
+            while (t<3);
+            if (dice.die1 == dice.die2);
+            gui.getUserButtonPressed("Du har slået to ens og derfor får du et ekstra slag", "Slå igen");
+            gui.getFields()[playerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex],false);
+            PlayerController.movePlayer(playerIndex,dice.getTotal());
+            gui.getFields()[playerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex],true);
+            checkSubClasses(playerIndex);
+
+
+
         }
 
 
