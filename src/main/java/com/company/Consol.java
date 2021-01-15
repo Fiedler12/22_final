@@ -5,6 +5,7 @@ import Fields.*;
 import gui_fields.GUI_Car;
 import gui_fields.GUI_Ownable;
 import gui_fields.GUI_Player;
+import gui_fields.GUI_Street;
 import gui_main.GUI;
 import java.awt.*;
 
@@ -718,6 +719,17 @@ public class Consol {
                     gui.getUserButtonPressed("Du har ingen grunde du kan bygge på.", "Fortsæt");
                 } else {
                     String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at bygge på? ", names);
+                    int streetChosen;
+                    for (streetChosen = 0; streetChosen < names.length; streetChosen++) {
+                        boolean chosen = names[streetChosen].equals(chosenElement);
+                        if (chosen) {
+                            break;
+                        }
+                    }
+                    Street buildOnStreet = (Street) boardController.getField()[canBuild[streetChosen]];
+                    GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[streetChosen]];
+                    buildOnStreet.build(1);
+                    buildGui_Street.setHouses(1);
                 }
             }
         }

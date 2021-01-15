@@ -221,7 +221,7 @@ public class BoardController {
             if (ostergade.houseCount == 0) {
                 ostergade.setCanBuild(true);
             }
-            guiOstergade.setRent(Integer.toString(osterbrogade.currentRent));
+            guiOstergade.setRent(Integer.toString(ostergade.currentRent));
         } else {
             bredgade.setCanBuild(false);
             guiBredgade.setRent(Integer.toString(bredgade.currentRent));
