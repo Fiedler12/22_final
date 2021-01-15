@@ -174,30 +174,36 @@ public class Consol {
                                     gui.displayChanceCard("Det er dig selv. Du kan desværre ikke handle med dig selv.");
                                     break;
                                 }
-                                if (playerController.getPlayers()[idChosen].owns.size() != 0 && idChosen != playerIndex) {
+                                else if (playerController.getPlayers()[idChosen].owns.size() != 0 && idChosen != playerIndex) {
                                     trade(playerIndex, idChosen);
                                 }
-                                if (playerController.getPlayers()[idChosen].owns.size() == 0) {
+                                else if (playerController.getPlayers()[idChosen].owns.size() == 0) {
                                     gui.getUserButtonPressed("Denne spiller har ingen grunde.", "OK");
                                 }
                                 break;
                             }
-
-                        case "Sælg mine huse":
+                            break;
+                            case "Sælg mine huse":
 
                             break;
 
-                        case "Gå tilbage":
+                            case "Gå tilbage":
                             break;
                     }
-                case "Byg hus/hotel":
-                    build(playerIndex);
                     break;
-                case "Pantsæt":
-                    if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
-                        gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
-                        break;
-                    }
+                        case "Byg hus/hotel":
+                            if (playerController.getPlayers()[playerIndex].owns.size() != 0) {
+                            build(playerIndex);
+                            }
+                            else {
+                            gui.getUserButtonPressed("Du ejer ingen grunde.", "Ok");
+                            }
+                            break;
+                        case "Pantsæt":
+                            if (playerController.getPlayers()[playerIndex].owns.size() == 0 && playerController.getPlayers()[playerIndex].pawned.size() == 0) {
+                            gui.getUserButtonPressed("Du har ikke nogen grunde at pantsætte.", "Ok");
+                            break;
+                        }
                     if (playerController.getPlayers()[playerIndex].pawned.size() != 0) {
                         String choicePawn = gui.getUserButtonPressed("Ønsker du at købe din grund tilbage eller pantsætte en ny?", "Pantsæt en ny.", "Køb grund tilbage.");
                         switch (choicePawn) {
@@ -218,11 +224,11 @@ public class Consol {
                     } else {
                         playerPawns(playerIndex);
                     }
-                    break;
-                case "Slå terningen":
-                    playerRolls(playerIndex);
-                    checkSubClasses(playerIndex);
-                    break;
+                        break;
+                    case "Slå terningen":
+                        playerRolls(playerIndex);
+                        checkSubClasses(playerIndex);
+                        break;
             }
             checkPlayerAccount(playerIndex);
             if (!choice.equals("Slå terningen")) {
@@ -232,7 +238,7 @@ public class Consol {
 
             updateView(playerController.getPlayers().length);
         }
-        }
+    }
 
 
     public void playerRolls(int playerIndex) {
@@ -537,7 +543,7 @@ public class Consol {
                                gui.showMessage(PlayerController.players[playerIDBuys].getName() + " har ikke nok penge til at gennemføre det bud");
                                break;
                             }
-
+                        break;
                     }
                 }
                 else {
@@ -663,57 +669,58 @@ public class Consol {
         }
 
         public void build(int playerIndex) {
-        int counter = 0;
-        int i = 0;
-        while (i < playerController.getPlayers()[playerIndex].owns.size()) {
-            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
-            boolean checkStreet = ownable instanceof Street;
-            if(checkStreet) {
-                counter++;
+            int counter = 0;
+            int i = 0;
+            while (i < playerController.getPlayers()[playerIndex].owns.size()) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
+                boolean checkStreet = ownable instanceof Street;
+                if (checkStreet) {
+                    counter++;
+                }
+                i++;
             }
-            i++;
-        }
-        int[] ownsStreets = new int[counter];
-        int i2 = 0;
-        int place = 0;
-        while (i2 < playerController.getPlayers()[playerIndex].owns.size()) {
-            Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i2)];
-            boolean checkStreet = ownable instanceof Street;
-            if(checkStreet) {
-                ownsStreets[place] = playerController.getPlayers()[playerIndex].owns.get(i2);
-                place++;
+            int[] ownsStreets = new int[counter];
+            int i2 = 0;
+            int place = 0;
+            while (i2 < playerController.getPlayers()[playerIndex].owns.size()) {
+                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i2)];
+                boolean checkStreet = ownable instanceof Street;
+                if (checkStreet) {
+                    ownsStreets[place] = playerController.getPlayers()[playerIndex].owns.get(i2);
+                    place++;
+                }
+                i2++;
             }
-            i2++;
-        }
-        int buildCounter = 0;
-        int i3 = 0;
-        while (i3 < ownsStreets.length) {
-            Street street = (Street) boardController.getField()[ownsStreets[i3]];
-            if (street.isCanBuild()) {
-                buildCounter++;
+            if (ownsStreets.length != 0) {
+                int buildCounter = 0;
+                int i3 = 0;
+                while (i3 < ownsStreets.length) {
+                    Street street = (Street) boardController.getField()[ownsStreets[i3]];
+                    if (street.isCanBuild()) {
+                        buildCounter++;
+                    }
+                    i3++;
+                }
+                int[] canBuild = new int[buildCounter];
+                String[] names = new String[buildCounter];
+                int i4 = 0;
+                int place2 = 0;
+                while (i4 < ownsStreets.length) {
+                    Street street = (Street) boardController.getField()[ownsStreets[i4]];
+                    if (street.isCanBuild()) {
+                        canBuild[place2] = ownsStreets[i4];
+                        names[place2] = street.getName();
+                        place2++;
+                    }
+                    i4++;
+                }
+                if (canBuild.length == 0) {
+                    gui.getUserButtonPressed("Du har ingen grunde du kan bygge på.", "Fortsæt");
+                } else {
+                    String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
+                }
             }
-            i3++;
         }
-        int[] canBuild = new int[buildCounter];
-        String[] names = new String[buildCounter];
-        int i4 = 0;
-        int place2 = 0;
-        while (i4 < ownsStreets.length) {
-            Street street = (Street) boardController.getField()[ownsStreets[i4]];
-            if (street.isCanBuild()) {
-                canBuild[place2] = ownsStreets[i4];
-                names[place2] = street.getName();
-                place2++;
-            }
-            i4++;
-        }
-        if (canBuild.length == 0) {
-            gui.getUserButtonPressed("Du har ingen grunde du kan bygge på.", "Fortsæt");
-        }
-        else {
-            String chosenElement = gui.getUserSelection("Hvilken grund ønsker du at købe? ", names);
-        }
-    }
 }
 
 
