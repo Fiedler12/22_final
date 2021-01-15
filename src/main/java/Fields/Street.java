@@ -82,6 +82,26 @@ public class Street extends Ownable {
             currentRent = hotel;
         }
     }
+
+    public void sellHouse(int amountSold) {
+        houseCount = houseCount - amountSold;
+        if (houseCount == 0) {
+            currentRent = noHouse;
+        }
+        if (houseCount == 1) {
+            currentRent = firstHouse;
+        }
+        if (houseCount == 2) {
+            currentRent = secondHouse;
+        }
+        if (houseCount == 3) {
+            currentRent = thirdHouse;
+        }
+        if (houseCount == 4) {
+            currentRent = fourthHouse;
+        }
+    }
+
     public void setOwnedID(int ownedID) {
         this.ownedID = ownedID;
         currentRent = noHouse;
