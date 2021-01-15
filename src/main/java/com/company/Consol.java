@@ -728,6 +728,9 @@ public class Consol {
                     }
                     Street buildOnStreet = (Street) boardController.getField()[canBuild[streetChosen]];
                     GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[streetChosen]];
+                    for (int j = 0; j < canBuild.length; j++) {
+
+                    }
                     buildOnStreet.build(1);
                     buildGui_Street.setHouses(1);
                 }

@@ -164,7 +164,6 @@ public class BoardController {
             if (strandvejen.houseCount == 0) {
                 strandvejen.setCanBuild(true);
             }
-
             guiStrandvejen.setRent(Integer.toString(strandvejen.currentRent));
         } else {
             bernstorffsvej.setCanBuild(false);
