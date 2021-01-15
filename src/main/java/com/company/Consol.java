@@ -754,11 +754,14 @@ public class Consol {
                         }
                     }
                             if (equalBuild) {
-                                if(buildOnStreet.getHouseCount() < 5) {
+                                if(buildOnStreet.getHouseCount() < 4) {
                                     buildOnStreet.build(1);
                                     buildGui_Street.setHouses(buildOnStreet.getHouseCount());
                                     playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
                                     gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
+                                }
+                                else if(buildOnStreet.getHouseCount() == 5) {
+                                    gui.getUserButtonPressed("Du kan ikke bygge mere på denne grund.", "Fortsæt");
                                 }
                                 else {
                                     buildOnStreet.build(1);
