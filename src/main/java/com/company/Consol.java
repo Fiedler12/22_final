@@ -754,11 +754,18 @@ public class Consol {
                         }
                     }
                             if (equalBuild) {
-                                buildOnStreet.build(1);
-                                buildGui_Street.setHouses(buildOnStreet.getHouseCount());
-                                playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
-                                gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
-
+                                if(buildOnStreet.getHouseCount() < 5) {
+                                    buildOnStreet.build(1);
+                                    buildGui_Street.setHouses(buildOnStreet.getHouseCount());
+                                    playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
+                                    gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
+                                }
+                                else {
+                                    buildOnStreet.build(1);
+                                    buildGui_Street.setHotel(true);
+                                    playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
+                                    gui.getUserButtonPressed("Du har nu bygget et hotel på: " + buildOnStreet.getName(), "Fortsæt");
+                                }
                             }
                             else {
                                 gui.getUserButtonPressed("Du skal bygge ligeligt på dine grunde af samme farve.", "Fortsæt");
