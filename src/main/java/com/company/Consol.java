@@ -15,6 +15,7 @@ public class Consol {
     PlayerController playerController = new PlayerController();
     Dice dice = new Dice();
     CardDeck cardDeck = new CardDeck();
+    public int playersGivenUp = 0;
 
 
     public void startGame() {
@@ -61,7 +62,18 @@ public class Consol {
 
     public void playGame() {
         int playerIndex = 0;
+        int iDWon = 0;
         while (true) {
+            if (playersGivenUp == playerController.getPlayers().length - 1) {
+                for (int i = 0; i < playerController.getPlayers().length; i++) {
+                    if (!playerController.getPlayers()[i].isBankrupt()) {
+                        iDWon = i;
+                        break;
+                    }
+                }
+                gui.showMessage("Vinderen er nu fundet! Det blev: " + playerController.getPlayers()[iDWon].getName() + " Tillykke!");
+                break;
+            }
             if (playerIndex > PlayerController.players.length - 1) {
                 playerIndex = 0;
             }
@@ -417,6 +429,7 @@ public class Consol {
                     player.setBankrupt(true);
                     updateView(PlayerController.players.length);
                     gui.showMessage(player.getName() + " du er erklæret fallit og er nu ude af spillet");
+                    playersGivenUp++;
                     break;
             }
         }
