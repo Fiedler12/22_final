@@ -532,7 +532,7 @@ public class Consol {
                         String counterAnswer = gui.getUserButtonPressed(playerController.getPlayers()[playerIDBuys].name + " du har modtaget et modbud på: " + counterOffer + " vil du købe grunden til denne pris: ", "Ja", "Nej");
                         switch (counterAnswer) {
                             case "Ja":
-                                playerController.trade(playerIDSells, playerIDBuys, ownableChosen, counterOffer);
+                                playerController.trade(playerIDSells, playerIDBuys, owns[ownableChosen], counterOffer);
                                 tradeOwnable.setOwnedID(playerIDBuys);
                                 updateView(PlayerController.players.length);
                                 tradeGui_ownable.setOwnerName(playerController.getPlayers()[playerIDBuys].getName());
