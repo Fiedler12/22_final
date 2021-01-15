@@ -418,6 +418,7 @@ public class Consol {
                         gui.showMessage("Du har stadig ikke nok penge til at betale det du skylder");
                     }
                 case "Sælg hus/hotel":
+                    sellHouse(playerIndex);
                     break;
 
                 case "Giv op":
@@ -590,7 +591,7 @@ public class Consol {
             gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
             player.setInJail(true);
             updateView(PlayerController.players.length);
-        } //DONE
+        }
 
         boolean checkIncreasePrice = (card instanceof IncreasePrice);
 
@@ -605,7 +606,7 @@ public class Consol {
                 i++;
             }
             updateView(PlayerController.players.length);
-        } //DONE
+        }
 
         boolean checkMove = (card instanceof Move);
         if (checkMove) {
@@ -615,7 +616,6 @@ public class Consol {
             gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
             checkSubClasses(playerIndex);
             updateView(PlayerController.players.length);
-            //DONE
         }
 
         boolean checkMoveToShipping = (card instanceof MoveToShipping);
@@ -629,14 +629,6 @@ public class Consol {
                     break;
                 }
             }
-            if (cardDeck.receiveID() == 39) {
-                checkSubClasses(playerIndex);
-            }
-            // else {
-            //      if ()
-            //       checkSubClasses(playerIndex);
-            //        updateView(PlayerController.players.length);
-            // }
         }
 
         boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
@@ -657,7 +649,7 @@ public class Consol {
             PayMoney payMoney = (PayMoney) card;
             player.playerAccount.setBalance(player.playerAccount.getBalance() - payMoney.getPay());
             updateView(PlayerController.players.length);
-        } //DONE
+        }
 
 
         boolean checkReceiveMoney = (card instanceof ReceiveMoney);
@@ -673,7 +665,7 @@ public class Consol {
                 player.playerAccount.setBalance(player.playerAccount.getBalance() + receiveMoney.getReceive());
             }
             updateView(PlayerController.players.length);
-        } //DONE
+        }
     }
 
     public void build(int playerIndex) {

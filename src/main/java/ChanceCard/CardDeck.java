@@ -21,7 +21,7 @@ public class CardDeck {
         cardDeck[7] = new PayMoney("De har købt 4 nye dæk til deres vogn og de koster dig 1000 kr",7,1000);
         cardDeck[8] = new PayMoney("De har fået en parkeringskøbe, betal 200 kr i bøde",8,200 );
         cardDeck[9] = new PayMoney("Betal deres bilforsikring:\n1000 kr",9,1000);
-        cardDeck[10] = new PayMoney("De har været udenlands og købt for manger smøger, betal 200kr i told",10,200);
+        cardDeck[10] = new PayMoney("De har været udenlands og købt for mange smøger, betal 200kr i told",10,200);
         cardDeck[11] = new PayMoney("Tandlægeregning betal 2000kr",11,2000);
         cardDeck[12] = new ReceiveMoney("De har vundet i klasselotteriet. Modtag 500kr",12,500);
         cardDeck[13] = new ReceiveMoney("De har vundet i klasselotteriet. Modtag 500kr",13,500);
@@ -36,7 +36,7 @@ public class CardDeck {
         cardDeck[22] = new ReceiveMoney("De har solgt nogle gamle møbler på auktion, modtag 1000kr",22,1000);
         cardDeck[23] = new ReceiveMoney("Værdien af egen avl fra nyttehaven udgør 200kr som de modtager",23,200);
         cardDeck[24] = new ReceiveMoney("De modtager Matador-legatet på 40000kr, men kun hvis din konto ikke overstiger 5000kr",24,40000);
-        cardDeck[25] = new MoneyFromPlayer("Det er deres fødselsdag, motag 200 kr fra hver medspiller",25,200);
+        cardDeck[25] = new MoneyFromPlayer("Det er deres fødselsdag, modtag 200 kr fra hver medspiller",25,200);
         cardDeck[26] = new MoneyFromPlayer("De har lagt penge ud til et sammenskudsgilde. Mærkværdigvis betaler alle straks, modtag 500kr fra hver medspiller",26,500);
         cardDeck[27] = new MoneyFromPlayer("De skal holde familiefest og får et tilskud fra hver medspiller på 500kr",27,500);
         cardDeck[28] = new MovetoSpecific("Ryk frem til START", 28,0 );
@@ -45,8 +45,8 @@ public class CardDeck {
         cardDeck[31] = new Move("Ryk tre felter tilbage",31,-3);
         cardDeck[32] = new Move("Ryk tre felter tilbage",32,-3);
         cardDeck[33] = new MovetoSpecific("Ryk frem til Frederiksberg Alle. Hvis De passere START, indkasser da 4000kr.",33,11);
-        cardDeck[34] = new MoveToShipping("Ryk frem til det nærmeste rederi og betal ejeren to gange den leje han ellers er berettiget til, hvis selskabet ikke ejes af nogen kan De købe det af banken",34);
-        cardDeck[35] = new MoveToShipping("Ryk frem til det nærmeste rederi og betal ejeren to gange den leje han ellers er berettiget til, hvis selskabet ikke ejes af nogen kan De købe det af banken",35);
+        cardDeck[34] = new MoveToShipping("Ryk frem til det nærmeste rederi og betal ejeren den leje han er berettiget til, hvis selskabet ikke ejes af nogen kan De købe det af banken",34);
+        cardDeck[35] = new MoveToShipping("Ryk frem til det nærmeste rederi og betal ejeren den leje han er berettiget til, hvis selskabet ikke ejes af nogen kan De købe det af banken",35);
         cardDeck[36] = new MovetoSpecific("Tag Mols-Linien, flyt brikken frem og hvis De passerer START indkasser da 4000kr",36,15);
         cardDeck[37] = new MovetoSpecific("Ryk frem til Grønningen, hvis De passere start indkasser da 4000kr.",37,24);
         cardDeck[38] = new MovetoSpecific("Ryk frem til Vimmelskaftet, hvis de passerer start indkasser da 4000kr.",38,32);
