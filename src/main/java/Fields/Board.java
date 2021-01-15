@@ -12,7 +12,7 @@ public class Board {
             fields[5] = new Shipping("Scandlines Helsingør-Helsingborg", 5, 4000,"4.000", "her skal betales","");
             fields[6] = new Street("Roskildevej", 6,2000, "2.000 kr", "Leje af grund: 100 kr. \n m/ 1 hus: 600 \n 2 huse: 1.800 \n 3 huse: 5.400 \n 4 huse: 8.000 \n hotel: 11.000", "", new Color(250,145,10), Color.black, 0, 100, 2000, 1000, 3000, 9000, 12500, 15000);
             fields[7] = new Chancefield(7);
-            fields[8] = new Street("Valby Langgade", 8,2000, "2.000 kr", "Leje af grund: 100 kr. \n m/ 1 hus: 600 \n 2 huse: 1.800 \n 3 huse: 5.400 \n 4 huse: 8.000 \n hotel: 11.000", "", new Color(250,145,10), Color.black, 0, 100, 2000, 1000, 3000, 9000, 12500, 15000);
+            fields[8] = new Street("Valby Langgade", 8,2000, "2.000 kr", "Leje af grund: 100 kr. \n m/ 1 hus: 600 \n 2 huse: 1.800 \n 3 huse: 5.400 \n 4 huse: 8.000 \n hotel: 11.000", "", new Color(250,145,10), Color.black, 0, 100, 1000, 600, 3000, 9000, 12500, 15000);
             fields[9] = new Street("Allégade", 9,2400, "2.400 kr", "Leje af grund: 150 kr. \n m/ 1 hus: 800 \n 2 huse: 2.000 \n 3 huse: 6.000 \n 4 huse: 9.000 \n hotel: 12.000", "", new Color(250,145,10), Color.black, 0, 150, 2000, 1250, 3750, 10000, 14000, 18000);
             fields[10] = new Jail(10);
             fields[11] = new Street("Frederiksberg Allé",11,2800,  "2.800 kr", "Leje af grund: 200 kr. \n m/ 1 hus: 1.000 \n 2 huse: 3.000 \n 3 huse: 9.000 \n 4 huse: 12.500 \n hotel: 15.000", "", new Color(181,249,47), Color.black, 0, 200, 2000, 250, 750, 2250, 4000, 6000);

@@ -339,21 +339,21 @@ public class Consol {
                         gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 4000 kr. fordi personen ejer alle rederierne.", "Betal");
                         updateView(PlayerController.players.length);
                     }
-                    gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
+                    gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
                 } boolean checkBrewery = (ownable instanceof Brewery);
                 if(checkBrewery) {
                 if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 1) {
                         int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du har betalt: " + toPay, "Betal");
                         updateView(PlayerController.players.length);
 
 
                 } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
                         int toPay = dice.getTotal() * 200;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du har betalt: " + toPay, "Betal");
                         updateView(PlayerController.players.length);
 
                 }
@@ -405,28 +405,28 @@ public class Consol {
         checkPlayerAccount(playerIndex);
         }
 
-        public void checkPlayerAccount (int playerIndex){
-        Player player = playerController.getPlayers()[playerIndex];
+        public void checkPlayerAccount (int playerIndex) {
+            Player player = playerController.getPlayers()[playerIndex];
 
-        while (player.playerAccount.getBalance() < 0) {
-            String fallit = gui.getUserButtonPressed(player.getName() + ", du har ikke råd til at betale det du skal, du har nu disse muligheder","Pantsæt grund","Sælg hus/hotel","Giv op");
-            switch(fallit){
-                case "Pantsæt grund":
-                    playerPawns(playerIndex);
-                    updateView(PlayerController.players.length);
-                    if(player.playerAccount.getBalance() >= 0) {
-                        gui.showMessage("Du har nu nok penge til at betale det du skylder");
+            while (player.playerAccount.getBalance() < 0) {
+                String fallit = gui.getUserButtonPressed(player.getName() + ", du har ikke råd til at betale det du skal, du har nu disse muligheder", "Pantsæt grund", "Sælg hus/hotel", "Giv op");
+                switch (fallit) {
+                    case "Pantsæt grund":
+                        playerPawns(playerIndex);
+                        updateView(PlayerController.players.length);
+                        if (player.playerAccount.getBalance() >= 0) {
+                            gui.showMessage("Du har nu nok penge til at betale det du skylder");
+                            break;
+                        } else {
+                            gui.showMessage("Du har stadig ikke nok penge til at betale det du skylder");
+                        }
+                    case "Sælg hus/hotel":
                         break;
-                    }
-                    else {
-                        gui.showMessage("Du har stadig ikke nok penge til at betale det du skylder");
-                    }
-                case "Sælg hus/hotel":
-                    break;
 
                 case "Giv op":
                     player.playerAccount.setBalance(0);
                     player.setBankrupt(true);
+                    gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                     updateView(PlayerController.players.length);
                     gui.showMessage(player.getName() + " du er erklæret fallit og er nu ude af spillet");
                     playersGivenUp++;
@@ -636,11 +636,11 @@ public class Consol {
                 if (cardDeck.receiveID() == 39){
                     checkSubClasses(playerIndex);
                 }
-                else {
+               // else {
               //      if ()
              //       checkSubClasses(playerIndex);
             //        updateView(PlayerController.players.length);
-                }
+               // }
             }
 
             boolean checkMoveToSpecific = (card instanceof MovetoSpecific);
