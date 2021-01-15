@@ -33,8 +33,8 @@ public class BoardController {
                 }
                 checkSubClass = (board.getFields()[i] instanceof Brewery);
                 if (checkSubClass) {
-                    gui_fields[12] = new GUI_Brewery("default", "Tuborg", "3.000 kr","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
-                    gui_fields[28] = new GUI_Brewery("default", "Carlsberg", "3.000 kr","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betakes 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
+                    gui_fields[12] = new GUI_Brewery("default", "Tuborg", "3.000 kr","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betales 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
+                    gui_fields[28] = new GUI_Brewery("default", "Carlsberg", "3.000 kr","Hvis en virksomhed ejes betales 100 gange så meget som øjnene viser. \n \nHvis både Tuborg og Carlsberg ejes betales 200 gange så meget som øjnene viser","",new Color(16,88,5),Color.BLACK);
                 }
                 checkSubClass = (board.getFields()[i] instanceof Chancefield);
                 if (checkSubClass) {
