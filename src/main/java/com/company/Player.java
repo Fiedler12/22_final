@@ -80,17 +80,6 @@ public class Player {
         playerAccount.setBalance(playerAccount.getBalance() + price);
     }
 
-    public int[] getOwns(int index) {
-        int i = 0;
-        int[] ownedIDs;
-        ownedIDs = new int[owns.size()];
-        while(i < owns.size()) {
-            ownedIDs[i] = owns.get(i);
-            i++;
-        }
-        return ownedIDs;
-    }
-
     public void pawns (int fieldID, int value) {
         pawned.add(fieldID);
         playerAccount.setBalance(playerAccount.getBalance() + value);
