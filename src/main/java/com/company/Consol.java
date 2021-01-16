@@ -937,17 +937,35 @@ public class Consol {
                             break;
                         }
                     }
+
+
                     Street sellHouseOnStreet = (Street) boardController.getField()[canBuild[houseChosen]];
-                    GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
-                    if (sellHouseOnStreet.getHouseCount() == 5) {
-                        sellHouseOnStreet.sellHouse(1);
-                        buildGui_Street.setHotel(false);
-                        buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                    boolean equalBuild = true;
+                    for (int j = 0; j < canBuild.length && equalBuild; j++) {
+                        Street compareStreet = (Street) boardController.getField()[canBuild[j]];
+                        if (sellHouseOnStreet.getMainColor().equals(compareStreet.getMainColor())) {
+                            if (sellHouseOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
+                                equalBuild = false;
+                                break;
+                            } else {
+                                equalBuild = true;
+                            }
+                        }
+                    }
+                    if (equalBuild) {
+                        GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
+                        if (sellHouseOnStreet.getHouseCount() == 5) {
+                            sellHouseOnStreet.sellHouse(1);
+                            buildGui_Street.setHotel(false);
+                            buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
+                            playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                        } else {
+                            sellHouseOnStreet.sellHouse(1);
+                            buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
+                            playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                        }
                     } else {
-                        sellHouseOnStreet.sellHouse(1);
-                        buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                        gui.showMessage("Du skal sælge ligeligt på alle grunde.");
                     }
                 }
             }
