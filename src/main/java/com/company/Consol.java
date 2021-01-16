@@ -868,109 +868,6 @@ public class Consol {
             }
         }
     }
-        public void sellHouse (int playerIndex){
-            int counter = 0;
-            int i = 0;
-            while (i < playerController.getPlayers()[playerIndex].owns.size()) {
-                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
-                boolean checkStreet = ownable instanceof Street;
-                if (checkStreet) {
-                    counter++;
-                }
-                i++;
-            }
-            int[] ownsStreets = new int[counter];
-            int i2 = 0;
-            int place = 0;
-            while (i2 < playerController.getPlayers()[playerIndex].owns.size()) {
-                Ownable ownable = (Ownable) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i2)];
-                boolean checkStreet = ownable instanceof Street;
-                if (checkStreet) {
-                    ownsStreets[place] = playerController.getPlayers()[playerIndex].owns.get(i2);
-                    place++;
-                }
-                i2++;
-            }
-            if (ownsStreets.length != 0) {
-                int buildCounter = 0;
-                int i3 = 0;
-                while (i3 < ownsStreets.length) {
-                    Street street = (Street) boardController.getField()[ownsStreets[i3]];
-                    if (street.isCanBuild()) {
-                        buildCounter++;
-                    }
-                    i3++;
-                }
-                int[] canBuild = new int[buildCounter];
-                int i4 = 0;
-                int place2 = 0;
-                while (i4 < ownsStreets.length) {
-                    Street street = (Street) boardController.getField()[ownsStreets[i4]];
-                    if (street.isCanBuild()) {
-                        canBuild[place2] = ownsStreets[i4];
-                        place2++;
-                    }
-                    i4++;
-                }
-                int houseBuildCounter = 0;
-                for (int j = 0; j < canBuild.length; j++) {
-                    Street street = (Street) boardController.getField()[canBuild[j]];
-                    if (street.getHouseCount() != 0) {
-                        houseBuildCounter++;
-                    }
-                }
-                int[] streetsWithHouse = new int[houseBuildCounter];
-                String[] names = new String[houseBuildCounter];
-                int place3 = 0;
-                for (int j = 0; j < canBuild.length; j++) {
-                    Street street = (Street) boardController.getField()[canBuild[j]];
-                    if (street.getHouseCount() != 0) {
-                        streetsWithHouse[place3] = canBuild[j];
-                        names[place3] = street.getName();
-                        place3++;
-                    }
-                }
-                if (names.length == 0) {
-                    gui.showMessage("Du har ikke nogen huse at sælge.");
-                } else {
-                    String chosenElement = gui.getUserSelection("Fra hvilken grund ønsker du at sælge en bygning? ", names);
-                    int houseChosen;
-                    for (houseChosen = 0; houseChosen < names.length; houseChosen++) {
-                        boolean chosen = names[houseChosen].equals(chosenElement);
-                        if (chosen) {
-                            break;
-                        }
-                    }
-
-
-                    Street sellHouseOnStreet = (Street) boardController.getField()[canBuild[houseChosen]];
-                    boolean equalBuild = true;
-                    for (int j = 0; j < canBuild.length && equalBuild; j++) {
-                        Street compareStreet = (Street) boardController.getField()[canBuild[j]];
-                        if (sellHouseOnStreet.getMainColor().equals(compareStreet.getMainColor())) {
-                            if (sellHouseOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
-                                equalBuild = false;
-                                break;
-                            } else {
-                                equalBuild = true;
-                            }
-                        }
-                    }
-                    if (equalBuild) {
-                        GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
-                        if (sellHouseOnStreet.getHouseCount() == 5) {
-                            sellHouseOnStreet.sellHouse(1);
-                            buildGui_Street.setHotel(false);
-                            buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                            playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
-                        } else {
-                            sellHouseOnStreet.sellHouse(1);
-                            buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                            playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
-                        }
-                    } else {
-                        gui.showMessage("Du skal sælge ligeligt på alle grunde.");
-                    }
 
     public void sellHouse(int playerIndex) {
         int counter = 0;
@@ -1046,57 +943,71 @@ public class Consol {
                     }
                 }
                 Street sellHouseOnStreet = (Street) boardController.getField()[canBuild[houseChosen]];
-                GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
-                if (sellHouseOnStreet.getHouseCount() == 5) {
-                    sellHouseOnStreet.sellHouse(1);
-                    buildGui_Street.setHotel(false);
-                    buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                    playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                boolean equalBuild = true;
+                for (int j = 0; j < canBuild.length && equalBuild; j++) {
+                    Street compareStreet = (Street) boardController.getField()[canBuild[j]];
+                    if (sellHouseOnStreet.getMainColor().equals(compareStreet.getMainColor())) {
+                        if (sellHouseOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
+                            equalBuild = false;
+                            break;
+                        } else {
+                            equalBuild = true;
+                        }
+                    }
+                }
+                if (equalBuild) {
+                    GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[houseChosen]];
+                    if (sellHouseOnStreet.getHouseCount() == 5) {
+                        sellHouseOnStreet.sellHouse(1);
+                        buildGui_Street.setHotel(false);
+                        buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
+                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                    } else {
+                        sellHouseOnStreet.sellHouse(1);
+                        buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
+                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                    }
                 } else {
-                    sellHouseOnStreet.sellHouse(1);
-                    buildGui_Street.setHouses(sellHouseOnStreet.getHouseCount());
-                    playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() + (sellHouseOnStreet.getHousePrice() / 2));
+                    gui.showMessage("Du skal sælge ligeligt på alle grunde.");
                 }
-
-            }
-
-        }
-    }
-
-    public void ekstraTur(int playerIndex) {
-        int t = 0;
-        while (t < 2) {
-            if (dice.die1 == dice.die2) {
-                gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", du har slået to ens. Tryk på knappen og slå en gang til", "Kast terningerne");
-                dice.roll();
-                gui.setDice(dice.die1, dice.die2);
-                gui.getUserButtonPressed("Du har slået: " + dice.getTotal(), "Ok");
-                t++;
-                if (t == 2) {
-                    break;
-                }
-                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-                playerController.movePlayer(playerIndex, dice.getTotal());
-                gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                updateView(playerController.getPlayers().length);
-                checkSubClasses(playerIndex);
-            } else {
-                break;
             }
         }
-
-        if (t == 2) {
-            gui.showMessage(playerController.getPlayers()[playerIndex].getName() + " har slået to ens 3 gange i træk og ryger i fængsel.");
-            GoToJail goToJail = new GoToJail(30, 10);
-            playerController.getPlayers()[playerIndex].setInJail(true);
-            gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
-            playerController.getPlayers()[playerIndex].setPos(goToJail.getPrison());
-            gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-            playerController.getPlayers()[playerIndex].setInJail(true);
-            updateView(PlayerController.players.length);
-        }
     }
+                public void ekstraTur ( int playerIndex){
+                    int t = 0;
+                    while (t < 2) {
+                        if (dice.die1 == dice.die2) {
+                            gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", du har slået to ens. Tryk på knappen og slå en gang til", "Kast terningerne");
+                            dice.roll();
+                            gui.setDice(dice.die1, dice.die2);
+                            gui.getUserButtonPressed("Du har slået: " + dice.getTotal(), "Ok");
+                            t++;
+                            if (t == 2) {
+                                break;
+                            }
+                            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                            playerController.movePlayer(playerIndex, dice.getTotal());
+                            gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                            updateView(playerController.getPlayers().length);
+                            checkSubClasses(playerIndex);
+                        } else {
+                            break;
+                        }
+                    }
+
+                    if (t == 2) {
+                        gui.showMessage(playerController.getPlayers()[playerIndex].getName() + " har slået to ens 3 gange i træk og ryger i fængsel.");
+                        GoToJail goToJail = new GoToJail(30, 10);
+                        playerController.getPlayers()[playerIndex].setInJail(true);
+                        gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
+                        playerController.getPlayers()[playerIndex].setPos(goToJail.getPrison());
+                        gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                        playerController.getPlayers()[playerIndex].setInJail(true);
+                        updateView(PlayerController.players.length);
+                    }
+                }
 }
+
 
 
 
