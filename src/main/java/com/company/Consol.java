@@ -231,7 +231,6 @@ public class Consol {
         }
     }
 
-
     public void playerRolls(int playerIndex) {
         dice.roll();
         gui.setDice(dice.die1, dice.die2);
@@ -575,7 +574,6 @@ public class Consol {
         }
     }
 
-
     public void pullCard(int playerIndex) {
         gui.getUserButtonPressed("Du er landet på chancefeltet\nTryk på knappen for at trække et kort", "Træk kort");
         ChanceCard card = cardDeck.draw();
@@ -819,11 +817,9 @@ public class Consol {
                 for (int j = 0; j < canBuild.length && equalBuild; j++) {
                     Street compareStreet = (Street) boardController.getField()[canBuild[j]];
                     if (buildOnStreet.getMainColor().equals(compareStreet.getMainColor())) {
-                        if (buildOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
+                        if (buildOnStreet.getHouseCount() < compareStreet.getHouseCount()) {
                             equalBuild = false;
                             break;
-                        } else {
-                            equalBuild = true;
                         }
                     }
                 }
@@ -952,7 +948,8 @@ public class Consol {
             }
         }
     }
-                public void ekstraTur ( int playerIndex){
+
+    public void ekstraTur ( int playerIndex){
                     int t = 0;
                     while (t < 2) {
                         if (dice.die1 == dice.die2) {
@@ -986,8 +983,3 @@ public class Consol {
                     }
                 }
 }
-
-
-
-
-
