@@ -33,30 +33,30 @@ public class Consol {
     }
 
     public void askName(int amount) {
-        int var = 0;
-        while (var < amount) {
+        int playerAmount = 0;
+        while (playerAmount < amount) {
             String name = gui.getUserString("Indtast spillernes navne");
-            PlayerController.players[var] = new Player();
-            PlayerController.players[var].setName(name);
-            PlayerController.players[var].setPos(0);
-            PlayerController.players[var].setShippingOwned(0);
-            PlayerController.players[var].setPlayerID(var);
-            PlayerController.players[var].playerAccount.setBalance(30000);
-            playerController.cars[var] = new GUI_Car();
-            playerController.cars[var].setPrimaryColor(playerController.getColors()[var]);
-            playerController.gui_players[var] = new GUI_Player(PlayerController.players[var].getName(), PlayerController.players[var].playerAccount.getBalance(), playerController.getCars()[var]);
-            gui.addPlayer(playerController.getGui_players()[var]);
-            gui.getFields()[PlayerController.players[var].getPos()].setCar(playerController.getGui_players()[var], true);
-            var++;
+            PlayerController.players[playerAmount] = new Player();
+            PlayerController.players[playerAmount].setName(name);
+            PlayerController.players[playerAmount].setPos(0);
+            PlayerController.players[playerAmount].setShippingOwned(0);
+            PlayerController.players[playerAmount].setPlayerID(playerAmount);
+            PlayerController.players[playerAmount].playerAccount.setBalance(30000);
+            playerController.cars[playerAmount] = new GUI_Car();
+            playerController.cars[playerAmount].setPrimaryColor(playerController.getColors()[playerAmount]);
+            playerController.gui_players[playerAmount] = new GUI_Player(PlayerController.players[playerAmount].getName(), PlayerController.players[playerAmount].playerAccount.getBalance(), playerController.getCars()[playerAmount]);
+            gui.addPlayer(playerController.getGui_players()[playerAmount]);
+            gui.getFields()[PlayerController.players[playerAmount].getPos()].setCar(playerController.getGui_players()[playerAmount], true);
+            playerAmount++;
         }
         gui.showMessage("I skal nu til at starte spillet");
-        int var2 = 0;
-        while (var2 < amount) {
-            gui.getUserButtonPressed(PlayerController.players[var2].getName() + ", det er din tur, tryk på knappen for at slå", "Kast terningerne");
-            playerRolls(var2);
-            checkSubClasses(var2);
-            ekstraTur(var2);
-            var2++;
+        int playerIndex = 0;
+        while (playerIndex < amount) {
+            gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur, tryk på knappen for at slå", "Kast terningerne");
+            playerRolls(playerIndex);
+            checkSubClasses(playerIndex);
+            ekstraTur(playerIndex);
+            playerIndex++;
 
         }
     }
