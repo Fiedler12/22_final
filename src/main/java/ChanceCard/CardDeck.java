@@ -53,8 +53,8 @@ public class CardDeck {
         cardDeck[39] = new MoveToShipping("Tag med den nærmeste færge, hvis de passerer start indkasser da 4000kr.",39);
         cardDeck[40] = new MovetoSpecific("Ryk frem til Strandvejen. Hvis De passere START, indkasser da 4000kr.",40,19);
         cardDeck[41] = new MovetoSpecific("Tag til Rådhuspladsen",41,39);
-        cardDeck[42] = new GetOutOfJailCard("I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares indtil De får brug for det, eller det kan sælges",42,600);
-        cardDeck[43] = new GetOutOfJailCard("I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares indtil De får brug for det, eller det kan sælges",43,600);
+        cardDeck[42] = new GetOutOfJailCard("I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares indtil De får brug for det",42,600);
+        cardDeck[43] = new GetOutOfJailCard("I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares indtil De får brug for det",43,600);
         cardDeck[44] = new GoToJailCard("Gå i fængsel, De indkasserer ikke 4000kr for at passere start.", 44,10);
         cardDeck[45] = new GoToJailCard("Gå i fængsel, De indkasserer ikke 4000kr for at passere start.", 45,10);
 
