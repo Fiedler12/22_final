@@ -345,14 +345,14 @@ public class Consol {
                         int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du skal betale: " + toPay, "Betal");
                         updateView(PlayerController.players.length);
 
 
                     } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
                         int toPay = dice.getTotal() * 200;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du skal betale: " + toPay, "Betal");
                         updateView(PlayerController.players.length);
 
                     }
@@ -733,6 +733,8 @@ public class Consol {
                 boolean Shipping = (boardController.getField()[player.getPos()] instanceof Shipping);
                 if (Shipping) {
                     gui.getFields()[player.getPos()].setCar(playerController.getGui_players()[playerIndex], true);
+                    checkSubClasses(playerIndex);
+                    updateView(PlayerController.players.length);
                     break;
                 }
             }
@@ -841,8 +843,6 @@ public class Consol {
                         if (buildOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
                             equalBuild = false;
                             break;
-                        } else {
-                            equalBuild = true;
                         }
                     }
                 }
