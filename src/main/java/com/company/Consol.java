@@ -951,14 +951,17 @@ public class Consol {
 
     public void extraTurn(int playerIndex){
                     int t = 0;
-                    while (t < 2) {
-                        if (dice.die1 == dice.die2) {
+                    while (true) {
+                        if (dice.die1 == dice.die2 && !playerController.getPlayers()[playerIndex].isBankrupt() && !playerController.getPlayers()[playerIndex].isInJail()) {
+                            t++;
                             gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", du har slået to ens. Tryk på knappen og slå en gang til", "Kast terningerne");
                             dice.roll();
                             gui.setDice(dice.die1, dice.die2);
                             gui.getUserButtonPressed("Du har slået: " + dice.getTotal(), "Ok");
-                            t++;
-                            if (t == 2) {
+                            if (dice.die1 == dice.die2) {
+                                t++;
+                            }
+                            if (t == 4) {
                                 break;
                             }
                             gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
@@ -966,12 +969,13 @@ public class Consol {
                             gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
                             updateView(playerController.getPlayers().length);
                             checkSubClasses(playerIndex);
-                        } else {
+                            }
+                        else {
                             break;
                         }
                     }
 
-                    if (t == 2) {
+                    if (t == 4) {
                         gui.showMessage(playerController.getPlayers()[playerIndex].getName() + " har slået to ens 3 gange i træk og ryger i fængsel.");
                         GoToJail goToJail = new GoToJail(30, 10);
                         playerController.getPlayers()[playerIndex].setInJail(true);

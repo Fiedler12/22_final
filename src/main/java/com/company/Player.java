@@ -1,7 +1,5 @@
 package com.company;
 
-import Fields.Field;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +13,8 @@ public class Player {
     boolean inJail;
     boolean hasJailCard;
     boolean bankrupt;
-    List<Integer> owns = new ArrayList<Integer>();
-    List<Integer> pawned = new ArrayList<Integer>();
+    List<Integer> owns = new ArrayList<>();
+    List<Integer> pawned = new ArrayList<>();
 
 
     public boolean isHasJailCard() {

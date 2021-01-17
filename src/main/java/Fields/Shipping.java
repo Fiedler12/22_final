@@ -1,15 +1,10 @@
 package Fields;
 
-import java.awt.*;
-
 public class Shipping extends Ownable {
     String subText;
     String description;
     String rent;
-    Color mainColor;
-    Color secondaryColor;
 
-    int currentPrice;
     int pawnValue;
     int priceOfOne;
     int priceOfTwo;
@@ -44,7 +39,6 @@ public class Shipping extends Ownable {
             case 4:
                 toPay = priceOfFour;
         }
-
         return toPay;
     }
 

@@ -8,8 +8,5 @@ public class GetOutOfJailCard extends ChanceCard{
         super(Text,ID);
         this.sellValue = sellValue;
     }
-    public int getSellValue() {
-        return sellValue;
-    }
 }
 

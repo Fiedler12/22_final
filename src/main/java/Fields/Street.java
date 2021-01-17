@@ -44,10 +44,6 @@ public class Street extends Ownable {
 
     public int getHousePrice() { return housePrice; }
 
-    public int getCurrentRent() {
-        return currentRent;
-    }
-
     public String getName() {
         return name;
     }
