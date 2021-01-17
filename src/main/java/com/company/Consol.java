@@ -385,8 +385,8 @@ public class Consol {
         Player player = playerController.getPlayers()[playerIndex];
 
         while (player.playerAccount.getBalance() < 0) {
-            String fallit = gui.getUserButtonPressed(player.getName() + ", du har ikke råd til at betale det du skal, du har nu disse muligheder", "Pantsæt grund", "Sælg hus/hotel", "Giv op");
-            switch (fallit) {
+            String bankrupt = gui.getUserButtonPressed(player.getName() + ", du har ikke råd til at betale det du skal, du har nu disse muligheder", "Pantsæt grund", "Sælg hus/hotel", "Giv op");
+            switch (bankrupt) {
                 case "Pantsæt grund":
                     playerPawns(playerIndex);
                     updateView(PlayerController.players.length);
@@ -413,7 +413,7 @@ public class Consol {
                     player.setBankrupt(true);
                     gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                     updateView(PlayerController.players.length);
-                    gui.showMessage(player.getName() + " du er erklæret fallit og er nu ude af spillet");
+                    gui.showMessage(player.getName() + " du er erklæret bankrupt og er nu ude af spillet");
                     playersGivenUp++;
                     for (int i = 0; i < player.owns.size(); i++) {
                         Ownable ownable = (Ownable) boardController.getField()[player.owns.get(i)];
