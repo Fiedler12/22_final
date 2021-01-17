@@ -817,7 +817,7 @@ public class Consol {
                 for (int j = 0; j < canBuild.length && equalBuild; j++) {
                     Street compareStreet = (Street) boardController.getField()[canBuild[j]];
                     if (buildOnStreet.getMainColor().equals(compareStreet.getMainColor()) && !buildOnStreet.getName().equals(compareStreet.getName())) {
-                        if (buildOnStreet.getHouseCount() < compareStreet.getHouseCount()) {
+                        if (buildOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
                             equalBuild = false;
                             break;
                         }
@@ -922,7 +922,7 @@ public class Consol {
                 for (int j = 0; j < canBuild.length && equalBuild; j++) {
                     Street compareStreet = (Street) boardController.getField()[canBuild[j]];
                     if (sellHouseOnStreet.getMainColor().equals(compareStreet.getMainColor())) {
-                        if (sellHouseOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
+                        if (sellHouseOnStreet.getHouseCount() < compareStreet.getHouseCount()) {
                             equalBuild = false;
                             break;
                         } else {
