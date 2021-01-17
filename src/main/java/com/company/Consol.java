@@ -428,6 +428,7 @@ public class Consol {
                             gui_street.setHouses(street.getHouseCount());
                         }
                     }
+                    //Commit
                     for (int i = 0; i < player.pawned.size(); i++) {
                         Ownable ownable = (Ownable) boardController.getField()[player.pawned.get(i)];
                         GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[player.pawned.get(i)];
