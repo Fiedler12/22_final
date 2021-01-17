@@ -462,7 +462,10 @@ public class Consol {
                     canPawn = false;
                 }
                 for (int i = 0; i < playerController.getPlayers()[playerIndex].owns.size(); i++) {
-                    if (street.getMainColor().equals(playerController.getPlayers()[playerIndex].owns.get(i))) {
+                    boolean isStreetToCompare = boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)] instanceof Street;
+                        if (isStreetToCompare) {
+                            Street streetToCompare = (Street) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
+                        if (street.getMainColor().equals(streetToCompare.getMainColor())) {
                         Street otherHouses = (Street) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
                         if (otherHouses.getHouseCount() > 0) {
                             canPawn = false;
@@ -472,6 +475,7 @@ public class Consol {
                     }
                 }
             }
+        }
             if (canPawn) {
                 Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
                 GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[owns[idChosen]];
