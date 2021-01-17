@@ -420,6 +420,13 @@ public class Consol {
                         GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[player.owns.get(i)];
                         ownable.setOwnedID(-1);
                         gui_ownable.setBorder(null);
+                        boolean isStreet = ownable instanceof Street;
+                        if (isStreet) {
+                            Street street = (Street) boardController.getField()[player.owns.get(i)];
+                            street.sellHouse(street.getHouseCount());
+                            GUI_Street gui_street = (GUI_Street) boardController.getGui_fields()[player.owns.get(i)];
+                            gui_street.setHouses(street.getHouseCount());
+                        }
                     }
                     for (int i = 0; i < player.pawned.size(); i++) {
                         Ownable ownable = (Ownable) boardController.getField()[player.pawned.get(i)];
