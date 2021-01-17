@@ -316,7 +316,7 @@ public class Consol {
                         gui.getUserButtonPressed("Du ejer ikke dette rederi, det gør: " + playerController.getPlayers()[ownable.getOwnedID()].getName() + ". Du skal betale 4000 kr. fordi personen ejer alle rederierne.", "Betal");
                         updateView(PlayerController.players.length);
                     }
-                    gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du har betalt: " + ((Shipping) ownable).getToPay());
+                    gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du skal betale: " + ((Shipping) ownable).getToPay());
                 }
                 boolean checkBrewery = (ownable instanceof Brewery);
                 if (checkBrewery) {
@@ -324,14 +324,14 @@ public class Consol {
                         int toPay = dice.getTotal() * 100;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
                         PlayerController.players[ownable.getOwnedID()].playerAccount.setBalance(PlayerController.players[ownable.getOwnedID()].playerAccount.getBalance() + toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du skal betale: " + toPay, "Betal");
                         updateView(PlayerController.players.length);
 
 
                     } else if (PlayerController.players[ownable.getOwnedID()].getBreweryOwned() == 2) {
                         int toPay = dice.getTotal() * 200;
                         PlayerController.players[playerIndex].playerAccount.setBalance(PlayerController.players[playerIndex].playerAccount.getBalance() - toPay);
-                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + "ejer denne grund. Du har betalt: " + toPay, "Betal");
+                        gui.getUserButtonPressed(playerController.getPlayers()[ownable.getOwnedID()].getName() + " ejer denne grund. Du skal betale: " + toPay, "Betal");
                         updateView(PlayerController.players.length);
 
                     }
@@ -396,11 +396,19 @@ public class Consol {
                         break;
                     } else {
                         gui.showMessage("Du har stadig ikke nok penge til at betale det du skylder");
+                        break;
                     }
                 case "Sælg hus/hotel":
                     sellHouse(playerIndex);
-                    break;
-
+                    updateView(playerIndex);
+                    if (player.playerAccount.getBalance() >= 0) {
+                        gui.showMessage("Du har nu nok penge til at betale det du skylder");
+                        break;
+                    }
+                    else {
+                        gui.showMessage("Du har stadig ikke nok penge tila t betale det du skylder");
+                        break;
+                    }
                 case "Giv op":
                     player.playerAccount.setBalance(0);
                     player.setBankrupt(true);
@@ -413,8 +421,15 @@ public class Consol {
                         GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[player.owns.get(i)];
                         ownable.setOwnedID(-1);
                         gui_ownable.setBorder(null);
-                        player.owns.remove(i);
                     }
+                    for (int i = 0; i < player.pawned.size(); i++) {
+                        Ownable ownable = (Ownable) boardController.getField()[player.pawned.get(i)];
+                        GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[player.pawned.get(i)];
+                        ownable.setOwnedID(-1);
+                        gui_ownable.setBorder(null);
+                    }
+                    player.owns.clear();
+                    player.pawned.clear();
                     break;
             }
         }
@@ -443,7 +458,7 @@ public class Consol {
             boolean checkBuiltOnStreet = pawnOwnable instanceof Street;
             if (checkBuiltOnStreet) {
                 Street street = (Street) pawnOwnable;
-                if (street.getHouseCount() < 0) {
+                if (street.getHouseCount() > 0) {
                     gui.showMessage("Du kan ikke pantsætte en grund med bygninger på.");
                     canPawn = false;
                 }
@@ -478,9 +493,14 @@ public class Consol {
             }
             Ownable ownableChosen = (Ownable) boardController.getField()[pawned[idChosen]];
             GUI_Ownable gui_ownable = (GUI_Ownable) boardController.getGui_fields()[pawned[idChosen]];
-            playerController.buysBackPawn(playerIndex, pawned[idChosen], ownableChosen.getPawnValue());
-            ownableChosen.setOwnedID(playerIndex);
-            gui_ownable.setBorder(playerController.colors[playerIndex]);
+            if (playerController.getPlayers()[playerIndex].playerAccount.getBalance() >= (ownableChosen.getPawnValue() + (ownableChosen.getPawnValue()/10) + (((ownableChosen.getPawnValue() / 10) + 99) / 100) * 100)) {
+                playerController.buysBackPawn(playerIndex, pawned[idChosen], ownableChosen.getPawnValue());
+                ownableChosen.setOwnedID(playerIndex);
+                gui_ownable.setBorder(playerController.colors[playerIndex]);
+            }
+            else {
+                gui.showMessage("Du har ikke råd til at købe denne grund tilbage");
+            }
         }
     }
 
@@ -813,32 +833,37 @@ public class Consol {
                 }
                 Street buildOnStreet = (Street) boardController.getField()[canBuild[streetChosen]];
                 GUI_Street buildGui_Street = (GUI_Street) boardController.getGui_fields()[canBuild[streetChosen]];
-                boolean equalBuild = true;
-                for (int j = 0; j < canBuild.length && equalBuild; j++) {
-                    Street compareStreet = (Street) boardController.getField()[canBuild[j]];
-                    if (buildOnStreet.getMainColor().equals(compareStreet.getMainColor()) && !buildOnStreet.getName().equals(compareStreet.getName())) {
-                        if (buildOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
-                            equalBuild = false;
-                            break;
+                if (playerController.getPlayers()[playerIndex].playerAccount.getBalance() >= buildOnStreet.getHousePrice()) {
+                    boolean equalBuild = true;
+                    for (int j = 0; j < canBuild.length && equalBuild; j++) {
+                        Street compareStreet = (Street) boardController.getField()[canBuild[j]];
+                        if (buildOnStreet.getMainColor().equals(compareStreet.getMainColor()) && !buildOnStreet.getName().equals(compareStreet.getName())) {
+                            if (buildOnStreet.getHouseCount() > compareStreet.getHouseCount()) {
+                                equalBuild = false;
+                                break;
+                            }
                         }
                     }
-                }
-                if (equalBuild) {
-                    if (buildOnStreet.getHouseCount() < 4) {
-                        buildOnStreet.build(1);
-                        buildGui_Street.setHouses(buildOnStreet.getHouseCount());
-                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
-                        gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
-                    } else if (buildOnStreet.getHouseCount() == 5) {
-                        gui.getUserButtonPressed("Du kan ikke bygge mere på denne grund.", "Fortsæt");
+                    if (equalBuild) {
+                        if (buildOnStreet.getHouseCount() < 4) {
+                            buildOnStreet.build(1);
+                            buildGui_Street.setHouses(buildOnStreet.getHouseCount());
+                            playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
+                            gui.getUserButtonPressed("Du har nu bygget et hus på: " + buildOnStreet.getName(), "Fortsæt");
+                        } else if (buildOnStreet.getHouseCount() == 5) {
+                            gui.getUserButtonPressed("Du kan ikke bygge mere på denne grund.", "Fortsæt");
+                        } else {
+                            buildOnStreet.build(1);
+                            buildGui_Street.setHotel(true);
+                            playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
+                            gui.getUserButtonPressed("Du har nu bygget et hotel på: " + buildOnStreet.getName(), "Fortsæt");
+                        }
                     } else {
-                        buildOnStreet.build(1);
-                        buildGui_Street.setHotel(true);
-                        playerController.getPlayers()[playerIndex].playerAccount.setBalance(playerController.getPlayers()[playerIndex].playerAccount.getBalance() - buildOnStreet.getHousePrice());
-                        gui.getUserButtonPressed("Du har nu bygget et hotel på: " + buildOnStreet.getName(), "Fortsæt");
+                        gui.getUserButtonPressed("Du skal bygge ligeligt på dine grunde af samme farve.", "Fortsæt");
                     }
-                } else {
-                    gui.getUserButtonPressed("Du skal bygge ligeligt på dine grunde af samme farve.", "Fortsæt");
+                }
+                else {
+                    gui.showMessage("Du har ikke råd til at bygge et hus her");
                 }
             }
         }
