@@ -461,6 +461,16 @@ public class Consol {
                     gui.showMessage("Du kan ikke pantsætte en grund med bygninger på.");
                     canPawn = false;
                 }
+                for (int i = 0; i < playerController.getPlayers()[playerIndex].owns.size(); i++) {
+                    if (street.getMainColor().equals(playerController.getPlayers()[playerIndex].owns.get(i))) {
+                        Street otherHouses = (Street) boardController.getField()[playerController.getPlayers()[playerIndex].owns.get(i)];
+                        if (otherHouses.getHouseCount() > 0) {
+                            canPawn = false;
+                            gui.showMessage("Du har bygninger på andre grunde af samme farve. Derfor kan du ikke pantsætte denne grund.");
+                            break;
+                        }
+                    }
+                }
             }
             if (canPawn) {
                 Ownable ownableChosen = (Ownable) boardController.getField()[owns[idChosen]];
