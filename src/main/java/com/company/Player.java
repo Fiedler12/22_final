@@ -1,7 +1,5 @@
 package com.company;
 
-import Fields.Field;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +13,8 @@ public class Player {
     boolean inJail;
     boolean hasJailCard;
     boolean bankrupt;
-    List<Integer> owns = new ArrayList<Integer>();
-    List<Integer> pawned = new ArrayList<Integer>();
+    List<Integer> owns = new ArrayList<>();
+    List<Integer> pawned = new ArrayList<>();
 
 
     public boolean isHasJailCard() {
@@ -78,17 +76,6 @@ public class Player {
     public void sells (int fieldID,int price) {
         owns.remove((Integer)fieldID);
         playerAccount.setBalance(playerAccount.getBalance() + price);
-    }
-
-    public int[] getOwns(int index) {
-        int i = 0;
-        int[] ownedIDs;
-        ownedIDs = new int[owns.size()];
-        while(i < owns.size()) {
-            ownedIDs[i] = owns.get(i);
-            i++;
-        }
-        return ownedIDs;
     }
 
     public void pawns (int fieldID, int value) {

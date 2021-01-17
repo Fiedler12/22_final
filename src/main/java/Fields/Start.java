@@ -7,10 +7,6 @@ public class Start extends Field {
         setStartField(true);
     }
 
-
-    public boolean isStartField() {
-        return startField;
-    }
     public void setStartField(boolean startField) {
         this.startField = startField;
     }

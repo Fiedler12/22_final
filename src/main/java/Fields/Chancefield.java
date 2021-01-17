@@ -9,9 +9,6 @@ public class Chancefield extends Field {
 
     boolean chance;
 
-    public boolean isChance() {
-        return chance;
-    }
     public void setChance(boolean chance) {
         this.chance = chance;
     }

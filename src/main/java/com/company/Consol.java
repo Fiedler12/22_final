@@ -33,21 +33,21 @@ public class Consol {
     }
 
     public void askName(int amount) {
-        int playerAmount = 0;
-        while (playerAmount < amount) {
+        int eachPlayer = 0;
+        while (eachPlayer < amount) {
             String name = gui.getUserString("Indtast spillernes navne");
-            PlayerController.players[playerAmount] = new Player();
-            PlayerController.players[playerAmount].setName(name);
-            PlayerController.players[playerAmount].setPos(0);
-            PlayerController.players[playerAmount].setShippingOwned(0);
-            PlayerController.players[playerAmount].setPlayerID(playerAmount);
-            PlayerController.players[playerAmount].playerAccount.setBalance(30000);
-            playerController.cars[playerAmount] = new GUI_Car();
-            playerController.cars[playerAmount].setPrimaryColor(playerController.getColors()[playerAmount]);
-            playerController.gui_players[playerAmount] = new GUI_Player(PlayerController.players[playerAmount].getName(), PlayerController.players[playerAmount].playerAccount.getBalance(), playerController.getCars()[playerAmount]);
-            gui.addPlayer(playerController.getGui_players()[playerAmount]);
-            gui.getFields()[PlayerController.players[playerAmount].getPos()].setCar(playerController.getGui_players()[playerAmount], true);
-            playerAmount++;
+            PlayerController.players[eachPlayer] = new Player();
+            PlayerController.players[eachPlayer].setName(name);
+            PlayerController.players[eachPlayer].setPos(0);
+            PlayerController.players[eachPlayer].setShippingOwned(0);
+            PlayerController.players[eachPlayer].setPlayerID(eachPlayer);
+            PlayerController.players[eachPlayer].playerAccount.setBalance(30000);
+            playerController.cars[eachPlayer] = new GUI_Car();
+            playerController.cars[eachPlayer].setPrimaryColor(playerController.getColors()[eachPlayer]);
+            playerController.gui_players[eachPlayer] = new GUI_Player(PlayerController.players[eachPlayer].getName(), PlayerController.players[eachPlayer].playerAccount.getBalance(), playerController.getCars()[eachPlayer]);
+            gui.addPlayer(playerController.getGui_players()[eachPlayer]);
+            gui.getFields()[PlayerController.players[eachPlayer].getPos()].setCar(playerController.getGui_players()[eachPlayer], true);
+            eachPlayer++;
         }
         gui.showMessage("I skal nu til at starte spillet");
         int playerIndex = 0;
@@ -55,7 +55,7 @@ public class Consol {
             gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", det er din tur, tryk på knappen for at slå", "Kast terningerne");
             playerRolls(playerIndex);
             checkSubClasses(playerIndex);
-            ekstraTur(playerIndex);
+            extraTurn(playerIndex);
             playerIndex++;
 
         }
@@ -226,7 +226,7 @@ public class Consol {
                 updateView(playerController.getPlayers().length);
                 turn(playerIndex);
             }
-            ekstraTur(playerIndex);
+            extraTurn(playerIndex);
             updateView(playerController.getPlayers().length);
         }
     }
@@ -949,16 +949,19 @@ public class Consol {
         }
     }
 
-    public void ekstraTur ( int playerIndex){
+    public void extraTurn(int playerIndex){
                     int t = 0;
-                    while (t < 2) {
-                        if (dice.die1 == dice.die2) {
+                    while (true) {
+                        if (dice.die1 == dice.die2 && !playerController.getPlayers()[playerIndex].isBankrupt() && !playerController.getPlayers()[playerIndex].isInJail()) {
+                            t++;
                             gui.getUserButtonPressed(PlayerController.players[playerIndex].getName() + ", du har slået to ens. Tryk på knappen og slå en gang til", "Kast terningerne");
                             dice.roll();
                             gui.setDice(dice.die1, dice.die2);
                             gui.getUserButtonPressed("Du har slået: " + dice.getTotal(), "Ok");
-                            t++;
-                            if (t == 2) {
+                            if (dice.die1 == dice.die2) {
+                                t++;
+                            }
+                            if (t == 4) {
                                 break;
                             }
                             gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
@@ -966,19 +969,19 @@ public class Consol {
                             gui.getFields()[PlayerController.players[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
                             updateView(playerController.getPlayers().length);
                             checkSubClasses(playerIndex);
-                        } else {
+                            }
+                        else {
                             break;
                         }
                     }
 
-                    if (t == 2) {
+                    if (t == 4) {
                         gui.showMessage(playerController.getPlayers()[playerIndex].getName() + " har slået to ens 3 gange i træk og ryger i fængsel.");
                         GoToJail goToJail = new GoToJail(30, 10);
                         playerController.getPlayers()[playerIndex].setInJail(true);
                         gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], false);
                         playerController.getPlayers()[playerIndex].setPos(goToJail.getPrison());
                         gui.getFields()[playerController.getPlayers()[playerIndex].getPos()].setCar(playerController.getGui_players()[playerIndex], true);
-                        playerController.getPlayers()[playerIndex].setInJail(true);
                         updateView(PlayerController.players.length);
                     }
                 }
