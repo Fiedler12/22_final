@@ -535,7 +535,7 @@ public class Consol {
         boolean checkBuiltOnStreet = tradeOwnable instanceof Street;
         if (checkBuiltOnStreet) {
             Street street = (Street) tradeOwnable;
-            if (street.getHouseCount() < 0) {
+            if (street.getHouseCount() > 0) {
                 gui.showMessage("Du kan ikke købe denne grund før spilleren der ejer den har solgt sine bygninger.");
                 canTrade = false;
             }
