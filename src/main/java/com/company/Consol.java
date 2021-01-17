@@ -592,7 +592,7 @@ public class Consol {
                                     break;
                             }
                         } else {
-                            gui.showMessage(PlayerController.players[playerIDBuys].getName() + " har ikke nok penge til at gennemføre det bud");
+                            gui.showMessage(PlayerController.players[playerIDBuys].getName() + " har slet ikke så mange penge.");
                             break;
                         }
                         break;
