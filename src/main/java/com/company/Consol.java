@@ -17,7 +17,6 @@ public class Consol {
     CardDeck cardDeck = new CardDeck();
     public int playersGivenUp = 0;
 
-
     public void startGame() {
         cardDeck.mix();
         while (true) {

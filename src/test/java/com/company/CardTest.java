@@ -1,4 +1,6 @@
-package ChanceCard;
+package com.company;
+
+import ChanceCard.CardDeck;
 
 public class CardTest {
     /*tester vores Chancekortdæk ved at trække 100 kort efter blanding og ser om vores blandingsmetode virker
